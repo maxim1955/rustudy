@@ -1,0 +1,396 @@
+
+
+.news {
+    padding-bottom: 120px;
+}
+
+.all {
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+.all__block {
+    position: relative;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.all__block:nth-child(5n + 1) {
+    grid-column: 1/8;
+}
+
+.all__block:nth-child(5n + 2) {
+    grid-column: 8/13;
+}
+
+.all__block:nth-child(5n + 3) {
+    grid-column: 1/4;
+}
+
+.all__block:nth-child(5n + 4) {
+    grid-column: 4/7;
+}
+
+.all__block:nth-child(5n + 5) {
+    grid-column: 7/13;
+}
+
+.news__tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs__item {
+    padding: 14px 0;
+    width: 195px;
+    text-align: center;
+}
+
+.tabs__link {
+    font-size: 20px;
+    color: rgba(10, 43, 73, 0.60);
+    transition: color .3s ease-in-out;
+}
+
+.tabs__item.active .tabs__link {
+    color: inherit;
+}
+
+.tabs__item.active {
+    border-bottom: 1px solid #0A2B49;
+}
+
+.tabs__item:hover .tabs__link {
+    color: inherit;
+}
+
+.news__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.news__btn {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 600;
+    border: 2px solid #056BF0;
+    color: #056BF0;
+    transition: color .3s ease-in-out, background-color .3s ease-in-out;
+}
+
+
+.news__btn path {
+    fill: #056BF0;
+    transition: fill .3s ease-in-out;
+}
+
+.news__btn:hover path {
+    fill: #0A2B49;
+}
+
+.news__btn:active path {
+    fill: #0A2B49;
+}
+
+.news__btn:hover {
+    color: inherit;
+}
+
+.news__btn:active {
+    color: inherit;
+    background-color: rgba(255, 255, 255, 0.60);
+}
+
+.news__btn svg {
+    margin-right: 3px;
+}
+
+.all__text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: var(--blue);
+}
+
+.all__descr {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+}
+
+.all__title {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 16px;
+    color: white;
+}
+
+.all__title--preview {
+    background: linear-gradient(277deg, #D547BA 0%, #FED030 154.35%);
+}
+
+.all__title--event {
+    background: linear-gradient(95deg, #056BF0 -4.05%, #5724A7 107.33%);
+}
+
+.all__title--new {
+    background: linear-gradient(93deg, #D547BA -4.18%, #5724A7 147.75%);
+}
+
+.news__btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-background,
+.btn-outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 16px;
+
+}
+
+.btn-background {
+    color: white;
+    background-color: #056BF0;
+}
+
+.btn-background:hover {
+    background: linear-gradient(95deg, #056BF0 -4.05%, #714AB4 107.33%);
+}
+
+.btn-background:active {
+    background: linear-gradient(95deg, #4193FD -4.05%, #865FC9 107.33%);
+}
+
+.btn-background:disabled {
+    background: #87A1C3;
+    cursor: auto;
+}
+
+.btn-outline {
+    color: #056BF0;
+    border: 2px solid #056BF0;
+    transition: color .3s ease-in-out, background-color .3s ease-in-out;
+}
+
+.btn-outline path {
+    stroke: #056BF0;
+    transition: stroke .3s ease-in-out;
+}
+
+.btn-outline:hover {
+    color: inherit;
+}
+
+.btn-outline:active {
+    color: inherit;
+    background: rgba(255, 255, 255, 0.60);
+}
+
+.btn-outline:hover path {
+    stroke: #0A2B49;
+}
+
+.all__block img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.all__calendar {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 24px;
+    border-radius: 16px;
+    background: linear-gradient(95deg, #056BF0 -4.05%, #5724A7 107.33%);
+}
+
+.all__btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    padding: 12px 24px;
+    max-height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(95deg, #056BF0 -4.05%, #5724A7 107.33%);
+}
+
+@media (max-width: 1400px) {
+    .news__title {
+        margin-bottom: 23px !important;
+        font-size: 32px;
+    }
+
+    .news__btn {
+        padding: 12px 14px;
+        font-size: 20px;
+    }
+
+    .tabs__item {
+        max-width: 135px;
+    }
+
+    .all__title {
+        padding: 12px 14px;
+        top: 10px;
+        left: 10px;
+        max-height: 48px;
+        border-radius: 12px;
+        font-size: 20px;
+    }
+
+    .all__btn {
+        top: 10px;
+        right: 10px;
+        max-height: 48px;
+    }
+
+    .all__text {
+        padding: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        border-radius: 14px;
+    }
+
+    .all__descr {
+        -webkit-line-clamp: 3;
+    }
+
+    .all {
+        margin-bottom: 20px;
+    }
+
+    .btn-background,
+    .btn-outline {
+        padding: 12px 14px;
+        border-radius: 12px;
+    }
+
+
+    .tabs__link {
+        font-size: 14px;
+    }
+
+    .all__block img {
+        border-radius: 16px;
+    }
+
+    .news {
+        padding-bottom: 105px;
+    }
+}
+
+@media (max-width: 992px) {
+    .all {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .all__title {
+        top: 20px;
+        left: 20px;
+    }
+
+    .all__btn {
+        top: 20px;
+        right: 20px;
+    }
+
+    .news__title {
+        font-size: 28px;
+    }
+
+    .news {
+        padding-bottom: 80px;
+    }
+
+    .all__block img {
+        height: 400px;
+    }
+
+    .all__text {
+        left: 20px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .tabs__link {
+        font-size: 12px;
+    }
+
+    .all__btn,
+    .all__title {
+        max-height: 44px;
+    }
+
+    .news__top {
+        flex-direction: column;
+    }
+
+    .tabs__item {
+        max-width: 100%;
+    }
+
+    .news__tabs {
+        width: 100%;
+    }
+
+    .news__btn {
+        justify-content: center;
+        width: 100%;
+        font-size: 16px;
+        
+    }
+
+    .news__tabs {
+        margin-bottom: 12px;
+    }
+
+    .all__title {
+        font-size: 16px;
+    }
+
+    .all__descr {
+        font-size: 14px;
+    }
+
+    .all__text {
+        padding: 12px;
+    }
+}

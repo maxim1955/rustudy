@@ -1,0 +1,63 @@
+.testPage_wrap {
+    position: relative;
+    background: url(../img/tests/quest_bg_bottom.svg) no-repeat 100% 100%, url(../img/tests/a1_quest.svg) no-repeat 100% 100%, #5724A7;
+    height: 100vh;
+    padding-top: 80px;
+}
+
+.testPage_header {
+    display: flex;
+    padding-bottom: 130px;
+
+}
+
+.link_back {
+    flex-grow: 0;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.60);
+    /* desktop/button */
+    font-family: Manrope;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 24px */
+}
+.link_back:hover {
+    color: white;
+    text-decoration: underline;
+}
+.testPage_title {
+    flex-grow: 1;
+    color: #FFF;
+    font-family: Manrope;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 48px */
+    text-align: center;
+    max-width: 75%;
+}
+.testPage_body__rotate{
+
+}
+.rotate_text{
+    display: inline-block;
+    border-radius: 20px;
+    border: 1px solid #FFF;
+    padding: 4px 18px;
+    color: #FFF;
+    font-family: Sofia Sans;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+.rotate_first{
+    transform: rotate(-2deg);
+}
+.rotate_second{
+    transform: rotate(4deg);
+    margin: 0 10px;
+}
+

@@ -1,9 +1,129 @@
 {
+  "public/fonts/Manrope-Bold.woff": {
+    "file": "assets/Manrope-Bold-B3VgaMYs.woff",
+    "src": "public/fonts/Manrope-Bold.woff"
+  },
+  "public/fonts/Manrope-Medium.woff": {
+    "file": "assets/Manrope-Medium-B06codu0.woff",
+    "src": "public/fonts/Manrope-Medium.woff"
+  },
+  "public/fonts/Manrope-Regular.woff": {
+    "file": "assets/Manrope-Regular-CFvnD1l6.woff",
+    "src": "public/fonts/Manrope-Regular.woff"
+  },
+  "public/fonts/Repo-Bold.woff": {
+    "file": "assets/Repo-Bold-DBbqD7yt.woff",
+    "src": "public/fonts/Repo-Bold.woff"
+  },
+  "public/img/Icon_back.svg": {
+    "file": "assets/Icon_back-Cf8BOOUP.svg",
+    "src": "public/img/Icon_back.svg"
+  },
+  "public/img/Icon_forward.svg": {
+    "file": "assets/Icon_forward-9Obn7NG0.svg",
+    "src": "public/img/Icon_forward.svg"
+  },
+  "public/img/background1.webp": {
+    "file": "assets/background1-B1v680D9.webp",
+    "src": "public/img/background1.webp"
+  },
+  "public/img/background1_hover.webp": {
+    "file": "assets/background1_hover-U3ROjspo.webp",
+    "src": "public/img/background1_hover.webp"
+  },
+  "public/img/background2.webp": {
+    "file": "assets/background2-BTjmeklt.webp",
+    "src": "public/img/background2.webp"
+  },
+  "public/img/background2_hover.webp": {
+    "file": "assets/background2_hover-CQJ_UYVw.webp",
+    "src": "public/img/background2_hover.webp"
+  },
+  "public/img/background3.webp": {
+    "file": "assets/background3-DedIDrj-.webp",
+    "src": "public/img/background3.webp"
+  },
+  "public/img/background3_hover.webp": {
+    "file": "assets/background3_hover-DMZ5DSFW.webp",
+    "src": "public/img/background3_hover.webp"
+  },
+  "public/img/banner_game.png": {
+    "file": "assets/banner_game-BgLoeRH2.png",
+    "src": "public/img/banner_game.png"
+  },
+  "public/img/blonde.png": {
+    "file": "assets/blonde-BpjWKtQv.png",
+    "src": "public/img/blonde.png"
+  },
+  "public/img/brunette.png": {
+    "file": "assets/brunette-DUcMiwto.png",
+    "src": "public/img/brunette.png"
+  },
+  "public/img/error.svg": {
+    "file": "assets/error-CytkyPqz.svg",
+    "src": "public/img/error.svg"
+  },
+  "public/img/game_bg_mob.png": {
+    "file": "assets/game_bg_mob-CSP2bl5A.png",
+    "src": "public/img/game_bg_mob.png"
+  },
+  "public/img/game_bg_tab.png": {
+    "file": "assets/game_bg_tab-khekYaeT.png",
+    "src": "public/img/game_bg_tab.png"
+  },
+  "public/img/icon_back_hover.svg": {
+    "file": "assets/icon_back_hover-TGRxhrqL.svg",
+    "src": "public/img/icon_back_hover.svg"
+  },
+  "public/img/icon_forward_hover.svg": {
+    "file": "assets/icon_forward_hover-2U9QBbVJ.svg",
+    "src": "public/img/icon_forward_hover.svg"
+  },
+  "public/img/material/avatar.svg": {
+    "file": "assets/avatar-BlluW4Xf.svg",
+    "src": "public/img/material/avatar.svg"
+  },
+  "public/img/promo_app.png": {
+    "file": "assets/promo_app-BEmvB9yG.png",
+    "src": "public/img/promo_app.png"
+  },
+  "public/img/x-circle.svg": {
+    "file": "assets/x-circle-Ed3L9DAX.svg",
+    "src": "public/img/x-circle.svg"
+  },
   "resources/js/app.js": {
-    "file": "assets/app-qOEmkUoU.js",
+    "file": "assets/app-DG_E15pQ.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "css": [
+      "assets/app-BfQhwKmT.css"
+    ],
+    "assets": [
+      "assets/avatar-BlluW4Xf.svg",
+      "assets/banner_game-BgLoeRH2.png",
+      "assets/promo_app-BEmvB9yG.png",
+      "assets/game_bg_tab-khekYaeT.png",
+      "assets/game_bg_mob-CSP2bl5A.png",
+      "assets/Manrope-Regular-CFvnD1l6.woff",
+      "assets/Manrope-Medium-B06codu0.woff",
+      "assets/Manrope-Bold-B3VgaMYs.woff",
+      "assets/Repo-Bold-DBbqD7yt.woff",
+      "assets/background1-B1v680D9.webp",
+      "assets/background1_hover-U3ROjspo.webp",
+      "assets/blonde-BpjWKtQv.png",
+      "assets/background2-BTjmeklt.webp",
+      "assets/background2_hover-CQJ_UYVw.webp",
+      "assets/brunette-DUcMiwto.png",
+      "assets/background3-DedIDrj-.webp",
+      "assets/background3_hover-DMZ5DSFW.webp",
+      "assets/Icon_forward-9Obn7NG0.svg",
+      "assets/Icon_back-Cf8BOOUP.svg",
+      "assets/icon_forward_hover-2U9QBbVJ.svg",
+      "assets/icon_back_hover-TGRxhrqL.svg",
+      "assets/error-CytkyPqz.svg",
+      "assets/x-circle-Ed3L9DAX.svg"
+    ]
   },
   "resources/sass/app.scss": {
     "file": "assets/app-D-sv12UV.css",
