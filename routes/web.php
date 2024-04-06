@@ -19,6 +19,9 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/max', function () {
+    return view('max');
+});
 
 
 Route::group(['prefix' => 'admin'], function () {
