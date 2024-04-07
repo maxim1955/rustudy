@@ -819,6 +819,7 @@ export default {
             // document.body.style.overflow = 'hidden';
         },
         closeOrder() {
+            console.log('asda')
             this.showOrder = false;
             // document.body.style.overflow = 'auto'
         },

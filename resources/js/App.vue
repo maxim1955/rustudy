@@ -10,5 +10,6 @@
 @import "../../public/css/modal-offer.css";
 @import "../../public/css/book.css";
 @import "../../public/css/news.css";
+
 </style>
 
