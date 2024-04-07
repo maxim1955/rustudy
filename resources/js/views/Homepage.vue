@@ -277,6 +277,7 @@ export default {
   },
   mounted() {
     useHead({
+    title: 'Обучение русскому как иностранному | Привет, Россия! | Rus.Study',
       meta: [
         {
           name: 'title',
