@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="{{ asset('RKI_games/TemplateData/favicon.ico') }}">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite([ 'resources/js/app.js'])
 
     <link rel="stylesheet" href="{{ asset('RKI_games/TemplateData/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
