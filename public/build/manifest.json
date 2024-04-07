@@ -47,6 +47,10 @@
     "file": "assets/YouTube_hover-DG0YrrsX.svg",
     "src": "public/img/YouTube_hover.svg"
   },
+  "public/img/advantages-bg.webp": {
+    "file": "assets/advantages-bg-AMwh6ZDz.webp",
+    "src": "public/img/advantages-bg.webp"
+  },
   "public/img/background1.webp": {
     "file": "assets/background1-B1v680D9.webp",
     "src": "public/img/background1.webp"
@@ -107,6 +111,18 @@
     "file": "assets/blonde_tablet-MRRwHJdN.png",
     "src": "public/img/blonde_tablet.png"
   },
+  "public/img/book-banner-1024.webp": {
+    "file": "assets/book-banner-1024-BBqh0I6f.webp",
+    "src": "public/img/book-banner-1024.webp"
+  },
+  "public/img/book-banner-360.webp": {
+    "file": "assets/book-banner-360-DbtcAnQv.webp",
+    "src": "public/img/book-banner-360.webp"
+  },
+  "public/img/book-banner.webp": {
+    "file": "assets/book-banner-DXennzev.webp",
+    "src": "public/img/book-banner.webp"
+  },
   "public/img/brunette.png": {
     "file": "assets/brunette-DUcMiwto.png",
     "src": "public/img/brunette.png"
@@ -147,6 +163,34 @@
     "file": "assets/logo_tablet-DNkyDqw2.svg",
     "src": "public/img/logo_tablet.svg"
   },
+  "public/img/message-1024.svg": {
+    "file": "assets/message-1024-hzSkgsAp.svg",
+    "src": "public/img/message-1024.svg"
+  },
+  "public/img/message-violet-1024.svg": {
+    "file": "assets/message-violet-1024-BPHbKX0j.svg",
+    "src": "public/img/message-violet-1024.svg"
+  },
+  "public/img/message-violet.svg": {
+    "file": "assets/message-violet-BTLNYWGx.svg",
+    "src": "public/img/message-violet.svg"
+  },
+  "public/img/message.svg": {
+    "file": "assets/message-D1tYdd50.svg",
+    "src": "public/img/message.svg"
+  },
+  "public/img/mute.svg": {
+    "file": "assets/mute-DR3pbZRL.svg",
+    "src": "public/img/mute.svg"
+  },
+  "public/img/play-hover.svg": {
+    "file": "assets/play-hover-CC553yDV.svg",
+    "src": "public/img/play-hover.svg"
+  },
+  "public/img/play.svg": {
+    "file": "assets/play-Diui5OhL.svg",
+    "src": "public/img/play.svg"
+  },
   "public/img/promo_app.png": {
     "file": "assets/promo_app-BEmvB9yG.png",
     "src": "public/img/promo_app.png"
@@ -158,6 +202,10 @@
   "public/img/telegramm.svg": {
     "file": "assets/telegramm-CavvMF7P.svg",
     "src": "public/img/telegramm.svg"
+  },
+  "public/img/tick.svg": {
+    "file": "assets/tick-eVVnJsXA.svg",
+    "src": "public/img/tick.svg"
   },
   "public/img/vk.svg": {
     "file": "assets/vk-Db_Bd9nn.svg",
@@ -172,12 +220,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DcMCpNdI.js",
+    "file": "assets/app-BzNsEbog.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-Dl2F30VT.css"
+      "assets/app-BuEIxQF-.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",
@@ -193,10 +241,6 @@
       "assets/Facebook_hover-iQxZtImV.svg",
       "assets/Instagram-CMG1ip7O.svg",
       "assets/Instagram_hover-BFm8g3bp.svg",
-      "assets/banner_game-BgLoeRH2.png",
-      "assets/promo_app-BEmvB9yG.png",
-      "assets/game_bg_tab-khekYaeT.png",
-      "assets/game_bg_mob-CSP2bl5A.png",
       "assets/Manrope-Regular-CFvnD1l6.woff",
       "assets/Manrope-Medium-B06codu0.woff",
       "assets/Manrope-Bold-B3VgaMYs.woff",
@@ -215,6 +259,10 @@
       "assets/icon_back_hover-TGRxhrqL.svg",
       "assets/error-CytkyPqz.svg",
       "assets/x-circle-Ed3L9DAX.svg",
+      "assets/banner_game-BgLoeRH2.png",
+      "assets/promo_app-BEmvB9yG.png",
+      "assets/game_bg_tab-khekYaeT.png",
+      "assets/game_bg_mob-CSP2bl5A.png",
       "assets/bacrground1_tablet-B_FA2gQe.webp",
       "assets/background1_hover_tablet-DuUUaHWu.webp",
       "assets/background2_tablet-BM30GNBK.webp",
@@ -222,7 +270,19 @@
       "assets/bacrground3_tablet--jJILgPC.webp",
       "assets/background3_hover_tablet-oAXTuwRw.webp",
       "assets/blonde_tablet-MRRwHJdN.png",
-      "assets/download-DBZM4f-z.svg"
+      "assets/download-DBZM4f-z.svg",
+      "assets/book-banner-DXennzev.webp",
+      "assets/advantages-bg-AMwh6ZDz.webp",
+      "assets/message-D1tYdd50.svg",
+      "assets/tick-eVVnJsXA.svg",
+      "assets/message-violet-BTLNYWGx.svg",
+      "assets/play-Diui5OhL.svg",
+      "assets/play-hover-CC553yDV.svg",
+      "assets/mute-DR3pbZRL.svg",
+      "assets/message-1024-hzSkgsAp.svg",
+      "assets/message-violet-1024-BPHbKX0j.svg",
+      "assets/book-banner-1024-BBqh0I6f.webp",
+      "assets/book-banner-360-DbtcAnQv.webp"
     ]
   },
   "resources/sass/app.scss": {

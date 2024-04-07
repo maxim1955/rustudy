@@ -515,19 +515,19 @@ body {
   height: 100%;
 }
 
-.swiper-button-next::after {
+body .swiper-button-next::after {
   content: url(../img/Icon_forward.svg);
 }
 
-.swiper-button-prev::after {
+body .swiper-button-prev::after {
   content: url(../img/Icon_back.svg);
 }
 
-.swiper-button-next:hover::after {
+body .swiper-button-next:hover::after {
   content: url(../img/icon_forward_hover.svg);
 }
 
-.swiper-button-prev:hover::after {
+body .swiper-button-prev:hover::after {
   content: url(../img/icon_back_hover.svg);
 }
 

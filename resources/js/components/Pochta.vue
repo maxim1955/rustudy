@@ -12,13 +12,13 @@
                 </ul>
                 <p v-else>Ничего не найдено</p>
                 </div>
-                
+
             </div>
-           
+
             <div class="form__btns">
                 <a :class="{active: activeTab == tab.id}" class="btn-reset pochta__btn" v-for="tab in tabs" :key="tab.id" @click="changeTab(tab)">{{ tab.name }}</a>
             </div>
-            
+
         </form>
 
         <div style="position: relative;">
@@ -29,7 +29,7 @@
         </div>
 
         <div class="" v-show="activeTab == 2">
-               
+
             <div class="pochta__addresses addresses">
                 <div class="addresses__block" :class="{open: activeList}">
                     <div class="flex pochta__block">
@@ -43,20 +43,20 @@
                         </li>
                     </ul>
                 </div>
-                
-           
+
+
             </div>
-            
+
 
         </div>
         <div class="pochta__balloon balloon">
                 <div class="flex flex-between">
                     <p class="balloon__title">Отделения Почты России</p>
                     <button class="balloon__close btn-reset" @click.prevent="closeBalloon()"></button>
-                </div>               
-                
+                </div>
+
                 <p class="balloon__address">{{ checkAddress.type }} №{{ checkAddress.postal_code }} {{ checkAddress.address }}</p>
-                
+
                 <p v-if="checkAddress.time" class="balloon__time">{{ checkAddress.time[0]}}</p>
                 <p v-else-if="!checkAddress.time" class="balloon__time"></p>
                 <button type="button" class="btn-reset btn-background balloon__btn" @click="setActiveCity(checkAddress)">Заберу отсюда</button>
@@ -67,7 +67,7 @@
     <mapAfter @back="backChoice()" :activeCity="activeCity" v-if="afterChoice"></mapAfter>
 </div>
 
-    
+
 
 </template>
 
@@ -80,7 +80,7 @@ import usePostcodeStore from '@/stores/PostcodeStore.js'
 export default {
     components: { mapAfter },
 
-    
+
   data() {
     return {
         center: [],
@@ -142,7 +142,7 @@ export default {
                 console.log(response.geoObjects.position)
                 console.log(this.center)
             })
-            .catch(err => console.log(err)); 
+            .catch(err => console.log(err));
 
             postcodeArray.forEach(postcode => {
                 var obj = {
@@ -164,7 +164,7 @@ export default {
                                                 item.data.schedule_fri,
                                                 item.data.schedule_sat,
                                                 item.data.schedule_sun,
-                                                ] 
+                                                ]
                                             },
                                             geometry: {
                                                 type: 'Point',
@@ -232,20 +232,20 @@ objects.addEvents('click', function (e) {
 })
 
 })
- 
-    
+
+
     ymaps.ready();
 
 
-    this.createList()  
+    this.createList()
     this.getCity()
-  
+
   },
 
   computed: {
             checkAddress() {
                 const PostcodeStore = usePostcodeStore()
-                return PostcodeStore.checkAddress 
+                return PostcodeStore.checkAddress
             }
         },
 
@@ -255,7 +255,7 @@ objects.addEvents('click', function (e) {
         this.activeTab = tab.id;
         const balloon = document.querySelector('.balloon');
         const addreesBlock = document.querySelector('.addresses__block')
-        balloon.classList.remove('open')   
+        balloon.classList.remove('open')
         if (addreesBlock.classList.contains('open')) addreesBlock.classList.remove('open')
     },
 
@@ -282,7 +282,7 @@ objects.addEvents('click', function (e) {
         this.activeCity = item
         const PostcodeStore = usePostcodeStore();
         PostcodeStore.checkAddress = item
-   
+
     },
 
 
@@ -309,13 +309,13 @@ objects.addEvents('click', function (e) {
                             item.data.schedule_fri,
                             item.data.schedule_sat,
                             item.data.schedule_sun,
-                        ] 
+                        ]
                     })
                 }
-                
-            })           
-        })   
-        
+
+            })
+        })
+
     },
 
     createList() {
@@ -338,17 +338,17 @@ objects.addEvents('click', function (e) {
                             item.data.schedule_fri,
                             item.data.schedule_sat,
                             item.data.schedule_sun,
-                        ] 
+                        ]
                     })
-                }  
+                }
                 }
             })
-                              
+
         })
     },
 
 
-//     getAddress(text) {    
+//     getAddress(text) {
 //             var url = "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/postal_unit";
 //             var token = "8c890d6b252427b1a024b544d3b501fc8a618a8c";
 //             var query = text;
@@ -370,13 +370,13 @@ objects.addEvents('click', function (e) {
 //             const data = JSON.parse(result);
 
 //             if (data.suggestions.length > 0)
-//             this.address.push(data.suggestions)      
+//             this.address.push(data.suggestions)
 //         } )
 //         .catch(error => console.log("error", error));
 
 //     },
 
-    // sourchAddress() {      
+    // sourchAddress() {
     //         var url = "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
     //     var token = "8c890d6b252427b1a024b544d3b501fc8a618a8c";
     //     var query =  this.city;
@@ -412,7 +412,7 @@ objects.addEvents('click', function (e) {
         console.log(this.clientIp)
         })
         .catch(error => console.log(error))
-        
+
     var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=";
     var token = "8c890d6b252427b1a024b544d3b501fc8a618a8c";
     var query = this.clientIp;
@@ -437,7 +437,7 @@ objects.addEvents('click', function (e) {
 .catch(error => console.log("error", error));
 
     },
- 
+
   },
 
 
