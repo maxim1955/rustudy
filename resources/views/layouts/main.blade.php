@@ -13,12 +13,13 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link rel="shortcut icon" href="{{ asset('RKI_games/TemplateData/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ asset('RKI_games/TemplateData/style.css') }}">
 
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <link rel="stylesheet" href="{{ asset('RKI_games/TemplateData/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/media.css') }}">
     <link rel="stylesheet" href="{{ asset('css/service.css') }}">
     <link rel="stylesheet" href="{{ asset('css/tests.css') }}">
     <link rel="stylesheet" href="{{ asset('css/testpage.css') }}">
@@ -26,19 +27,14 @@
     <link rel="stylesheet" href="{{ asset('css/modalCreateMaterial.css') }}">
     <link rel="stylesheet" href="{{ asset('css/book.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal-order.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/news.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal-news.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal-offer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/error.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal-feedback.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/vue-tel-input/dist/vue-tel-input.css" />
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/media.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modal-offer.css') }}">
 </head>
 <body>
-<div id="app">
-    <router-view></router-view>
-</div>
+<div id="app"></div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <template>
-    <div id="news" class="modal modal-news">
+    <div id="news" class="modal__offer modal-news">
         <router-link to="/news" class="btn-reset btn-close"></router-link>
         <div class="modal__overlay">
             <div class="modal__window">
@@ -11,23 +11,23 @@
                     nextEl: next,
                 }"
                 @swiper="onSwiper"
-                :allowTouchMove="false"   
+                :allowTouchMove="false"
                 >
                 <swiper-slide class="new" v-for="item in filteredNews" :key="item.id" :id="item.id">
                     <div class="new__block">
-                        
+
                         <div class="new__left" v-if="item.video != ''">
                             <p :class="{'new__tag--preview': item.tag == 'Анонсы', 'new__tag--event': item.tag == 'Мероприятия', 'new__tag--new': item.tag == 'Новости'}" class="new__tag">{{ item.tag }}</p>
-                            <iframe width="100%" height="900" :src="item.video" 
-                            title="YouTube video player" frameborder="0" 
+                            <iframe width="100%" height="900" :src="item.video"
+                            title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                         </div>
                         <div v-else-if="item.video == ''" class="new__left">
                             <p :class="{'new__tag--preview': item.tag == 'Анонсы', 'new__tag--event': item.tag == 'Мероприятия', 'new__tag--new': item.tag == 'Новости'}" class="new__tag">{{ item.tag }}</p>
                             <img :src="item.image" :alt="item.title">
                         </div>
-                        
-                    
+
+
                     <div class="new__right">
                         <div class="new__btns">
                             <button class="btn-reset btn-background">
@@ -49,14 +49,14 @@
                             <p class="new__title">{{ item.title }}</p>
                             <p class="new__desc">{{ item.desc }}</p>
                         </div>
-                        
-                    </div>                   
+
+                    </div>
                 </div>
                 </swiper-slide>
                 </swiper>
                 <div @click="prevSlide()" ref="prev" class="swiper-button-prev"></div>
                 <div @click="nextSlide()" ref="next" class="swiper-button-next"></div>
-                
+
             </div>
         </div>
     </div>
@@ -81,7 +81,7 @@ import useNewsStore from '@/stores/NewsStore.js'
         computed: {
             allNews() {
                 const NewsStore = useNewsStore()
-                return NewsStore.allNews 
+                return NewsStore.allNews
             },
 
             filteredNews() {
@@ -94,7 +94,7 @@ import useNewsStore from '@/stores/NewsStore.js'
 
             currentActiveSlide() {
                 const NewsStore = useNewsStore()
-                return NewsStore.currentActiveSlide 
+                return NewsStore.currentActiveSlide
             }
         },
 
@@ -102,19 +102,19 @@ import useNewsStore from '@/stores/NewsStore.js'
             const prev = ref(null);
             const next = ref(null);
             const onSwiper = (swiper) => {
-                
+
                 const NewsStore = useNewsStore();
                 NewsStore.currentActiveSlide
-                swiper.activeIndex = NewsStore.currentActiveSlide         
-            }; 
-            
+                swiper.activeIndex = NewsStore.currentActiveSlide
+            };
+
             return {
                 onSwiper,
                 prev,
                 next,
                 modules: [Navigation],
             };
-     
+
         },
 
         methods: {
@@ -137,7 +137,7 @@ import useNewsStore from '@/stores/NewsStore.js'
                 const id = slides.getAttribute('id');
                 window.history.replaceState('page2', 'Title', `/news/${id}`);
             },
-            
+
         },
     }
 </script>

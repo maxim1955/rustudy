@@ -1,5 +1,5 @@
 <template>
-    <div class="modal feedback">
+    <div class="modal__offer feedback">
         <div class="modal__overlay">
             <div class="modal__window">
                 <button class="btn-reset btn-close" @click="$emit('close-feedback')"></button>
@@ -8,9 +8,9 @@
                         <p class="modal__title">Мы заинтересованы в вашем мнении</p>
                     <p class="modal__text">Звоните, пишите, задавайте вопросы</p>
                     </div>
-                    
+
                     <img src="img/feedback-img.webp" alt="">
-                    
+
                 </div>
                 <div class="feedback__block">
                         <ul class="list-reset feedback__contacts contacts">
@@ -19,7 +19,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                                     <path d="M7.72005 2.4181C7.51613 2.21417 7.23954 2.09961 6.95115 2.09961C4.54894 2.09961 2.60156 4.04699 2.60156 6.44919V8.5009C2.60156 9.81404 2.91785 11.1079 3.52367 12.2729C5.46176 16 8.50118 19.0394 12.2283 20.9775C13.3933 21.5833 14.6871 21.8996 16.0003 21.8996H18.9764C20.8681 21.8996 22.4016 20.3661 22.4016 18.4744C22.4016 17.6155 21.9723 16.8134 21.2576 16.337C20.8813 16.0861 19.2932 15.0274 19.0903 14.9771C18.9007 14.9301 18.7025 14.9301 18.5129 14.9771C18.3099 15.0274 16.5782 16.2612 16.0347 16.5026C15.4912 16.744 14.8775 16.7751 14.3124 16.5898C14.1181 16.526 12.9505 15.993 12.1628 15.4672C10.7256 14.5078 9.97936 13.7848 9.03393 12.3384C8.60383 11.6803 8.15189 10.7169 8.09454 10.558C7.86038 9.90918 7.94733 8.94769 8.43397 8.30066C8.92062 7.65363 10.3567 6.34442 10.4458 6.07043C10.5241 5.82942 10.5241 5.5698 10.4458 5.32879C10.383 5.13553 7.72005 2.4181 7.72005 2.4181Z" stroke="#0A2B49" stroke-width="2" stroke-miterlimit="1.41421" stroke-linejoin="round"/>
                                     </svg>
-                                    <span>8 (999) 333–33–03</span> 
+                                    <span>8 (999) 333–33–03</span>
                                 </a>
                             </li>
                             <li class="contacts__item">
@@ -27,7 +27,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                                     <path d="M21.2262 3.27344H3.77166C2.57166 3.27344 1.60075 4.25526 1.60075 5.45526L1.58984 18.5462C1.58984 19.7462 2.57166 20.728 3.77166 20.728H21.2262C22.4262 20.728 23.408 19.7462 23.408 18.5462V5.45526C23.408 4.25526 22.4262 3.27344 21.2262 3.27344ZM21.2262 7.63707L12.4989 13.0916L3.77166 7.63707V5.45526L12.4989 10.9098L21.2262 5.45526V7.63707Z" fill="#0A2B49"/>
                                     </svg>
-                                    <span>info@example.com</span> 
+                                    <span>info@example.com</span>
                                 </a>
                             </li>
                         </ul>
@@ -63,15 +63,15 @@
                             </a>
                         </li>
                     </ul>
-                        
+
                     </div>
                 <div class="feedback__right">
                     <Form @InvalidSubmit="onInvalidSubmit" class="feedback__form form">
                         <p class="form__title">Задать вопрос</p>
                         <div>
                             <span class="form__text">Ф.И.О</span>
-                            <label for="" class="form__label">                               
-                                <button class="modal__btn hidden" @click.prevent="clearInput"></button>                                
+                            <label for="" class="form__label">
+                                <button class="modal__btn hidden" @click.prevent="clearInput"></button>
                                 <Field class="form__input" name="fio" v-model="fio" type="text" placeholder="Введите Ф.И.О" @input="inputChange" @keydown="deleteNumber"/>
                                 <!-- <span v-show="errorFio" class="error-icon"></span> -->
                                 <!-- <ErrorMessage class="form__error" name="fio" /> -->
@@ -80,20 +80,20 @@
                         <label for="" class="form__label">
                                 <span class="form__text">Телефон</span>
                                 <vue-tel-input v-model="phone" @country-changed="countryChanged" @validate="customValidate" @keydown="deleteLetter"></vue-tel-input>
-                          
+
                         </label>
                         <div>
                             <span class="form__text">E-mail *</span>
-                            <label for="" class="form__label">                               
-                                <button class="modal__btn hidden" @click.prevent="clearInput"></button>                                
+                            <label for="" class="form__label">
+                                <button class="modal__btn hidden" @click.prevent="clearInput"></button>
                                 <Field :class="{'error-input': errorEmail}" class="form__input" name="email" v-model="email" type="text" placeholder="Введите E-mail" :rules="validateEmail" @input="inputChange" @keydown="deleteNumber"/>
                                 <span v-show="errorEmail" class="error-icon"></span>
                                 <ErrorMessage class="form__error" name="email" />
                             </label>
                         </div>
                         <span class="form__text">Вопрос *</span>
-                            <label for="" class="form__label">                                
-                                    <button class="modal__btn hidden" @click.prevent="clearInput"></button>                                    
+                            <label for="" class="form__label">
+                                    <button class="modal__btn hidden" @click.prevent="clearInput"></button>
                                     <Field as="textarea" :class="{'error-input': errorQuestion}" class="form__input" name="question" v-model="question" type="field" placeholder="Ваш вопрос" :rules="validateQuestion" @input="inputChange"/>
                                     <span v-show="errorQuestion" class="error-icon"></span>
                                     <ErrorMessage class="form__error" name="question" />
@@ -103,7 +103,7 @@
                             <button class="btn-background btn-reset feedback__btn" type="submit">Отправить</button>
                         <p class="policy">Нажимая на&nbsp;кнопку Отправить, я&nbsp;соглашаюсь с <a class="policy__link" target="_blank" href="docs/политика_обработки_ПДн_на_сайте_учебник.pdf">Политикой о&nbsp;персональных данных</a> и <a class="policy__link" target="_blank" href="docs/Согласие_на_обработку_ПДн_на_сайте_учебник.pdf">Пользовательским соглашением</a></p>
                         </div>
-                        
+
                     </Form>
                 </div>
             </div>
@@ -119,7 +119,7 @@ configure({
   validateOnChange: true,
   validateOnInput: true,
   validateOnModelUpdate: true,
-  
+
 });
     export default {
         data() {
@@ -159,11 +159,11 @@ configure({
                         this.errorQuestion = false
                     }
 
-                
-                if (e.target.value != '') {
-                    btn.classList.remove('hidden') 
 
-                } else btn.classList.add('hidden') 
+                if (e.target.value != '') {
+                    btn.classList.remove('hidden')
+
+                } else btn.classList.add('hidden')
             },
 
             countryChanged(country) {
@@ -189,7 +189,7 @@ configure({
             },
 
             validateEmail(value) {
-                if (!value) {  
+                if (!value) {
                     return 'Введите E-mail!';
                 }
                 const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;

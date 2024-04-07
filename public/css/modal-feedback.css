@@ -1,8 +1,8 @@
-.modal.feedback {
+.modal__offer.feedback {
     overflow: auto;
 }
 
-.modal.feedback .modal__window {
+.modal__offer.feedback .modal__window {
     margin-bottom: 40px;
     transform: translateY(20px);
 }
@@ -235,13 +235,13 @@
 }
 
 @media (max-width: 1400px) {
-    .modal.feedback .modal__window {
+    .modal__offer.feedback .modal__window {
         max-width: 100%;
         border-radius: 0;
         transform: none;
     }
-    
-    .modal.feedback {
+
+    .modal__offer.feedback {
         padding: 0;
     }
 
@@ -270,7 +270,7 @@
         display: none;
     }
 
-    .modal.feedback .modal__window {
+    .modal__offer.feedback .modal__window {
         padding-top: 80px;
         grid-template-columns: 1fr;
         gap: 40px;

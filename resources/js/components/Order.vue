@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="modal order">
+    <div class="modal__offer order">
         <div class="modal__overlay">
             <div class="modal__window">
                 <button class="btn-reset btn-close" @click="$emit('close-order')"></button>
@@ -42,8 +42,8 @@
                             <div class="order__info info">
                                 <div>
                                     <span class="form__text">Ф.И.О *</span>
-                                    <label for="" class="form__label">                                       
-                                        <button class="modal__btn hidden" @click.prevent="clearInput"></button>                                
+                                    <label for="" class="form__label">
+                                        <button class="modal__btn hidden" @click.prevent="clearInput"></button>
                                         <Field :class="{'error-input': errorFio}" class="form__input" name="fio" v-model="fio" type="text" placeholder="Введите Ф.И.О" :rules="validateFio" @input="inputChange" @keydown="deleteNumber"/>
                                         <span v-show="errorFio" class="error-icon"></span>
                                         <ErrorMessage class="form__error" name="fio" />
@@ -52,29 +52,29 @@
 
                             <div>
                                 <span class="form__text">Страна</span>
-                                <label for="" class="form__label">                                    
+                                <label for="" class="form__label">
                                     <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                    <input class="form__input" name="country" v-model="country" type="text" placeholder="Введите страну" @input="inputChange" @keydown="deleteNumber"/> 
+                                    <input class="form__input" name="country" v-model="country" type="text" placeholder="Введите страну" @input="inputChange" @keydown="deleteNumber"/>
                                 </label>
                             </div>
-                            
-                            
+
+
                             <div class="info-block">
                                 <div class="w-100">
                                     <span class="form__text">Email *</span>
-                                    <label for="" class="form__label">                                       
-                                        <button v-show="!errorEmail" class="modal__btn hidden" @click.prevent="clearInput"></button>                               
+                                    <label for="" class="form__label">
+                                        <button v-show="!errorEmail" class="modal__btn hidden" @click.prevent="clearInput"></button>
                                         <Field :class="{'error-input': errorEmail}" class="form__input" name="email" v-model="email" type="text" placeholder="Введите email" :rules="validateEmail" @input="inputChange" @keydown="deleteNumber"/>
                                         <span v-show="errorEmail" class="error-icon"></span>
-                                        <ErrorMessage class="form__error" name="email" />  
+                                        <ErrorMessage class="form__error" name="email" />
                                     </label>
                                 </div>
                                 <div class="w-100">
                                     <span class="form__text">Телефон *</span>
-                                    <label for="" class="form__label">                                       
-                                        <vue-tel-input v-model="phone" @country-changed="countryChanged" @validate="customValidate" @keydown="deleteLetter"></vue-tel-input>                          
+                                    <label for="" class="form__label">
+                                        <vue-tel-input v-model="phone" @country-changed="countryChanged" @validate="customValidate" @keydown="deleteLetter"></vue-tel-input>
                                     </label>
-                                </div>                                                            
+                                </div>
                             </div>
                             </div>
 
@@ -92,7 +92,7 @@
                                     <img src="img/payment-2.svg" alt="PayPal">
                                 </label>
                                 </div>
-                                
+
                             </div>
 
                             <div class="order__block delivery">
@@ -106,7 +106,7 @@
                                 </label>
                                 <p>г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора, слева от 5-го подъезда (бесплатно)</p>
                                 </div>
-                                    
+
                                <div>
                                 <label class="delivery__label">
                                     <input type="radio" class="visually-hidden" name="delivery" value="pochta" @change="selectedDelivery"/>
@@ -115,7 +115,7 @@
                                 </label>
                                 <p>Книга отправляется вам почтовым переводом, по адресу, который вы укажите, срок доставки зависит от Почты России, стоимость за счёт покупателя</p>
                                </div>
-                                
+
                                 </div>
                             </div>
 
@@ -145,7 +145,7 @@
                                 <button :disabled="!validate" class="btn-reset order__submit" type="submit">Заказать</button>
 
                                 <p class="order__agreement">Нажимая на кнопку «Заказать», вы подтверждаете, что ознакомлены c <a href="docs/Согласие_на_обработку_ПДн_на_сайте_учебник.pdf" target="_blank">Пользовательским соглашением</a> и <a href="docs/политика_обработки_ПДн_на_сайте_учебник.pdf" target="_blank">Политикой о персональных данных</a></p>
-                                
+
                             </div>
                             <div class="order__block order__message">
                                 <p class="order__text">Любые вопросы по покупке книги: <a href="tel:+74993021872">+7 499 302-18-72</a>, <a href="tel:+79993333303">+7 999 333-33-03</a>, <a href="mailto:book@rus.study">book@rus.study</a></p>
@@ -156,7 +156,7 @@
 
                         </div>
                     </Form>
-                    
+
             </div>
         </div>
     </div>
@@ -176,7 +176,7 @@ configure({
   validateOnChange: true,
   validateOnInput: true,
   validateOnModelUpdate: true,
-  
+
 });
 
     export default {
@@ -193,13 +193,13 @@ configure({
                 errorFio: false,
                 errorEmail: false,
                 phoneValid: false,
-                selectedProducts: [],    
+                selectedProducts: [],
                 deliveryValue: '',
                 paymentValue: '',
                 currencyValue: 'rub',
                 delivery: '',
                 showModalSubmit: false
-     
+
             }
         },
 
@@ -233,7 +233,7 @@ configure({
 
 
             validateEmail(value) {
-                if (!value) {  
+                if (!value) {
                     return 'Введите E-mail!';
                 }
                 const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
@@ -260,7 +260,7 @@ configure({
                     this.errorEmail = true
                 }
 
-          
+
             },
 
             inputChange(e) {
@@ -271,15 +271,15 @@ configure({
 
 
                 if (e.target.getAttribute('name') == 'email') {
-                        this.errorEmail = false                   
+                        this.errorEmail = false
                     }
 
                     console.log(e)
 
                 if (e.target.value != '') {
-                    btn.classList.remove('hidden') 
+                    btn.classList.remove('hidden')
 
-                } else btn.classList.add('hidden') 
+                } else btn.classList.add('hidden')
 
             },
 
@@ -318,13 +318,13 @@ configure({
 
         computed: {
             validate() {
-                if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0) 
+                if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0)
                     return true
-                
+
             },
-          
+
         }
-        
+
     }
 </script>
 

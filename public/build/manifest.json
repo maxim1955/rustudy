@@ -15,6 +15,14 @@
     "file": "assets/Repo-Bold-DBbqD7yt.woff",
     "src": "public/fonts/Repo-Bold.woff"
   },
+  "public/img/Facebook.svg": {
+    "file": "assets/Facebook-CtkrMZtu.svg",
+    "src": "public/img/Facebook.svg"
+  },
+  "public/img/Facebook_hover.svg": {
+    "file": "assets/Facebook_hover-iQxZtImV.svg",
+    "src": "public/img/Facebook_hover.svg"
+  },
   "public/img/Icon_back.svg": {
     "file": "assets/Icon_back-Cf8BOOUP.svg",
     "src": "public/img/Icon_back.svg"
@@ -22,6 +30,22 @@
   "public/img/Icon_forward.svg": {
     "file": "assets/Icon_forward-9Obn7NG0.svg",
     "src": "public/img/Icon_forward.svg"
+  },
+  "public/img/Instagram.svg": {
+    "file": "assets/Instagram-CMG1ip7O.svg",
+    "src": "public/img/Instagram.svg"
+  },
+  "public/img/Instagram_hover.svg": {
+    "file": "assets/Instagram_hover-BFm8g3bp.svg",
+    "src": "public/img/Instagram_hover.svg"
+  },
+  "public/img/YouTube.svg": {
+    "file": "assets/YouTube-jEeSqAO0.svg",
+    "src": "public/img/YouTube.svg"
+  },
+  "public/img/YouTube_hover.svg": {
+    "file": "assets/YouTube_hover-DG0YrrsX.svg",
+    "src": "public/img/YouTube_hover.svg"
   },
   "public/img/background1.webp": {
     "file": "assets/background1-B1v680D9.webp",
@@ -31,6 +55,10 @@
     "file": "assets/background1_hover-U3ROjspo.webp",
     "src": "public/img/background1_hover.webp"
   },
+  "public/img/background1_hover_tablet.webp": {
+    "file": "assets/background1_hover_tablet-DuUUaHWu.webp",
+    "src": "public/img/background1_hover_tablet.webp"
+  },
   "public/img/background2.webp": {
     "file": "assets/background2-BTjmeklt.webp",
     "src": "public/img/background2.webp"
@@ -38,6 +66,14 @@
   "public/img/background2_hover.webp": {
     "file": "assets/background2_hover-CQJ_UYVw.webp",
     "src": "public/img/background2_hover.webp"
+  },
+  "public/img/background2_hover_tablet.webp": {
+    "file": "assets/background2_hover_tablet-fuGFy7LT.webp",
+    "src": "public/img/background2_hover_tablet.webp"
+  },
+  "public/img/background2_tablet.webp": {
+    "file": "assets/background2_tablet-BM30GNBK.webp",
+    "src": "public/img/background2_tablet.webp"
   },
   "public/img/background3.webp": {
     "file": "assets/background3-DedIDrj-.webp",
@@ -47,6 +83,18 @@
     "file": "assets/background3_hover-DMZ5DSFW.webp",
     "src": "public/img/background3_hover.webp"
   },
+  "public/img/background3_hover_tablet.webp": {
+    "file": "assets/background3_hover_tablet-oAXTuwRw.webp",
+    "src": "public/img/background3_hover_tablet.webp"
+  },
+  "public/img/bacrground1_tablet.webp": {
+    "file": "assets/bacrground1_tablet-B_FA2gQe.webp",
+    "src": "public/img/bacrground1_tablet.webp"
+  },
+  "public/img/bacrground3_tablet.webp": {
+    "file": "assets/bacrground3_tablet--jJILgPC.webp",
+    "src": "public/img/bacrground3_tablet.webp"
+  },
   "public/img/banner_game.png": {
     "file": "assets/banner_game-BgLoeRH2.png",
     "src": "public/img/banner_game.png"
@@ -55,9 +103,17 @@
     "file": "assets/blonde-BpjWKtQv.png",
     "src": "public/img/blonde.png"
   },
+  "public/img/blonde_tablet.png": {
+    "file": "assets/blonde_tablet-MRRwHJdN.png",
+    "src": "public/img/blonde_tablet.png"
+  },
   "public/img/brunette.png": {
     "file": "assets/brunette-DUcMiwto.png",
     "src": "public/img/brunette.png"
+  },
+  "public/img/download.svg": {
+    "file": "assets/download-DBZM4f-z.svg",
+    "src": "public/img/download.svg"
   },
   "public/img/error.svg": {
     "file": "assets/error-CytkyPqz.svg",
@@ -79,28 +135,64 @@
     "file": "assets/icon_forward_hover-2U9QBbVJ.svg",
     "src": "public/img/icon_forward_hover.svg"
   },
-  "public/img/material/avatar.svg": {
-    "file": "assets/avatar-BlluW4Xf.svg",
-    "src": "public/img/material/avatar.svg"
+  "public/img/logo.svg": {
+    "file": "assets/logo-CtnSC3jH.svg",
+    "src": "public/img/logo.svg"
+  },
+  "public/img/logo_footer.svg": {
+    "file": "assets/logo_footer-D2eazavL.svg",
+    "src": "public/img/logo_footer.svg"
+  },
+  "public/img/logo_tablet.svg": {
+    "file": "assets/logo_tablet-DNkyDqw2.svg",
+    "src": "public/img/logo_tablet.svg"
   },
   "public/img/promo_app.png": {
     "file": "assets/promo_app-BEmvB9yG.png",
     "src": "public/img/promo_app.png"
+  },
+  "public/img/telegram_hover.svg": {
+    "file": "assets/telegram_hover-0VYaXYU-.svg",
+    "src": "public/img/telegram_hover.svg"
+  },
+  "public/img/telegramm.svg": {
+    "file": "assets/telegramm-CavvMF7P.svg",
+    "src": "public/img/telegramm.svg"
+  },
+  "public/img/vk.svg": {
+    "file": "assets/vk-Db_Bd9nn.svg",
+    "src": "public/img/vk.svg"
+  },
+  "public/img/vk_hover.svg": {
+    "file": "assets/vk_hover-BGlAD9Sa.svg",
+    "src": "public/img/vk_hover.svg"
   },
   "public/img/x-circle.svg": {
     "file": "assets/x-circle-Ed3L9DAX.svg",
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DG_E15pQ.js",
+    "file": "assets/app-DcMCpNdI.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-BfQhwKmT.css"
+      "assets/app-Dl2F30VT.css"
     ],
     "assets": [
-      "assets/avatar-BlluW4Xf.svg",
+      "assets/logo_tablet-DNkyDqw2.svg",
+      "assets/logo-CtnSC3jH.svg",
+      "assets/logo_footer-D2eazavL.svg",
+      "assets/YouTube-jEeSqAO0.svg",
+      "assets/YouTube_hover-DG0YrrsX.svg",
+      "assets/telegramm-CavvMF7P.svg",
+      "assets/telegram_hover-0VYaXYU-.svg",
+      "assets/vk-Db_Bd9nn.svg",
+      "assets/vk_hover-BGlAD9Sa.svg",
+      "assets/Facebook-CtkrMZtu.svg",
+      "assets/Facebook_hover-iQxZtImV.svg",
+      "assets/Instagram-CMG1ip7O.svg",
+      "assets/Instagram_hover-BFm8g3bp.svg",
       "assets/banner_game-BgLoeRH2.png",
       "assets/promo_app-BEmvB9yG.png",
       "assets/game_bg_tab-khekYaeT.png",
@@ -122,7 +214,15 @@
       "assets/icon_forward_hover-2U9QBbVJ.svg",
       "assets/icon_back_hover-TGRxhrqL.svg",
       "assets/error-CytkyPqz.svg",
-      "assets/x-circle-Ed3L9DAX.svg"
+      "assets/x-circle-Ed3L9DAX.svg",
+      "assets/bacrground1_tablet-B_FA2gQe.webp",
+      "assets/background1_hover_tablet-DuUUaHWu.webp",
+      "assets/background2_tablet-BM30GNBK.webp",
+      "assets/background2_hover_tablet-fuGFy7LT.webp",
+      "assets/bacrground3_tablet--jJILgPC.webp",
+      "assets/background3_hover_tablet-oAXTuwRw.webp",
+      "assets/blonde_tablet-MRRwHJdN.png",
+      "assets/download-DBZM4f-z.svg"
     ]
   },
   "resources/sass/app.scss": {

@@ -3,16 +3,16 @@
         <div class="flex header__container container">
             <router-link :to="{ name: 'home' }" class="logo flex">
                 <picture>
-                    <source srcset="img/logo_tablet.svg" media="(max-width: 1024px)">
-                    <img class="logo__img" src="img/logo.svg" alt="Logo">
+                    <source srcset="../../../public/img/logo_tablet.svg" media="(max-width: 1024px)">
+                    <img class="logo__img" src="../../../public/img/logo.svg" alt="Logo">
                 </picture>
             </router-link>
 
             <div class="menu">
                 <router-link :to="{ name: 'home' }" class="logo_burger logo flex">
                     <picture>
-                        <source srcset="img/logo_tablet.svg" media="(max-width: 1024px)">
-                        <img class="logo__img" src="img/logo.svg" alt="Logo">
+                        <source srcset="../../../public/img/logo_tablet.svg" media="(max-width: 1024px)">
+                        <img class="logo__img" src="../../../public/img/logo.svg" alt="Logo">
                     </picture>
                 </router-link>
 

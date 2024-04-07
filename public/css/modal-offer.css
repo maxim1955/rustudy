@@ -13,7 +13,7 @@
     border-bottom: 1px solid #99A9B9;
 }
 
-.modal.offer {
+.modal__offer.offer {
     overflow: auto;
     background-color: var(--cyan);
 }
@@ -113,7 +113,7 @@ z-index: 1;
     background-image: url(../img/download.svg);
     background-position: top center;
     background-repeat: no-repeat;
-    
+
 }
 
 .file__size {
@@ -169,7 +169,7 @@ font-weight: 700;
 .dropzone__error-mark {
     padding: 2px;
     border-radius: 50%;
-    background-color: white;   
+    background-color: white;
 }
 
 .dropzone__item-control {
@@ -186,7 +186,7 @@ font-weight: 700;
         border-radius: 0;
     }
 
-    .modal.offer {
+    .modal__offer.offer {
         padding: 0;
     }
 
@@ -211,7 +211,7 @@ font-weight: 700;
         font-size: 14px;
     }
 
-    .modal.offer {
+    .modal__offer.offer {
         background: #E7F0FF;
     }
 
@@ -224,7 +224,7 @@ font-weight: 700;
     .file p {
         display: none;
     }
-    
+
     .file {
         gap: 8px;
         align-items: start;
@@ -253,7 +253,7 @@ font-weight: 700;
         top: 20px;
         right: 20px;
     }
-    
+
     .form__information {
         display: flex;
         flex-direction: column;

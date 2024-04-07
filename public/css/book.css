@@ -1,5 +1,5 @@
 *,
-html * /* override x.xhtml.ru style */ 
+html * /* override x.xhtml.ru style */
 {
   scrollbar-width: thin;
   scrollbar-color: var(--violet) rgba(87, 36, 167, 0.1);
@@ -924,7 +924,7 @@ audio::-moz-media-controls-panel {
     background-color: var(--cyan);
 }
 
-.modal {
+.modal__offer {
     position: fixed;
     padding: 40px;
     top: 0;
@@ -1256,7 +1256,7 @@ audio::-moz-media-controls-panel {
         background-position: bottom center;
     }
 
-   
+
 
     .about__right {
         padding: 40px;
@@ -1309,7 +1309,7 @@ audio::-moz-media-controls-panel {
 }
 
 @media (max-width: 992px) {
-    
+
 
     .cards__num {
         display: flex;
@@ -1438,7 +1438,7 @@ audio::-moz-media-controls-panel {
         font-size: 16px;
     }
 
-    .modal {
+    .modal__offer {
         padding: 20px;
     }
 
@@ -1447,7 +1447,7 @@ audio::-moz-media-controls-panel {
         height: 25px;
     }
 
-    .modal {
+    .modal__offer {
         background: linear-gradient(288deg, rgba(83, 213, 225, 0.20) 0%, rgba(5, 107, 240, 0.20) 100%), #FFF;
     }
 
@@ -1460,7 +1460,7 @@ audio::-moz-media-controls-panel {
         transform: translateY(8%);
     }
 
-    #review.modal {
+    #review.modal__offer {
         overflow: scroll;
     }
 
@@ -1534,6 +1534,6 @@ audio::-moz-media-controls-panel {
     .banner__text {
         font-size: 28px;
     }
-        
-    
+
+
 }

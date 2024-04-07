@@ -1,5 +1,5 @@
 <template>
-    <div class="modal modal-submit">
+    <div class="modal__offer modal-submit">
         <div class="modal__overlay">
             <div class="modal__window">
                 <button class="btn-reset btn-close"></button>

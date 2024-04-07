@@ -9,8 +9,9 @@ import error403 from "@/views/error403.vue";
 import error402 from "@/views/error402.vue";
 import error401 from "@/views/error401.vue";
 import service from '@/views/v-service.vue';
-import material from '@/components/v-material.vue'
-import game from '@/components/v-game.vue'
+import material from '@/components/v-material.vue';
+import game from '@/components/v-game.vue';
+import kalinka from '@/components/Kalinka.vue';
 
 
 const routes = [
@@ -27,9 +28,10 @@ const routes = [
         path: "/service",
         component: service,
         children: [
+            { path: '', name: '', component: material },
             { path: 'material', name: 'material', component: material },
             { path: 'game', name: 'game', component: game },
-            { path: 'kalinka', name: 'kalinka' },
+            { path: 'kalinka', name: 'kalinka' ,component: kalinka },
         ],
     },
 

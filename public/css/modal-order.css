@@ -35,7 +35,7 @@ input:focus {
     box-shadow: none;
 }
 
-.modal.order {
+.modal__offer.order {
     overflow: auto;
     background-color: var(--cyan);
 }
@@ -859,7 +859,7 @@ input:focus {
         border-radius: 0;
     }
 
-    .modal.order {
+    .modal__offer.order {
         padding: 0;
     }
 

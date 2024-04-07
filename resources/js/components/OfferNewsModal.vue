@@ -1,6 +1,6 @@
 <template>
-    <div class="modal offer">
-        <div class="modal__overlay">
+    <div class="modal__offer offer">
+        <div class="modal__overlay low">
             <div class="modal__window">
                 <button @click="$emit('close-modal')" class="btn-reset btn-close"></button>
                 <ul class="offer__tabs tabs list-reset">
@@ -14,41 +14,39 @@
                         <div>
                             <span class="form__text">Ф.И.О *</span>
                             <label for="" class="form__label">
-                                
                                 <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                
                                 <Field :class="{'error-input': errorFio}" class="form__input" name="fio" v-model="fio" type="text" placeholder="Введите Ф.И.О" :rules="validateFio" @input="inputChange" @keydown="deleteNumber" @validateOnBlur="onBlur()"/>
                                 <span v-show="errorFio" class="error-icon"></span>
                                 <ErrorMessage class="form__error" name="fio" />
                             </label>
                         </div>
-                            
+
                         <div>
                             <span class="form__text">Должность</span>
-                            <label for="" class="form__label">                                
+                            <label for="" class="form__label">
                                 <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                <input class="form__input" name="job" v-model="job" type="text" placeholder="Введите должность" @input="inputChange" @keydown="deleteNumber"/>                                
+                                <input class="form__input" name="job" v-model="job" type="text" placeholder="Введите должность" @input="inputChange" @keydown="deleteNumber"/>
                             </label>
                         </div>
-                           
+
                         <div>
                             <span class="form__text">Название новости *</span>
                             <label for="" class="form__label">
-                                
+
                                 <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                
+
                                 <Field :class="{'error-input': errorTitle}" class="form__input" name="title" v-model="title" type="text" placeholder="Введите название" :rules="validateTitle" @input="inputChange" @keydown="deleteNumber"/>
                                 <span v-show="errorTitle" class="error-icon"></span>
                                 <ErrorMessage class="form__error" name="title" />
                             </label>
-                        </div>    
-                            
+                        </div>
+
                         <div>
                             <span class="form__text">Вставьте ссылку на Вашу видеоновость</span>
                             <label for="" class="form__label">
-                                
+
                                 <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                <input class="form__input" name="link" v-model="link" type="text" placeholder="Ссылка на ваш видеоматериал" @input="inputChange"/>                                
+                                <input class="form__input" name="link" v-model="link" type="text" placeholder="Ссылка на ваш видеоматериал" @input="inputChange"/>
                             </label>
                         </div>
 
@@ -59,7 +57,7 @@
                         <div>
                             <span class="form__text">Загрузите файл</span>
                             <div class="form__label">
-                            <DropZone 
+                            <DropZone
                             :maxFiles="1"
                             url="http://localhost:5000/item"
                             :uploadOnDrop="true"
@@ -71,23 +69,23 @@
                         <span class="form__error" v-show="errorFile">Размер файла превышает 125MB</span>
                         </div>
                         </div>
-                        
-                            
+
+
                         </div>
-                        
+
                         <div class="information__right">
                             <div class="h-100">
                                 <span class="form__text">Описание новости *</span>
                                 <label for="" class="form__label h-100">
-                                
+
                                 <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                
+
                                 <Field as="textarea" :class="{'error-input': errorDescr}" class="form__input h-100" name="descr" v-model="descr" type="field" placeholder="Введите описание" :rules="validateDescr" @input="inputChange"/>
                                 <span v-show="errorDescr" class="error-icon"></span>
                                 <ErrorMessage class="form__error" name="descr" />
                             </label>
                             </div>
-                            
+
                         </div>
 
                         <div class="offer__btn">
@@ -118,7 +116,7 @@ configure({
   validateOnModelUpdate: true,
 });
 
-           
+
     export default {
         components: {Form, Field, ErrorMessage, DropZone},
         data() {
@@ -147,15 +145,15 @@ configure({
                 errorTitle: false,
                 errorDescr: false,
                 errorFile: false,
-       
+
             }
         },
 
         computed: {
             validate() {
-                if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true) 
+                if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true)
                     return true
-                
+
             },
         },
 
@@ -184,7 +182,7 @@ configure({
                     this.descr = '';
                     this.errorDescr = true
                 }
-       
+
             },
 
             changeTab(name) {
@@ -209,11 +207,11 @@ configure({
                         this.errorDescr = false
                     }
 
-                
-                if (e.target.value != '') {
-                    btn.classList.remove('hidden') 
 
-                } else btn.classList.add('hidden') 
+                if (e.target.value != '') {
+                    btn.classList.remove('hidden')
+
+                } else btn.classList.add('hidden')
 
             },
 
@@ -241,7 +239,7 @@ configure({
                 return true;
             },
 
-            
+
 
             deleteNumber(e) {
                 if( e.key.match(/[0-9]/) ) return e.preventDefault();
@@ -273,7 +271,7 @@ configure({
                 setTimeout(() => {
                     console.log(document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable'))
                     const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
-                    text.innerHTML = 
+                    text.innerHTML =
                         `<div class="file">
                             <p class="file__title">Загрузка файлов</p>
                             <p>Чтобы начать загрузку, выберите файлы на компьютере или перетащите их в это окно.</p>
@@ -281,14 +279,14 @@ configure({
                             <button class="btn-reset btn-outline file__btn">Выбрать файлы</button>
                         </div>`
                 }, 5)
-                
+
             },
 
             submitForm() {
-                
+
                 if (this.validate == true) {
                 }
-               
+
                 this.activeTab = 'Проверка'
             }
 
@@ -297,7 +295,7 @@ configure({
 
         mounted() {
             const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
-            text.innerHTML = 
+            text.innerHTML =
                         `<div class="file">
                             <p class="file__title">Загрузка файлов</p>
                             <p>Чтобы начать загрузку, выберите файлы на компьютере или перетащите их в это окно.</p>
@@ -307,3 +305,4 @@ configure({
         }
     }
 </script>
+

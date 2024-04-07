@@ -1,6 +1,7 @@
 <template>
     <div>
         <Header></Header>
+
         <main>
             <div class="container">
                     <router-link to="/" class="back">
@@ -24,7 +25,7 @@
                         <News :filteredNews="filteredNews"></News>
                 </div>
 
-                <OfferNewsModal v-if="showModal" @close-modal="closeModal()"></OfferNewsModal>
+                <offer-news-modal  v-if="showModal" @close-modal="closeModal"/>
             </section>
 
         </main>
@@ -38,11 +39,12 @@ import useNewsStore from '@/stores/NewsStore.js'
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import News from '@/components/News.vue';
-import OfferNewsModal from '@/components/OfferNewsModal.vue';
+import OfferNewsModal from '../components/OfferNewsModal.vue';
 import { useHead } from "unhead";
+import VCreateMaterial from "@/components/v-create-material.vue";
 
     export default {
-        components: {Header, Footer, News, OfferNewsModal},
+        components: {VCreateMaterial, Header, Footer, News, OfferNewsModal},
         data() {
             return {
                 tabs: [
@@ -84,10 +86,10 @@ import { useHead } from "unhead";
 
             filteredNews() {
                 const NewsStore = useNewsStore()
-              if (NewsStore.activeTab == 'Все') return NewsStore.allNews
-              if (NewsStore.activeTab == 'Анонсы') return NewsStore.allNews.filter(item => item.tag == 'Анонсы')
-              if (NewsStore.activeTab == 'Новости') return NewsStore.allNews.filter(item => item.tag == 'Новости')
-              if (NewsStore.activeTab == 'Мероприятия') return NewsStore.allNews.filter(item => item.tag == 'Мероприятия')
+              if (NewsStore.activeTab === 'Все') return NewsStore.allNews
+              if (NewsStore.activeTab === 'Анонсы') return NewsStore.allNews.filter(item => item.tag === 'Анонсы')
+              if (NewsStore.activeTab === 'Новости') return NewsStore.allNews.filter(item => item.tag === 'Новости')
+              if (NewsStore.activeTab === 'Мероприятия') return NewsStore.allNews.filter(item => item.tag === 'Мероприятия')
             },
 
         },
@@ -100,13 +102,14 @@ import { useHead } from "unhead";
             },
 
             openModal() {
+                console.log('asdasd')
                 this.showModal = true;
-                document.body.style.overflow = 'hidden';
+
             },
 
             closeModal() {
                 this.showModal = false;
-                document.body.style.overflow = 'auto'
+
             }
 
         },
@@ -134,3 +137,5 @@ import { useHead } from "unhead";
 
     }
 </script>
+
+

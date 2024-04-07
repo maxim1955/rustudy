@@ -5,13 +5,13 @@
         <div class="ya-share2" :data-title="item.title" :data-description="item.desc" data-copy="last" data-curtain data-size="l" data-shape="round" data-services="vkontakte,odnoklassniki,telegram,whatsapp,moimir"></div>
         <form class="share__form">
           <input readonly class="share__input" type="text" v-model="path">
-          <button :disabled="btnText == 'Скопировано'" class="share__btn btn-background" @click.prevent="copy()">{{ this.btnText }}</button>
+          <button :disabled="btnText === 'Скопировано'" class="share__btn btn-background" @click.prevent="copy()">{{ this.btnText }}</button>
         </form>
     </div>
 </template>
 
 
-<script type="module">
+<script>
 
 
   export default {
@@ -24,7 +24,7 @@
     },
     methods: {
       copy() {
-        if (this.btnText == 'Скопировать') this.btnText = 'Скопировано'
+        if (this.btnText === 'Скопировать') this.btnText = 'Скопировано'
         else this.btnText = 'Скопировать'
         setTimeout(() => {
           this.btnText = 'Скопировать'
@@ -39,4 +39,3 @@
     },
   };
 </script>
- 

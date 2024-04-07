@@ -2,7 +2,7 @@
     z-index: 2;
 }
 
-.modal-news.modal {
+.modal-news.modal__offer {
     overflow: auto;
     background-color: #F2F7FF;
 }
@@ -201,7 +201,7 @@
 
 @media (max-width: 1400px) {
 
-    .modal-news.modal,
+    .modal-news.modal__offer,
     .new__block {
         background-color: #E7F0FF;
     }
@@ -351,12 +351,12 @@
 }
 
 @media (max-width: 768px) {
-    .modal.modal-news .btn-close {
+    .modal__offer.modal-news .btn-close {
         top: 20px;
         right: 20px;
-    } 
-    
-    .modal.modal-news {
+    }
+
+    .modal__offer.modal-news {
         background: #E7F0FF;
     }
 
@@ -430,7 +430,7 @@
     }
 
 
-    .modal.modal-news {
+    .modal__offer.modal-news {
         padding: 0;
     }
 
