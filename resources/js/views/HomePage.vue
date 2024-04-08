@@ -2,11 +2,9 @@
     <div>
         <Header></Header>
         <main>
-
             <div class="container title">
                 <h1 class="title__text">Информационный портал для преподавателей РКИ</h1>
             </div>
-
             <section class="container promo flex">
                 <div class="promo-left flex">
                     <div class="promo-top">
@@ -20,17 +18,14 @@
                                 <img class="card-img_desktop" src="img/books_desktop.png"
                                      alt='Учебники "Привет, Россия!"'>
                             </picture>
-
                         </div>
                         <router-link :to="{ name: 'book' }" class="promo__btn btn btn-reset">Подробнее</router-link>
                     </div>
-
                     <a target="_blank" href="https://kurs.rus.study/" class="promo-bottom">
                         <div class="bottom_content card-content">
                             <h2 class="card-title">Курсы для педагогов</h2>
                             <p class="card-text card-width">Повышение квалификации РКИ</p>
                         </div>
-
                         <svg class="bottom__arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667"
@@ -279,6 +274,9 @@ export default {
     },
     mounted() {
         let getPartnersDb = async () => {
+/*
+            axios.get('news')
+*/
             try {
                 let partners = await getPartners();
                 console.log(partners) // Надо проверить что приходит и опдставить правильные данные
