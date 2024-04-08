@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Создаем экземпляр Axios с нужной конфигурацией
 const api = axios.create({
-    baseURL: 'http://localhost:8000/', // RL
+    baseURL: 'http://rustudy.niktinph.beget.tech/', // RL
     headers: {
         'Content-Type': 'application/json',
     },
