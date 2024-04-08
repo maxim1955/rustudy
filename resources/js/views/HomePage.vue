@@ -219,6 +219,7 @@ export default {
                     image: 'img/диктант.png',
                     link: 'http://totaldict.ru/',
                 },*/
+
             ]
         }
     },
