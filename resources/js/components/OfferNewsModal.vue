@@ -296,7 +296,7 @@ configure({
         mounted() {
             const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
             text.innerHTML =
-                        `<div class="file">
+                `<div class="file">
                             <p class="file__title">Загрузка файлов</p>
                             <p>Чтобы начать загрузку, выберите файлы на компьютере или перетащите их в это окно.</p>
                             <p class="file__size">Максимальный размер файлов 125 MB</p>
