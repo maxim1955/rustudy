@@ -174,7 +174,7 @@ export default {
             ],
 
             partners: [
-                {
+               /* {
                     id: 1,
                     image: 'img/обрсоюз.png',
                     link: 'http://obr.so/',
@@ -218,7 +218,7 @@ export default {
                     id: 9,
                     image: 'img/диктант.png',
                     link: 'http://totaldict.ru/',
-                },
+                },*/
             ]
         }
     },
