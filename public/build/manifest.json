@@ -220,12 +220,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-Ce-AJk-i.js",
+    "file": "assets/app-lGlDcAIY.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-BuEIxQF-.css"
+      "assets/app-DnHHKFWF.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",
