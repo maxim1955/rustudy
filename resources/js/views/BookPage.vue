@@ -862,6 +862,7 @@ export default {
 
     mounted() {
         useHead({
+            title: 'Бумажные и онлайн-учебники РКИ по методике Нахабиной М.М.',
             meta: [
                 {
                     name: 'title',

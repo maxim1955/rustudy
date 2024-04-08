@@ -33,6 +33,7 @@
 </template>
 <script setup>
 import {onMounted, ref} from "vue";
+import { useHead } from "unhead";
 
 let gameStart = ref(false)
 let initGame = () => {
@@ -110,6 +111,25 @@ let startGame = () => {
 
 }
 onMounted(() => {
+    useHead({
+      title: 'Игра онлайн по русскому как иностранному (game rki)',
+      meta: [
+        {
+          name: 'title',
+          content: 'Игра онлайн по русскому как иностранному (game rki)'
+        },
+        {
+          name: 'keywords',
+          content: 'игра РКИ онлайн, rki, game rki, играй и изучай русский язык, русский как иностранный'
+        },
+        {
+          name: 'description',
+          content: 'Онлайн-игра для изучения русского языка как иностранного. | Online game for learning Russian as a foreign language. | Rus.Study'
+        }
+      ],
+
+    })
+
     if (gameStart.value) {
         initGame()
     }

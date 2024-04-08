@@ -24,7 +24,7 @@
             <router-link :to="{ name: 'book' }" class="promo__btn btn btn-reset">Подробнее</router-link>
           </div>
 
-          <div onclick="window.open('#','_newtab');" class="promo-bottom">
+          <a target="_blank" href="https://kurs.rus.study/" class="promo-bottom">
             <div class="bottom_content card-content">
               <h2 class="card-title">Курсы для педагогов</h2>
               <p class="card-text card-width">Повышение квалификации РКИ</p>
@@ -35,7 +35,7 @@
               <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667" stroke="white"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-          </div>
+        </a>
 
         </div>
 

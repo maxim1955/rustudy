@@ -29,9 +29,9 @@
                             </router-link>
                         </li>
                         <li class="nav__item">
-                            <router-link to="/error403" class="nav__link">
+                            <a target="_blank" href="https://kurs.rus.study/" class="nav__link">
                                 Курсы для педагогов
-                            </router-link>
+                            </a>
                         </li>
                         <li class="nav__item">
                             <router-link to="/news" class="nav__link">
