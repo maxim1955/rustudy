@@ -116,6 +116,7 @@ import VCreateMaterial from "@/components/v-create-material.vue";
 
         mounted() {
             useHead({
+                title: 'Актуальные события и новости в РКИ | Rus.Study',
                 meta: [
                     {
                     name: 'title',

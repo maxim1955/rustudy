@@ -32,3 +32,33 @@
 <style scoped>
 
 </style>
+
+<script setup>
+    import {onMounted, ref} from "vue";
+    import { useHead } from "unhead";
+
+    onMounted(() => {
+    useHead({
+      title: 'Выучить русский быстро и легко с приложением Kalinka',
+      meta: [
+        {
+          name: 'title',
+          content: 'Выучить русский быстро и легко с приложением Kalinka'
+        },
+        {
+          name: 'keywords',
+          content: 'приложение РКИ, rki, application rki, навыки и развитие речевой деятельности, владение русским языком, обучение русскому как иностранному'
+        },
+        {
+          name: 'description',
+          content: 'Russian for foreigners in the Kalinka app | Приложение поможет быстро и легко выучить русский язык.'
+        }
+      ],
+
+    })
+
+    if (gameStart.value) {
+        initGame()
+    }
+})
+</script>

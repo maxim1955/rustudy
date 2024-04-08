@@ -202,6 +202,7 @@
 
 <script setup>
 import {computed, onMounted, ref} from "vue";
+import { useHead } from "unhead";
 
 const props = defineProps({})
 const emit = defineEmits(['openModal'])
@@ -365,6 +366,25 @@ const materialList = [
 const listShow = ref(false)
 const isWidthOK = ref(false)
 onMounted(() => {
+    useHead({
+      title: 'Бесплатные материалы | Общий каталог учебных электронных ресурсов по РКИ',
+      meta: [
+        {
+          name: 'title',
+          content: 'Бесплатные материалы | Общий каталог учебных электронных ресурсов по РКИ'
+        },
+        {
+          name: 'keywords',
+          content: 'бесплатные материалы, каталог учебных ресурсов РКИ, навыки речевой деятельности, уровень владения русским языком, для преподавателей РКИ, учебно-методические материалы РКИ'
+        },
+        {
+          name: 'description',
+          content: 'Материалы предназначены для преподавателей русского языка как иностранного в помощь развития навыков речевой деятельности у обучающихся с разным уровнем владения русским языком.'
+        }
+      ],
+
+    })
+
     const mql = window.matchMedia('(max-width: 1100px)');
     const onChange = () => isWidthOK.value = mql.matches;
     onChange();
