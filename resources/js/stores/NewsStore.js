@@ -1,17 +1,56 @@
-import { defineStore } from 'pinia'
-import allNews from '@/data/news.js'
- const useNewsStore = defineStore('NewsStore', {
+import {defineStore} from 'pinia'
+import axios from "axios";
+
+const useNewsStore = defineStore('NewsStore', {
     state: () => {
         return {
             activeTab: 'Все',
             currentActiveSlide: 0,
-            allNews,
-            previews: allNews.filter(item => item.tag == 'Анонсы'),
-            news: allNews.filter(item => item.tag == 'Новости'),
-            events: allNews.filter(item => item.tag == 'Мероприятия'),
+            allNews: [],
+            previews: [],
+            news: [],
+            events: [],
+            totalPage: Number,
         }
     },
+    actions: {
+        async fetchNews() {
+            try {
+                const response = await axios.get(`/api/publications`);
+                this.totalPage = response.data.data.meta.pagination.total_pages
+                const data = response.data.data.data;
+                this.allNews = data;
 
+                console.log(response.data.data)
+                /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
+                      this.news = allNews.filter(item => item.tag === 'Новости');
+                      this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
+            } catch (error) {
+                console.error('Failed to fetch news:', error);
+            }
+        },
+        async ShowMore(page) {
+            try {
+                const response = await axios.get(`/api/publications?page=${page}`);
+                const data = response.data.data.data;
+               data.forEach((elem)=>{
+                    this.allNews.push(elem)
+                })
+
+                console.log(page)
+                console.log(this.allNews)
+
+                /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
+                      this.news = allNews.filter(item => item.tag === 'Новости');
+                      this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
+            } catch (error) {
+                console.error('Failed to fetch news:', error);
+            }
+        },
+         sliceItem(page) {
+           this.allNews.slice(0,-10)
+        },
+    },
 })
 
 export default useNewsStore

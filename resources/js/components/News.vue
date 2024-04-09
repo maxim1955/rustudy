@@ -3,9 +3,9 @@
         <div class="news__block all">
             <div class="all__block" v-for="(item, index) in toBeShow" :key="item.id"
                  @click.prevent="openModalNews(index, item.id)">
-                <img :src="item.image" alt="">
-                <p :class="{'all__title--preview': item.tag == 'Анонсы', 'all__title--event': item.tag == 'Мероприятия', 'all__title--new': item.tag == 'Новости'}"
-                   class="all__title">{{ item.tag }}</p>
+                <img src="../../../public/img/new-2.webp" alt="logo">
+                <p :class="{'all__title--preview': item.tag === 'Анонсы', 'all__title--event': item.tag === 'Мероприятия', 'all__title--new': item.tag === 'Новости'}"
+                   class="all__title all__title--new">Новости</p>
                 <button class="all__btn btn-reset" v-if="item.tag == 'Мероприятия'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                         <path
@@ -24,7 +24,7 @@
                     </svg>
                 </button>
                 <div class="all__text">
-                    <p class="all__descr">{{ item.desc }}</p>
+                    <p class="all__descr">{{ item.title }}</p>
                 </div>
             </div>
         </div>
@@ -67,6 +67,7 @@
 <script>
 import NewsModal from './NewsModal.vue';
 import useNewsStore from '../stores/NewsStore.js'
+import NewsStore from "../stores/NewsStore.js";
 
 export default {
     props: ['filteredNews'],
@@ -81,11 +82,11 @@ export default {
 
     computed: {
         toBeShow() {
-            return this.filteredNews.slice(0, this.currentPage * 5)
+            return this.filteredNews.slice(0, this.currentPage * 10)
         },
 
         totalPage() {
-            return Math.ceil(this.filteredNews.length / 5)
+            return useNewsStore().totalPage
         },
 
         currentActiveSlide() {
@@ -106,16 +107,17 @@ export default {
             document.body.style.overflow = 'auto';
         },
 
-        showMore() {
+        async showMore() {
             if (this.currentPage < this.totalPage) {
                 this.hiddenBtn = true;
-                this.currentPage++
+                let res = await NewsStore().ShowMore(++this.currentPage)
+                console.log(this.currentPage)
             }
         },
 
         hide() {
-            this.hiddenBtn = false
-            this.currentPage = this.currentPage - 1 || 1
+            this.currentPage = this.currentPage -1 || 1
+            NewsStore().sliceItem()
         }
     }
 }

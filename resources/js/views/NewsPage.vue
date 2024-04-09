@@ -42,6 +42,7 @@ import News from '@/components/News.vue';
 import OfferNewsModal from '../components/OfferNewsModal.vue';
 import { useHead } from "unhead";
 import VCreateMaterial from "@/components/v-create-material.vue";
+import newsStore from "@/stores/NewsStore.js";
 
     export default {
         components: {VCreateMaterial, Header, Footer, News, OfferNewsModal},
@@ -88,7 +89,7 @@ import VCreateMaterial from "@/components/v-create-material.vue";
                 const NewsStore = useNewsStore()
               if (NewsStore.activeTab === 'Все') return NewsStore.allNews
               if (NewsStore.activeTab === 'Анонсы') return NewsStore.allNews.filter(item => item.tag === 'Анонсы')
-              if (NewsStore.activeTab === 'Новости') return NewsStore.allNews.filter(item => item.tag === 'Новости')
+              if (NewsStore.activeTab === 'Новости') return NewsStore.allNews
               if (NewsStore.activeTab === 'Мероприятия') return NewsStore.allNews.filter(item => item.tag === 'Мероприятия')
             },
 
@@ -115,6 +116,8 @@ import VCreateMaterial from "@/components/v-create-material.vue";
         },
 
         mounted() {
+            const NewsStore = useNewsStore()
+            newsStore().fetchNews()
             useHead({
                 title: 'Актуальные события и новости в РКИ | Rus.Study',
                 meta: [
