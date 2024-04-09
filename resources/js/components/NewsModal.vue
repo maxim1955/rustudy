@@ -47,7 +47,7 @@
                         </div>
                         <div class="new__text">
                             <p class="new__title">{{ item.title }}</p>
-                            <p class="new__desc">{{ item.desc }}</p>
+                            <p class="new__desc">{{ item.brief }}</p>
                         </div>
 
                     </div>
