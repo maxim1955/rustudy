@@ -16,10 +16,12 @@ const useNewsStore = defineStore('NewsStore', {
     actions: {
         async fetchNews() {
             try {
-                const response = await axios.get(`/api/publications?page=1`);
+                const response = await axios.get(`/api/publications`);
                 this.totalPage = response.data.data.meta.pagination.total_pages
                 const data = response.data.data.data;
                 this.allNews = data;
+
+                console.log(response.data.data)
                 /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
                       this.news = allNews.filter(item => item.tag === 'Новости');
                       this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
@@ -34,6 +36,8 @@ const useNewsStore = defineStore('NewsStore', {
                data.forEach((elem)=>{
                     this.allNews.push(elem)
                 })
+
+                console.log(page)
                 console.log(this.allNews)
 
                 /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');

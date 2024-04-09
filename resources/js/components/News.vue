@@ -110,8 +110,8 @@ export default {
         async showMore() {
             if (this.currentPage < this.totalPage) {
                 this.hiddenBtn = true;
-                let res = await NewsStore().ShowMore(this.currentPage++)
-                console.log(res)
+                let res = await NewsStore().ShowMore(++this.currentPage)
+                console.log(this.currentPage)
             }
         },
 
