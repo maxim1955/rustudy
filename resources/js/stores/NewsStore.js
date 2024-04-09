@@ -40,7 +40,7 @@ const useNewsStore = defineStore('NewsStore', {
                       this.news = allNews.filter(item => item.tag === 'Новости');
                       this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
             } catch (error) {
-                console.error('Failed to fetch news:', error);
+                console.error('Failed to fetch news:', error);c
             }
         },
          sliceItem(page) {
