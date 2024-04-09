@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PartnerResource;
 use App\Models\Partner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,10 @@ class PartnerController extends RestController
     {
         $partners = Partner::all();
 
-        return $this->sendResponse($partners);
+
+        
+        //return $this->sendResponse($partners);
+        return $this->sendResponse(PartnerResource::collection($partners));
     }
 
     public function create(Request $request)
