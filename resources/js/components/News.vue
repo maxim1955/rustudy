@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="news__block all">
-            <div class="all__block" v-for="(item, index) in toBeShow" :key="item.id"
+            <div class="all__block" v-for="(item, index) in toBeShow" :key="item.id" :id="item.id"
                  @click.prevent="openModalNews(index, item.id)">
                 <img src="../../../public/img/new-2.webp" alt="logo">
                 <p :class="{'all__title--preview': item.tag === 'Анонсы', 'all__title--event': item.tag === 'Мероприятия', 'all__title--new': item.tag === 'Новости'}"
@@ -99,15 +99,17 @@ export default {
     methods: {
         openModalNews(index, id) {
             const NewsStore = useNewsStore();
-            // NewsStore.getNew(id);
             NewsStore.currentActiveSlide = index
+            // NewsStore.getNew();
+
             this.$router.push({name: 'newItem', params: {id: id}})
         },
 
-        closeModalNews() {
-            this.showModal = false;
-            document.body.style.overflow = 'auto';
-        },
+        // closeModalNews() {
+        //     this.showModal = false;
+        //     newsStore().new = newsStore().new.splice(0, newsStore().new.length)
+        //     document.body.style.overflow = 'auto';
+        // },
 
         async showMore() {
             if (this.currentPage < this.totalPage) {
@@ -122,5 +124,6 @@ export default {
             newsStore().sliceItem()
         }
     },
+
 }
 </script>
