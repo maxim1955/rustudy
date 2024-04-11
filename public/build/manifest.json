@@ -224,12 +224,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-wt5XzmLe.js",
+    "file": "assets/app-DwRjVLUX.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-DnHHKFWF.css"
+      "assets/app-B2Nl7UJ5.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",
