@@ -113,6 +113,7 @@ import newsStore from "@/stores/NewsStore.js";
         },
 
         mounted() {
+            // newsStore().reset();
             newsStore().fetchNews();
 
             useHead({

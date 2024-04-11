@@ -4,7 +4,7 @@
         <div class="modal__overlay">
             <div class="modal__window">
                 <button class="btn-reset btn-close" @click="$emit('close-order')"></button>
-          <Form @InvalidSubmit="onInvalidSubmit" @submit="onSubmit()" class="order__form">
+          <Form @InvalidSubmit="onInvalidSubmit" @submit="onSubmit()" class="order__form" method="post">
                         <div class="flex currency-block">
                         <label class="order__label currency">
                             <input type="radio" class="visually-hidden" name="currency" value="rub" @change="selectedCurrency" checked>
