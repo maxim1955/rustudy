@@ -41,7 +41,7 @@ const useNewsStore = defineStore('NewsStore', {
             try {
                 const response = await axios.get(`/api/publications?page=${page}`);
                 const data = response.data.data.data;
-               data.forEach((elem)=>{
+                data.forEach((elem)=>{
                     this.allNews.push(elem);
 
                     if (this.ids.includes(elem.id)) {
