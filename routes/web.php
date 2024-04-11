@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\mainController;
 use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +16,6 @@ Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 Route::get('/{any}',  [mainController::class, 'index'])->where('any', '.*');
-
 
 //Auth::routes();
 

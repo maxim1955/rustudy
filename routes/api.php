@@ -5,7 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\api\EventController;
+use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PublicationController;
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Models\Role;
@@ -45,3 +46,5 @@ Route::get('/events/{event}', [EventController::class, 'show']);
 
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
+
+Route::post('/payment',  [PaymentController::class, 'submit']);
