@@ -67,7 +67,7 @@
 <script>
 import NewsModal from './NewsModal.vue';
 import useNewsStore from '../stores/NewsStore.js'
-import NewsStore from "../stores/NewsStore.js";
+import newsStore from "../stores/NewsStore.js";
 
 export default {
     props: ['filteredNews'],
@@ -92,12 +92,14 @@ export default {
         currentActiveSlide() {
             const NewsStore = useNewsStore()
             return NewsStore.currentActiveSlide
-        }
+        },
+
     },
 
     methods: {
         openModalNews(index, id) {
             const NewsStore = useNewsStore();
+            // NewsStore.getNew(id);
             NewsStore.currentActiveSlide = index
             this.$router.push({name: 'newItem', params: {id: id}})
         },
@@ -110,15 +112,15 @@ export default {
         async showMore() {
             if (this.currentPage < this.totalPage) {
                 this.hiddenBtn = true;
-                let res = await NewsStore().ShowMore(++this.currentPage)
+                let res = await newsStore().ShowMore(++this.currentPage)
                 console.log(this.currentPage)
             }
         },
 
         hide() {
             this.currentPage = this.currentPage -1 || 1
-            NewsStore().sliceItem()
+            newsStore().sliceItem()
         }
-    }
+    },
 }
 </script>

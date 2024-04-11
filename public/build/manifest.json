@@ -224,7 +224,11 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-PPVCzKTl.js",
+=======
+    "file": "assets/app-wt5XzmLe.js",
+>>>>>>> 4dc915241025ad6c35266f8529aed3074e7b8fbf
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

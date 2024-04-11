@@ -8,9 +8,11 @@ const useNewsStore = defineStore('NewsStore', {
             currentActiveSlide: 0,
             allNews: [],
             previews: [],
-            news: [],
+            // news: [],
             events: [],
             totalPage: Number,
+            new: [],
+            ids: []
         }
     },
     actions: {
@@ -21,7 +23,13 @@ const useNewsStore = defineStore('NewsStore', {
                 const data = response.data.data.data;
                 this.allNews = data;
 
-                console.log(response.data.data)
+                data.forEach(el => {
+                    this.ids.push(el.id)
+                })
+
+                // this.ids = response.data.data.data
+
+                console.log(response.data.data.data)
                 /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
                       this.news = allNews.filter(item => item.tag === 'Новости');
                       this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
@@ -34,10 +42,13 @@ const useNewsStore = defineStore('NewsStore', {
                 const response = await axios.get(`/api/publications?page=${page}`);
                 const data = response.data.data.data;
                data.forEach((elem)=>{
-                    this.allNews.push(elem)
-                })
+                    this.allNews.push(elem);
 
-                console.log(page)
+                    if (this.ids.includes(elem.id)) {
+                        this.ids.push(elem.id);
+                    }
+
+                })
                 console.log(this.allNews)
 
                 /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
@@ -50,6 +61,22 @@ const useNewsStore = defineStore('NewsStore', {
          sliceItem(page) {
            this.allNews.slice(0,-10)
         },
+
+        async getNew() {
+            try {
+                this.ids.forEach(async (el) => {
+                    const response = await axios.get(`/api/publications/${el}`);
+                    const data = response.data.data;
+
+                    // console.log(data)
+                    this.new.push(data);
+                })
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
     },
 })
 

@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\api\ActivityController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\api\EventController;
 use App\Http\Controllers\Api\PublicationController;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +31,12 @@ Route::delete('/partners/{partner}', [PartnerController::class, 'destroy'])->mid
 
 Route::get('/publications', [PublicationController::class, 'index']);
 Route::get('/publications/{publication}', [PublicationController::class, 'show']);
+
+Route::get('/activities', [ActivityController::class, 'index']);
+Route::get('/activities/{activity}', [ActivityController::class, 'show']);
+
+Route::get('/events', [EventController::class, 'index']);
+Route::get('/events/{event}', [EventController::class, 'show']);
 
 // Route::resources([
 //     'partners' => PartnerController::class,
