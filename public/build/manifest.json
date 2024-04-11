@@ -224,20 +224,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "file": "assets/app-PPVCzKTl.js",
-=======
-    "file": "assets/app-wt5XzmLe.js",
->>>>>>> 4dc915241025ad6c35266f8529aed3074e7b8fbf
-=======
-    "file": "assets/app-DwRjVLUX.js",
->>>>>>> bff4520d73b0e0bb97decde70b1822c370090ad0
+    "file": "assets/app-C2gvCfzf.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-B2Nl7UJ5.css"
+      "assets/app-CXxbO4v-.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",

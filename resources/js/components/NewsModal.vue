@@ -87,10 +87,10 @@ import newsStore from "@/stores/NewsStore.js";
 
             filteredNews() {
                 const NewsStore = useNewsStore()
-              if (NewsStore.activeTab == 'Все') return NewsStore.new
-              if (NewsStore.activeTab == 'Анонсы') return NewsStore.new.filter(item => item.tag == 'Анонсы')
-              if (NewsStore.activeTab == 'Новости') return NewsStore.new.filter(item => item.tag == 'Новости')
-              if (NewsStore.activeTab == 'Мероприятия') return NewsStore.new.filter(item => item.tag == 'Мероприятия')
+              if (NewsStore.activeTab == 'Все') return this.allNews
+              if (NewsStore.activeTab == 'Анонсы') return this.allNews.filter(item => item.tag == 'Анонсы')
+              if (NewsStore.activeTab == 'Новости') return this.allNews.filter(item => item.tag == 'Новости')
+              if (NewsStore.activeTab == 'Мероприятия') return this.allNews.filter(item => item.tag == 'Мероприятия')
             },
 
             currentActiveSlide() {
@@ -103,10 +103,11 @@ import newsStore from "@/stores/NewsStore.js";
             const prev = ref(null);
             const next = ref(null);
             const onSwiper = (swiper) => {
-
                 const NewsStore = useNewsStore();
-                NewsStore.currentActiveSlide
+
+                // NewsStore.currentActiveSlide
                 swiper.activeIndex = NewsStore.currentActiveSlide
+                console.log(swiper.activeIndex)
             };
 
             return {
@@ -147,9 +148,9 @@ import newsStore from "@/stores/NewsStore.js";
 
         },
 
-        mounted() {
-            const NewsStore = useNewsStore();
-            newsStore().getNew();
-        }
+        // mounted() {
+        //     const NewsStore = useNewsStore();
+        //     newsStore().getNew();
+        // }
     }
 </script>
