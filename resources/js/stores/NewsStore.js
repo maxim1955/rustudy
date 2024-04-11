@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
 import axios from "axios";
 
 const useNewsStore = defineStore('NewsStore', {
@@ -28,24 +28,24 @@ const useNewsStore = defineStore('NewsStore', {
                 this.allNews = data;
 
                 console.log(response.data.data.data)
-                /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
+                /*this.previews = allNews.filter(item => item.tag === 'Анонсы');
                       this.news = allNews.filter(item => item.tag === 'Новости');
-                      this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
+                      this.events = allNews.filter(item => item.tag === 'Мероприятия');
+                      */
 
 
-
-                this.allNews.forEach(async (el) => {
-                    const response = await axios.get(`/api/publications/${el.id}`);
-                    const data = response.data.data;
-
-                    this.new.push(data);
-
-
-                    // console.log(this.new)
-
-                })
-
-
+                // Проходимся по всем новостям
+                for (const el of this.allNews) {
+                    // Проверяем, есть ли уже новость с таким идентификатором в массиве `new`
+                    const index = this.new.findIndex(item => item.id === el.id);
+                    // Если индекс элемента равен -1, значит элемента нет в массиве `new`
+                    if (index === -1) {
+                        console.log('new push');
+                        const response = await axios.get(`/api/publications/${el.id}`);
+                        const data = response.data.data;
+                        this.new.push(data);
+                    }
+                }
             } catch (error) {
                 console.error('Failed to fetch news:', error);
             }
@@ -54,21 +54,27 @@ const useNewsStore = defineStore('NewsStore', {
             try {
                 const response = await axios.get(`/api/publications?page=${page}`);
                 const data = response.data.data.data;
-                data.forEach((elem) => {
+                for (const elem of data) {
                     this.allNews.push(elem);
-
-                })
-                // console.log(this.allNews)
-
-                /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
-                      this.news = allNews.filter(item => item.tag === 'Новости');
-                      this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
+                    // Проверяем, есть ли уже новость с таким идентификатором в массиве `new`
+                    const index = this.new.findIndex(item => item.id === elem.id);
+                    // Если индекс элемента равен -1, значит элемента нет в массиве `new`
+                    if (index === -1) {
+                        console.log('new push');
+                        const result = await axios.get(`/api/publications/${elem.id}`);
+                        const data = result.data.data;
+                        this.new.push(data);
+                    }
+                }
             } catch (error) {
                 console.error('Failed to fetch news:', error);
             }
         },
         sliceItem(page) {
-            this.allNews.slice(0, -10)
+            console.log(this.allNews.length)
+            let test = this.allNews.slice(0, -10)
+            this.allNews = test
+            console.log(test.length)
         },
 
         // async getNew() {
