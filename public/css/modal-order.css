@@ -340,6 +340,13 @@ input:focus {
     font-weight: 700;
 }
 
+.order__price input {
+    max-width: 70px;
+    background-color: transparent;
+    border: none;
+    text-align: right;
+}
+
 .between-block:first-child {
     margin-bottom: 40px;
 }

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="news__btns">
-            <button v-show="totalPage > 1 && currentPage != totalPage" @click.prevent="showMore()"
+            <button v-show="totalPage > 1 && currentPage != totalPage" @click.prevent="showMore(++currentPage, activeTab)"
                     class="btn-reset btn-background">
                 Показать больше
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="19" viewBox="0 0 24 19" fill="none">
@@ -45,7 +45,7 @@
                 </svg>
             </button>
 
-            <button v-show="hiddenBtn" @click="hide()" class="btn-reset btn-outline">
+            <button v-show="hiddenBtn" @click="hide(activeTab)" class="btn-reset btn-outline">
                 Скрыть
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="19" viewBox="0 0 24 19" fill="none">
                     <g clip-path="url(#clip0_5060_12448)">
@@ -89,10 +89,19 @@ export default {
             return useNewsStore().totalPage
         },
 
+        currentPageStore() {
+            return useNewsStore().currentPage;
+        },
+
+
         currentActiveSlide() {
             const NewsStore = useNewsStore()
             return NewsStore.currentActiveSlide
         },
+
+        activeTab() {
+            return useNewsStore().activeTab;
+        }
 
     },
 
@@ -111,19 +120,31 @@ export default {
         //     document.body.style.overflow = 'auto';
         // },
 
-        async showMore() {
-            if (this.currentPage < this.totalPage) {
+        async showMore(currentPage, activeTab) {
+            console.log(currentPage, activeTab)
+            if (currentPage < this.totalPage) {
                 this.hiddenBtn = true;
-                let res = await newsStore().ShowMore(++this.currentPage)
-                console.log(this.currentPage)
+                let res = await newsStore().ShowMore(currentPage, activeTab)
             }
+
         },
 
-        hide() {
+        hide(activeTab) {
             this.currentPage = this.currentPage -1 || 1
-            newsStore().sliceItem()
+            newsStore().sliceItem(activeTab);
+
+            if (this.currentPageStore == 1) {
+                this.hiddenBtn = false;
+            }
         }
     },
+
+    mounted() {
+
+         newsStore().fetchAllNews();
+
+
+    }
 
 }
 </script>
