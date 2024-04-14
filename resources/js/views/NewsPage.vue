@@ -13,7 +13,7 @@
                     <div class="title-block"><h1 class="title news__title">Анонсы и новости</h1></div>
                     <div class="news__top">
                     <ul class="news__tabs tabs list-reset">
-                        <li v-for="tab in tabs" :key="tab.id" class="tabs__item" @click.prevent="changeTab(tab.name)" :class="{active: activeTab == tab.name}">
+                        <li v-for="tab in tabs" :key="tab.id" class="tabs__item" @click.prevent="changeTab(tab.component)" :class="{active: activeTab == tab.component}">
                             <a href="" class="tabs__link">{{ tab.name }}</a>
                         </li>
                     </ul>
@@ -35,7 +35,7 @@
 
 <script>
 
-import useNewsStore from '@/stores/NewsStore.js'
+// import useNewsStore from '@/stores/NewsStore.js'
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import News from '@/components/News.vue';
@@ -52,22 +52,22 @@ import newsStore from "@/stores/NewsStore.js";
                     {
                         id: 1,
                         name: 'Все',
-                        component: 'AllNews',
+                        component: 'allNews',
                     },
                     {
                         id: 2,
                         name: 'Анонсы',
-                        component: 'Previews',
+                        component: 'activities',
                     },
                     {
                         id: 3,
                         name: 'Новости',
-                        component: 'News',
+                        component: 'publications',
                     },
                     {
                         id: 4,
                         name: 'Мероприятия',
-                        component: 'Events',
+                        component: 'events',
                     },
                 ],
                 showModal: false,
@@ -75,31 +75,39 @@ import newsStore from "@/stores/NewsStore.js";
         },
 
         computed: {
-            allNews() {
-                const NewsStore = useNewsStore()
-                return NewsStore.allNews
-            },
 
             activeTab() {
-                const NewsStore = useNewsStore()
-                return NewsStore.activeTab
+                return newsStore().activeTab
             },
 
             filteredNews() {
-                const NewsStore = useNewsStore()
-              if (NewsStore.activeTab === 'Все') return NewsStore.allNews
-              if (NewsStore.activeTab === 'Анонсы') return NewsStore.allNews.filter(item => item.tag === 'Анонсы')
-              if (NewsStore.activeTab === 'Новости') return NewsStore.allNews
-              if (NewsStore.activeTab === 'Мероприятия') return NewsStore.allNews.filter(item => item.tag === 'Мероприятия')
+              if (newsStore().activeTab === 'allNews') return newsStore().allNews
+              if (newsStore().activeTab === 'activities') return newsStore().activities
+              if (newsStore().activeTab === 'publications') return newsStore().publications
+              if (newsStore().activeTab === 'events') return newsStore().events
             },
 
         },
 
         methods: {
-            changeTab(name) {
-                this.activeTab = name;
-                const NewsStore = useNewsStore()
-                NewsStore.activeTab = name
+            changeTab(component) {
+                this.activeTab = component;
+                newsStore().activeTab = component;
+
+                if (this.activeTab == 'activities') {
+                    newsStore().fetchActivities();
+                } else
+                if (this.activeTab == 'events') {
+                    newsStore().fetchEvents();
+                } else
+                if (this.activeTab == 'publications') {
+                    newsStore().fetchNews();
+                } else
+                if (this.activeTab == 'allNews') {
+                    newsStore().fetchAllNews();
+                }
+
+
             },
 
             openModal() {
@@ -116,7 +124,7 @@ import newsStore from "@/stores/NewsStore.js";
 
         mounted() {
             // newsStore().reset();
-            newsStore().fetchNews();
+            newsStore().fetchAllNews();
 
             useHead({
                 title: 'Актуальные события и новости в РКИ | Rus.Study',

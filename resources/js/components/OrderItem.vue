@@ -1,15 +1,15 @@
 <template>
      <label :class="{active: selectedProducts.includes(book)}" class="product">
                                 <div class="order__product">
-                                   <input type="checkbox" class="visually-hidden product__input" name="product"  @change="addProduct(book)">
+                                   <input type="checkbox" class="visually-hidden product__input" :name="'product-'+book.id+''"  @change="addProduct(book)">
                                 <span class="product__checkbox"></span>
                                 <img :src="book.image" alt="">
                                 <div class="product__name">
                                     <p>{{ book.type }}</p>
                                     <p>{{ book.name }} {{ book.level }}</p>
-                                </div> 
                                 </div>
-                                
+                                </div>
+
                                 <div v-if="!book.isOnline" class="product__count count">
                                     <p class="count__text">Количество</p>
                                     <div class="count__block">
@@ -21,8 +21,8 @@
 
                                 <div v-else-if="book.isOnline" class="product__count sub">
                                     <div class="sub__text">
-                                        
-                                        
+
+
                                         <div class="tooltip">
                                             Подписка
                                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -49,8 +49,8 @@
                                             <span></span>
                                             Навсегда
                                         </label>
-                                        
-                                        
+
+
                                     </div>
                                 </div>
                                 <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
@@ -64,10 +64,11 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
     export default {
         data() {
             return {
+                total: this.totalPrice
             }
         },
 
-        props: ['book', 'currencyValue', 'selectedProducts'],
+        props: ['book', 'selectedProducts', 'totalPrice'],
         components: {Form, Field, ErrorMessage },
 
         computed: {
@@ -79,8 +80,9 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
             set(value) {
                 this.book.amount = value
             }
-            }
-            
+            },
+
+
         },
 
         methods: {
@@ -96,14 +98,15 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
 
             addProduct(product) {
                 if (!this.selectedProducts.includes(product)) {
-                    this.selectedProducts.push(product)
-                    product.amount = 1
+                    this.selectedProducts.push(product);
+                    product.amount = 1;
+
                 } else {
                    const index = this.selectedProducts.indexOf(product);
-                   this.selectedProducts.splice(index, 1)
-                   product.amount = 0
-                } 
-                
+                   this.selectedProducts.splice(index, 1);
+                   product.amount = 0;
+                }
+
             }
         }
     }
