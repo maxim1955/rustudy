@@ -112,12 +112,10 @@ import newsStore from "@/stores/NewsStore.js";
 
             openModal() {
                 this.showModal = true;
-
             },
 
             closeModal() {
                 this.showModal = false;
-
             }
 
         },

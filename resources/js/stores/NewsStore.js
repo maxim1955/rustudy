@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
 import axios from "axios";
 
 const useNewsStore = defineStore('NewsStore', {
@@ -69,8 +69,6 @@ const useNewsStore = defineStore('NewsStore', {
                 this.publications = data;
 
                 console.log(response.data.data)
-
-
                 /*      this.previews = allNews.filter(item => item.tag === 'Анонсы');
                       this.news = allNews.filter(item => item.tag === 'Новости');
                       this.events = allNews.filter(item => item.tag === 'Мероприятия');*/
@@ -98,7 +96,6 @@ const useNewsStore = defineStore('NewsStore', {
 
                 // })
 
-
             } catch (error) {
                 console.error('Failed to fetch news:', error);
             }
@@ -109,7 +106,6 @@ const useNewsStore = defineStore('NewsStore', {
                 this.currentPage = response.data.data.meta.pagination.current_page;
                 console.log(response)
                 const data = response.data.data.data;
-
                 let array;
                 let newArray;
 
