@@ -28,10 +28,11 @@ const useNewsStore = defineStore('NewsStore', {
                 this.allNews = data;
 
                 console.log(response.data.data.data)
-                /*this.previews = allNews.filter(item => item.tag === 'Анонсы');
-                      this.news = allNews.filter(item => item.tag === 'Новости');
-                      this.events = allNews.filter(item => item.tag === 'Мероприятия');
-                      */
+                /*
+                this.previews = allNews.filter(item => item.tag === 'Анонсы');
+                this.news = allNews.filter(item => item.tag === 'Новости');
+                this.events = allNews.filter(item => item.tag === 'Мероприятия');
+                */
 
 
                 // Проходимся по всем новостям
