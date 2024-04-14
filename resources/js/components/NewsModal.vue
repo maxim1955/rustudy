@@ -16,13 +16,13 @@
                 <swiper-slide class="new" v-for="item in filteredNews" :key="item.id" :id="item.id">
                     <div class="new__block">
 
-                        <div class="new__left" v-if="item.video != ''">
+                        <!-- <div class="new__left" v-if="item.video != ''">
                             <p :class="{'new__tag--preview': item.tag == 'Анонсы', 'new__tag--event': item.tag == 'Мероприятия', 'new__tag--new': item.tag == 'Новости'}" class="new__tag">{{ item.tag }}</p>
                             <iframe width="100%" height="900" :src="item.video"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-                        </div>
-                        <div v-else-if="item.video == ''" class="new__left">
+                        </div> -->
+                        <div class="new__left">
                             <p :class="{'new__tag--preview': item.tag == 'Анонсы', 'new__tag--event': item.tag == 'Мероприятия', 'new__tag--new': item.tag == 'Новости'}" class="new__tag">{{ item.tag }}</p>
                             <img :src="item.image" :alt="item.title">
                         </div>
@@ -80,17 +80,12 @@ import newsStore from "@/stores/NewsStore.js";
         },
 
         computed: {
-            allNews() {
-                const NewsStore = useNewsStore()
-                return NewsStore.new
-            },
 
             filteredNews() {
-                const NewsStore = useNewsStore()
-              if (NewsStore.activeTab == 'Все') return this.allNews
-              if (NewsStore.activeTab == 'Анонсы') return this.allNews.filter(item => item.tag == 'Анонсы')
-              if (NewsStore.activeTab == 'Новости') return this.allNews.filter(item => item.tag == 'Новости')
-              if (NewsStore.activeTab == 'Мероприятия') return this.allNews.filter(item => item.tag == 'Мероприятия')
+              if (newsStore().activeTab == 'allNews') return newsStore().allNews
+              if (newsStore().activeTab == 'activities') return newsStore().activity
+              if (newsStore().activeTab == 'publications') return newsStore().publication
+              if (newsStore().activeTab == 'events') return newsStore().event
             },
 
             currentActiveSlide() {

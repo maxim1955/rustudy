@@ -5,7 +5,7 @@
             <div class="modal__window">
                 <button class="btn-reset btn-close" @click="$emit('close-order')"></button>
           <Form @InvalidSubmit="onInvalidSubmit" @submit="onSubmit()" class="order__form" method="post">
-                        <div class="flex currency-block">
+                        <!-- <div class="flex currency-block">
                         <label class="order__label currency">
                             <input type="radio" class="visually-hidden" name="currency" value="rub" @change="selectedCurrency" checked>
                             <span class="currency__radio currency__radio--rub">
@@ -30,14 +30,14 @@
 </svg>
                             </span>
                         </label>
-                        </div>
+                        </div> -->
 
 
                         <div class="order__container">
 
                         <div class="order__left">
                             <div class="products" >
-                                <OrderItem v-for="book in books" :key="book.id" :book="book" :currencyValue="currencyValue" :selectedProducts="selectedProducts"/>
+                                <OrderItem v-for="book in books" :key="book.id" :book="book" :currencyValue="currencyValue" :selectedProducts="selectedProducts" @total="updateTotal" :totslPrice="totalPrice"/>
                             </div>
                             <div class="order__info info">
                                 <div>
@@ -126,7 +126,10 @@
                             <div class="order__block">
                                 <div class="between-block">
                                     <p class="order__title">Итого</p>
-                                    <p class="order__price order__price--bold">0 ₽</p>
+                                    <label class="order__price order__price--bold">
+                                        <input  type="text" readonly :value="total" name="totalPrice" id="totalPrice">₽
+                                    </label>
+                                    <!-- <p class="order__price order__price--bold">0 ₽</p> -->
                                 </div>
                                 <div class="between-block">
                                     <p class="order__text">Товары, {{ selectedProducts.length }}  шт.</p>
@@ -140,7 +143,7 @@
                                     </svg>
                                     Мы свяжемся с вами, чтобы уточнить сроки и стоимость доставки.</p>
 
-                                <input class="order__input" type="text" placeholder="Промокод">
+                                <input class="order__input" type="text" placeholder="Промокод" name="promocode" v-model="promocode">
 
                                 <button :disabled="!validate" class="btn-reset order__submit" type="submit">Заказать</button>
 
@@ -198,7 +201,8 @@ configure({
                 paymentValue: '',
                 currencyValue: 'rub',
                 delivery: '',
-                showModalSubmit: false
+                showModalSubmit: false,
+                promocode: ''
 
             }
         },
@@ -274,8 +278,6 @@ configure({
                         this.errorEmail = false
                     }
 
-                    console.log(e)
-
                 if (e.target.value != '') {
                     btn.classList.remove('hidden')
 
@@ -312,6 +314,10 @@ configure({
             onSubmit(e) {
                 console.log(e)
                 this.showModalSubmit = true
+            },
+
+            updateTotal(total) {
+                console.log(total)
             }
 
         },
@@ -322,6 +328,10 @@ configure({
                     return true
 
             },
+
+            total() {
+                return this.selectedProducts.reduce((total, item) => total + item[this.currencyValue], 0)
+            }
 
         }
 
