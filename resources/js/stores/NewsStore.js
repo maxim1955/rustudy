@@ -24,8 +24,8 @@ const useNewsStore = defineStore('NewsStore', {
             try {
                  axios.all([
                     axios.get(`/api/publications`),
-                    axios.get(`/api/activities`),
-                    axios.get(`/api/events`),
+                    /*axios.get(`/api/activities`),
+                    axios.get(`/api/events`),*/
                 ]).then(axios.spread((newsData, activitiesData, eventsData) => {
                     console.log(newsData.data.data.data)
                     this.publications = newsData.data.data.data;
