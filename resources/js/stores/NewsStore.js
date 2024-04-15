@@ -142,7 +142,7 @@ const useNewsStore = defineStore('NewsStore', {
                 }
 
             } catch (error) {
-                console.error('Failed to fetch news:', error);
+                console.error('Failed to fetch news:', error);c
             }
         },
         sliceItem(name) {

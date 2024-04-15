@@ -5,7 +5,7 @@
                 <div class="modal__window">
                     <button class="btn-reset btn-close" @click="$emit('close-order')"></button>
                     <Form @InvalidSubmit="onInvalidSubmit" @submit="onSubmit()" class="order__form" method="post">
-                        <div class="flex currency-block">
+                        <!-- <div class="flex currency-block">
                             <label class="order__label currency">
                                 <input type="radio" class="visually-hidden" name="currency" value="rub"
                                        @change="selectedCurrency" checked>
@@ -39,7 +39,7 @@
 </svg>
                             </span>
                             </label>
-                        </div>
+                        </div> -->
 
 
                         <div class="order__container">
@@ -202,7 +202,7 @@
             </div>
         </div>
 
-        <ModalAfterSubmit v-if="showModalSubmit"></ModalAfterSubmit>
+    <ModalAfterSubmit @close-submit="closeSubmit" v-if="showModalSubmit"></ModalAfterSubmit>
     </div>
 </template>
 
@@ -381,7 +381,16 @@ export default {
                 }
                 throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
             }
-        }
+        },
+
+        updateTotal(total) {
+                console.log(total)
+            },
+
+            closeSubmit() {
+                this.showModalSubmit = false;
+                this.$emit('close-order');
+            }
 
     },
 
