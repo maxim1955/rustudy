@@ -127,7 +127,7 @@
                             <a class="partners__link flex"
                                :href="partner.link"
                                target="_blank">
-                                <img :src="partner.photo_path" alt="Обрсоюз">
+                                <img :src="'storage/'+partner.photo_path" alt="Обрсоюз">
                             </a>
                         </div>
                     </swiper-slide>
