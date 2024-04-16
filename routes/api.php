@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PublicationController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::get('/activities/{activity}', [ActivityController::class, 'show']);
 
 Route::get('/events', [EventController::class, 'index']);
 Route::get('/events/{event}', [EventController::class, 'show']);
+
+Route::get('/news', [NewsController::class, 'index']);
 
 // Route::resources([
 //     'partners' => PartnerController::class,
