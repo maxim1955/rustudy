@@ -152,7 +152,7 @@
                                 <div class="order__block">
                                     <div class="between-block">
                                         <p class="order__title">Итого</p>
-                                        <p class="order__price order__price--bold">0 ₽</p>
+                                        <p class="order__price order__price--bold">{{ total }} ₽</p>
                                     </div>
                                     <div class="between-block">
                                         <p class="order__text">Товары, {{ selectedProducts.length }}  шт.</p>
@@ -241,7 +241,8 @@ export default {
             paymentValue: '',
             currencyValue: 'rub',
             delivery: '',
-            showModalSubmit: false
+            showModalSubmit: false,
+            totalPrice: 0
 
         }
     },
@@ -383,9 +384,7 @@ export default {
             }
         },
 
-        updateTotal(total) {
-                console.log(total)
-            },
+
 
             closeSubmit() {
                 this.showModalSubmit = false;
@@ -399,6 +398,10 @@ export default {
             if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0)
                 return true
         },
+
+        total() {
+                return this.selectedProducts.reduce((total, item) => total + item[this.currencyValue], 0)
+            },
 
     }
 

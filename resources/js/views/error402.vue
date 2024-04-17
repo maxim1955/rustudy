@@ -92,14 +92,19 @@
 <script>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
-
+import {useHead} from "unhead";
 export default {
     name: 'error402',
     components: { Header, Footer },
+    mounted() {
+        useHead({
+            title: '402',
+        })
+    }
 }
 </script>
 
-  
+
 
 <style>
 body {

@@ -1,6 +1,6 @@
 <template>
     <li class="about__item">
-        <a :href="book.url" class="about__link book">
+        <router-link :to="book.url" class="about__link book">
             <img :src="book.image" :alt="book.type">
             <div class="about__content">
             <p class="book__title">{{ book.type }}</p>
@@ -9,8 +9,8 @@
 <path d="M10 10L31.6667 31.6667M31.6667 31.6667V10.8667M31.6667 31.6667H10.8667" stroke="#0A2B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
             </div>
-        </a>
-       
+        </router-link>
+
     </li>
 </template>
 
@@ -28,17 +28,17 @@ var tl = gsap.timeline({ repeat: -1, defaults: { duration: 0.3, yoyo: -1, repeat
 
 
 items.forEach(item => {
-    tl.from(item, { 
+    tl.from(item, {
         y: '0',
-    }) 
-    tl.to(item, { 
+    })
+    tl.to(item, {
         y: '-3',
         boxShadow: '0px 13px 12px 0px rgba(87, 36, 167, 0.50)',
-        
-    }) 
+
+    })
 
 
-    
+
 
 })
 
@@ -53,5 +53,5 @@ items.forEach(item => {
 
 
 
- 
+
 </script>
