@@ -91,6 +91,7 @@ h3 {
     padding-left: 20px;
     flex-grow: 1;
     background: #E7F0FF;
+    position: relative;
 }
 .game_wrapper {
     position: relative;

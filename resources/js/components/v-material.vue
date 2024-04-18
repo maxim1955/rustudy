@@ -64,7 +64,6 @@
                             <input type="checkbox" :value="theme.value" :id="theme.id" v-model="checkedTheme"/>
                             <label :for="theme.id" class="material_theme__filter">{{ theme.value }}</label>
                         </div>
-
                     </div>
                 </div>
                 <div class="clean_filter">
@@ -149,42 +148,43 @@
             <div class="active_material_wrap">
                 <div class="active_material_info">
                     <div class="active_material_img">
-                        <img :src="activeMaterialInfo.img" alt="Logo" class="img  ">
+                        <img :src="`../${activeMaterialInfo.img}`" alt="Logo" class="img  ">
                         <p class="material_list__first_img_title">{{ activeMaterialInfo.title }}</p>
                     </div>
                     <div class="active_material_text">
                         <p class="active_material_date">{{ activeMaterialInfo.date }}</p>
                         <p class="material_list__first_subtitle">{{ activeMaterialInfo.title }}</p>
                         <p class="material_list__first_body">{{ activeMaterialInfo.body }}</p>
-                        <p class="active_material_likes">
+<!--                        <p class="active_material_likes">
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                                 <path
                                     d="M12.8851 4.981H9.79698V2.86306C9.79698 1.84694 9.49398 1.10934 8.8941 0.671674C7.95144 -0.0200214 6.66905 0.368675 6.61396 0.387038C6.39665 0.454372 6.24668 0.659432 6.24668 0.888977V3.44458C6.24668 5.33603 4.02163 5.99406 3.92675 6.01854C3.92063 6.0216 3.91451 6.0216 3.91145 6.02466L3.65742 6.10424C3.36972 5.83185 2.98408 5.66657 2.56172 5.66657H1.59763C0.71618 5.66351 0 6.37969 0 7.26115V12.758C0 13.6394 0.71618 14.3556 1.59763 14.3556H2.56172C2.96878 14.3556 3.34218 14.2026 3.62375 13.9486C4.02775 14.4291 4.63375 14.7382 5.31014 14.7382H11.566C13.0167 14.7382 13.9808 13.9424 14.1492 12.6111L14.9265 7.72942L14.9694 7.46621C14.9878 7.34378 15 7.2183 15 7.09281C14.9969 5.92978 14.0482 4.981 12.8851 4.981ZM3.10957 12.761C3.10957 13.064 2.86472 13.3089 2.56172 13.3089H1.59763C1.29463 13.3089 1.04979 13.064 1.04979 12.761V7.26115C1.04979 6.95815 1.29463 6.7133 1.59763 6.7133H2.56172C2.86472 6.7133 3.10957 6.95815 3.10957 7.26115V12.761ZM13.9319 7.30399L13.1116 12.458C13.1116 12.4642 13.1085 12.4703 13.1085 12.4764C13.0718 12.7763 12.9616 13.6915 11.566 13.6915H5.31014C4.6766 13.6915 4.15936 13.1742 4.15936 12.5407V7.26115C4.15936 7.19075 4.15323 7.12036 4.14405 7.04996L4.22057 7.02548C4.44399 6.96121 7.29647 6.08588 7.29647 3.44152V1.32052C7.59947 1.28992 7.99735 1.31134 8.27586 1.51946C8.58804 1.75207 8.74719 2.20197 8.74719 2.86306V5.50742C8.74719 5.79818 8.98286 6.03385 9.27362 6.03385H12.8851C13.4728 6.03385 13.9472 6.5113 13.9472 7.09587C13.9472 7.16321 13.941 7.2336 13.9319 7.30399Z"
                                     fill="#0A2B49"/>
                             </svg>
                             {{ activeMaterialInfo.likes || 0 }}
-                        </p>
+                        </p>-->
+<!--
                         <button class="active_download">Скачать</button>
+-->
                     </div>
-                    <div class="active_material_reviews">
+<!--                    <div class="active_material_reviews">
                         <p class="active_material_reviews_title">Оставьте свой отзыв</p>
                         <div class="active_material_reviews_logo">
                             <div class="active_material_reviews_logo_img">
-                                <img src="public/img/material/avatar.svg" alt="avatar" width="100%">
+                                <img src="/img/material/avatar.svg" alt="avatar" width="100%">
                             </div>
                             <form class="active_material_reviews__form">
                                 <input type="text" class="active_material_reviews__input">
                                 <button type="submit" class="active_material_reviews__form__btn">Опубликовать</button>
                             </form>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="active_material_list">
                     <div class="active_material_list_item" v-for="materialItem of materialList" :key="materialItem.id"
                          :class="{active_material_show: activeMaterialInfo.id === materialItem.id}">
                         <div class="active_material_list__img cursor " @click="showActiveMaterial(materialItem)">
-                            <img :src="'../../public/img/material/' + materialItem.img" alt="Logo" class="img">
-
+                            <img :src=" materialItem.img" alt="Logo" class="img">
                             <p class="active_material_list_item__title">{{ materialItem.title }}</p>
                         </div>
                         <div class="active_material_list__text">
@@ -204,8 +204,9 @@
 import {computed, onMounted, ref} from "vue";
 import { useHead } from "unhead";
 
-const props = defineProps({})
-const emit = defineEmits(['openModal'])
+const props = defineProps({
+})
+const emit = defineEmits(['openModal',])
 const showModal = () => {
 
 }
@@ -224,7 +225,6 @@ const activeMaterialInfo = ref({
     likes: '',
 })
 const showActiveMaterial = (activeMaterial) => {
-    console.log(activeMaterial)
     activeMaterialInfo.value = {
         id: activeMaterial.id,
         title: activeMaterial.title,

@@ -53,6 +53,7 @@
 
                                     </div>
                                 </div>
+                                <p class="product__price">{{ book.rub }} ₽</p>
                                 <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
                                 <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
                                 <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p>
@@ -68,7 +69,7 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
             }
         },
 
-        props: ['book', 'selectedProducts', 'totalPrice'],
+        props: ['book', 'selectedProducts'],
         components: {Form, Field, ErrorMessage },
 
         computed: {
