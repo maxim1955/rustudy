@@ -13,6 +13,8 @@
                 @swiper="onSwiper"
                 :allowTouchMove="false"
                 >
+
+                {{ this.$route.params.type }}
                 <swiper-slide class="new" v-for="item in filteredNews" :key="item.id" :id="item.id">
                     <div class="new__block">
 
@@ -23,8 +25,18 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                         </div> -->
                         <div class="new__left">
-                            <p :class="{'new__tag--preview': item.tag == 'Анонсы', 'new__tag--event': item.tag == 'Мероприятия', 'new__tag--new': item.tag == 'Новости'}" class="new__tag">{{ item.tag }}</p>
-                            <img :src="item.image" :alt="item.title">
+                            <p v-if="activeTab == 'news'" :class="{'all__title--preview': item.type === 'activity', 'all__title--event': item.type === 'event', 'all__title--new': item.type === 'publication'}"
+                            class="all__title">
+                                <span v-if="item.type === 'activity'">Анонсы</span>
+                                <span v-else-if="item.type === 'publication'">Новости</span>
+                                <span v-else-if="item.type === 'event'">Мероприятия</span>
+                            </p>
+                            <p v-else-if="activeTab == 'publications'" class="all__title--new all__title">Новости</p>
+                            <p v-else-if="activeTab == 'events'" class="all__title--event all__title">Мероприятия</p>
+                            <p v-else-if="activeTab == 'activities'" class="all__title--preview all__title">Анонсы</p>
+
+                            {{ type }}
+                            <img :src="item.img_path" :alt="item.title">
                         </div>
 
 
@@ -73,16 +85,22 @@ import useNewsStore from '@/stores/NewsStore.js';
 import newsStore from "@/stores/NewsStore.js";
     export default {
         components: {Swiper, SwiperSlide, ShareModal},
+        // props: ['type'],
         data() {
             return {
                 showModal: false,
+                type: null
             }
         },
 
         computed: {
 
+            activeTab() {
+                return useNewsStore().activeTab;
+            },
+
             filteredNews() {
-              if (newsStore().activeTab == 'allNews') return newsStore().allNews
+              if (newsStore().activeTab == 'news') return newsStore().allNew
               if (newsStore().activeTab == 'activities') return newsStore().activity
               if (newsStore().activeTab == 'publications') return newsStore().publication
               if (newsStore().activeTab == 'events') return newsStore().event
@@ -142,6 +160,11 @@ import newsStore from "@/stores/NewsStore.js";
             },
 
         },
+
+        // created() {
+        //     console.log(this.$route.params.type)
+        //     this.type = this.$route.params.type;
+        // }
 
         // mounted() {
         //     const NewsStore = useNewsStore();
