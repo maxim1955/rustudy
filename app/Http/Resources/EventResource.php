@@ -20,7 +20,8 @@ class EventResource extends JsonResource
             'brief' => $this->brief,
             'img' => $this->img,
             'description' => $this->description,
-            'date' => $this->date
+            'date' => $this->date,
+            'type' => "event"
         ];
     }
 }
