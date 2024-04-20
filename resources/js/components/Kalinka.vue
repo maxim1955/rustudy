@@ -56,9 +56,5 @@
       ],
 
     })
-
-    if (gameStart.value) {
-        initGame()
-    }
 })
 </script>

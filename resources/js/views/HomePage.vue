@@ -127,7 +127,7 @@
                             <a class="partners__link flex"
                                :href="partner.link"
                                target="_blank">
-                                <img :src="partner.photo_path" alt="Обрсоюз">
+                                <img :src="'storage/'+partner.photo_path" alt="Обрсоюз">
                             </a>
                         </div>
                     </swiper-slide>
@@ -174,7 +174,7 @@ export default {
             ],
 
             partners: [
-                {
+               /* {
                     id: 1,
                     image: 'img/обрсоюз.png',
                     link: 'http://obr.so/',
@@ -218,7 +218,8 @@ export default {
                     id: 9,
                     image: 'img/диктант.png',
                     link: 'http://totaldict.ru/',
-                },
+                },*/
+
             ]
         }
     },

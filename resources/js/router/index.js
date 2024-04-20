@@ -59,7 +59,7 @@ const routes = [
     },
 
     {
-        path: "/error404",
+        path: "/:catchAll(.*)",
         name: "error404",
         component: error404,
     },
@@ -75,11 +75,6 @@ const routes = [
     },
     {
         path: "/error401",
-        name: "error401",
-        component: error401,
-    },
-    {
-        path: "/test",
         name: "error401",
         component: error401,
     },

@@ -20,6 +20,8 @@
     "dependencies": {
         "@alexlit/vue-yandex-share": "^2.0.1",
         "@unhead/vue": "^1.9.2",
+        "@vuelidate/core": "^2.0.3",
+        "@vuelidate/validators": "^2.0.4",
         "core-js": "^3.8.3",
         "dropzone-vue": "^0.1.11",
         "gsap": "^3.12.2",
@@ -40,6 +42,7 @@
         "vue-tel-input": "^6.0.5",
         "vue-upload-component": "^2.8.23",
         "vue-yandex-maps": "^0.11.18",
+        "vuelidate": "^0.7.7",
         "vueperslides": "^2.16.0",
         "ymaps": "^0.2.1"
     }
