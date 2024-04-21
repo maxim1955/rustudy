@@ -25,7 +25,8 @@ class ActivityResource extends JsonResource
             'location' => $this->location,
             'place' => $this->place,
             'sponsor' => $this->sponsor,
-            'date' => $this->date
+            'date' => $this->date,
+            'type' => "activity"
         ];
     }
 }
