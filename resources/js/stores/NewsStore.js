@@ -178,7 +178,6 @@ const useNewsStore = defineStore('NewsStore', {
                             const data = response.data.data;
                             newArray.push(data);
                         }
-
                     }
                 }
 

@@ -6,7 +6,7 @@
         <div class="news__block all">
             <div class="all__block" v-for="(item, index) in toBeShow" :key="item.id" :id="item.id"
                  @click.prevent="openModalNews(index, item.id)">
-                <img src="../../../public/img/new-2.webp" alt="logo">
+                <img  :src="'/'+item.img" alt="logo">
                 <p v-if="activeTab == 'news'" :class="{'all__title--preview': item.type === 'activity', 'all__title--event': item.type === 'event', 'all__title--new': item.type === 'publication'}"
                    class="all__title">
                     <span v-if="item.type === 'activity'">Анонсы</span>
