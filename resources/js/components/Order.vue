@@ -37,172 +37,9 @@ d="M10.5014 10.2288C9.5592 9.83056 8.57108 9.63077 7.58431 9.41816V3.23431C7.595
 <path
 d="M16.4031 17.237C16.728 17.686 17.0485 18.1299 17.3899 18.6018C16.7344 19.0873 16.0395 19.471 15.2944 19.7586C9.58285 21.9624 3.47833 18.8635 1.89842 12.9541C1.82383 12.6758 1.71051 12.5869 1.43656 12.6005C1.04283 12.6199 0.647674 12.6005 0.253232 12.6056C0.0717894 12.6077 -0.00278916 12.5374 7.95062e-05 12.3517C0.00796833 11.887 0.00294222 11.4215 0.00294222 10.8922C0.438979 10.8922 0.85279 10.8714 1.26444 10.8987C1.60223 10.9216 1.58859 10.7302 1.58859 10.4978C1.58859 10.259 1.62015 10.0439 1.25655 10.0697C0.855651 10.0976 0.451176 10.0761 0.0266143 10.0761C0.0266143 9.49882 0.0266143 8.96597 0.0266143 8.36068C0.487752 8.36068 0.948889 8.3406 1.40716 8.36785C1.71697 8.38578 1.8267 8.27821 1.91347 7.97771C3.06094 4.01968 5.65278 1.54545 9.67679 0.685568C12.2887 0.127613 14.7536 0.66979 17.0148 2.09911C17.1152 2.16222 17.2085 2.23608 17.3383 2.3286C17.0105 2.79189 16.69 3.24585 16.3644 3.70556C13.3795 1.84595 10.3588 1.6602 7.3001 3.41726C5.24829 4.59556 3.88209 6.85105 3.6526 8.33414C3.81755 8.34347 3.97891 8.3614 4.14028 8.3614C7.308 8.36355 10.475 8.36283 13.6427 8.36355C14.134 8.36355 14.1347 8.36427 14.1383 8.8505C14.1397 9.1137 14.1196 9.37834 14.1433 9.63867C14.1741 9.97574 14.0666 10.0869 13.7101 10.0847C11.0208 10.069 8.33139 10.0761 5.64202 10.0761C5.03243 10.0761 4.42284 10.0754 3.81324 10.0761C3.29043 10.0769 3.27178 10.0962 3.31051 10.619C3.31625 10.7 3.34064 10.7789 3.36215 10.8901C6.57219 10.8901 9.77217 10.8901 13.0288 10.8901C13.0288 11.4308 13.0331 11.9393 13.0217 12.4471C13.0202 12.4987 12.9284 12.5769 12.866 12.5934C12.7649 12.6192 12.6523 12.6056 12.5455 12.6056C9.74851 12.6056 6.95156 12.6056 4.15462 12.6056C3.99182 12.6056 3.82903 12.6056 3.58519 12.6056C4.20912 14.7492 5.38527 16.3994 7.23054 17.4988C10.3022 19.3304 13.3609 19.1397 16.4031 17.237Z"/>
 </svg>
-<<<<<<< HEAD
                 </span>
                 </label>
             </div> -->
-=======
-                            </span>
-                            </label>
-                        </div> -->
-
-
-                        <div class="order__container">
-
-                            <div class="order__left">
-                                <div class="products">
-                                    <OrderItem v-for="book in books" :key="book.id" :book="book"
-                                               :currencyValue="currencyValue" :selectedProducts="selectedProducts"/>
-                                </div>
-                                <div class="order__info info">
-                                    <div>
-                                        <span class="form__text">Ф.И.О *</span>
-                                        <label for="" class="form__label">
-                                            <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                            <Field :class="{'error-input': errorFio}" class="form__input" name="fio"
-                                                   v-model="fio" type="text" placeholder="Введите Ф.И.О"
-                                                   :rules="validateFio" @input="inputChange" @keydown="deleteNumber"/>
-                                            <span v-show="errorFio" class="error-icon"></span>
-                                            <ErrorMessage class="form__error" name="fio"/>
-                                        </label>
-                                    </div>
-
-                                    <div>
-                                        <span class="form__text">Страна</span>
-                                        <label for="" class="form__label">
-                                            <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-                                            <input class="form__input" name="country" v-model="country" type="text"
-                                                   placeholder="Введите страну" @input="inputChange"
-                                                   @keydown="deleteNumber"/>
-                                        </label>
-                                    </div>
-
-
-                                    <div class="info-block">
-                                        <div class="w-100">
-                                            <span class="form__text">Email *</span>
-                                            <label for="" class="form__label">
-                                                <button v-show="!errorEmail" class="modal__btn hidden"
-                                                        @click.prevent="clearInput"></button>
-                                                <Field :class="{'error-input': errorEmail}" class="form__input"
-                                                       name="email" v-model="email" type="text"
-                                                       placeholder="Введите email" :rules="validateEmail"
-                                                       @input="inputChange" @keydown="deleteNumber"/>
-                                                <span v-show="errorEmail" class="error-icon"></span>
-                                                <ErrorMessage class="form__error" name="email"/>
-                                            </label>
-                                        </div>
-                                        <div class="w-100">
-                                            <span class="form__text">Телефон *</span>
-                                            <label for="" class="form__label">
-                                                <vue-tel-input v-model="phone" @country-changed="countryChanged"
-                                                               @validate="customValidate"
-                                                               @keydown="deleteLetter"></vue-tel-input>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="order__block payment">
-                                    <p class="order__title">Способ оплаты</p>
-                                    <div class="payment__block">
-                                        <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="robokassa"
-                                                   @change="selectedPayment" checked/>
-                                            <span></span>
-                                            <img src="img/payment-1.svg" alt="Robokassa">
-                                        </label>
-                                        <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="paypal"
-                                                   @change="selectedPayment"/>
-                                            <span></span>
-                                            <img src="img/payment-2.svg" alt="PayPal">
-                                        </label>
-                                    </div>
-
-                                </div>
-
-                                <div class="order__block delivery">
-                                    <p class="order__title">Способ получения</p>
-                                    <div class="delivery__block">
-                                        <div>
-                                            <label class="delivery__label">
-                                                <input type="radio" class="visually-hidden" name="delivery"
-                                                       value="pickup" @change="selectedDelivery" checked/>
-                                                <span></span>
-                                                Самовывоз
-                                            </label>
-                                            <p>г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора,
-                                                слева от 5-го подъезда (бесплатно)</p>
-                                        </div>
-
-                                        <div>
-                                            <label class="delivery__label">
-                                                <input type="radio" class="visually-hidden" name="delivery"
-                                                       value="pochta" @change="selectedDelivery"/>
-                                                <span></span>
-                                                Доставка почтой России
-                                            </label>
-                                            <p>Книга отправляется вам почтовым переводом, по адресу, который вы укажите,
-                                                срок доставки зависит от Почты России, стоимость за счёт покупателя</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <Pochta v-show="deliveryValue == 'pochta'"/>
-
-                            </div>
-                            <div class="order__right">
-                                <div class="order__block">
-                                    <div class="between-block">
-                                        <p class="order__title">Итого</p>
-                                        <p class="order__price order__price--bold">{{ total }} ₽</p>
-                                    </div>
-                                    <div class="between-block">
-                                        <p class="order__text">Товары, {{ selectedProducts.length }}  шт.</p>
-                                        <p class="order__price">0 ₽</p>
-                                    </div>
-
-                                    <p class="order__text order__text--info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                                             viewBox="0 0 12 12" fill="none">
-                                            <rect width="12" height="12" rx="6" fill="#B6D3FD"/>
-                                            <path d="M6 9.5V9.505M6 7.5V2.5" stroke="#0A2B49" stroke-linecap="round"
-                                                  stroke-linejoin="round"/>
-                                        </svg>
-                                        Мы свяжемся с вами, чтобы уточнить сроки и стоимость доставки.
-                                    </p>
-
-                                    <input class="order__input" type="text" placeholder="Промокод">
-
-                                    <button :disabled="!validate" class="btn-reset order__submit" type="submit">
-                                        Заказать
-                                    </button>
-
-                                    <p class="order__agreement">Нажимая на кнопку «Заказать», вы подтверждаете, что
-                                        ознакомлены c <a href="docs/Согласие_на_обработку_ПДн_на_сайте_учебник.pdf"
-                                                         target="_blank">Пользовательским соглашением</a> и <a
-                                            href="docs/политика_обработки_ПДн_на_сайте_учебник.pdf" target="_blank">Политикой
-                                            о персональных данных</a></p>
-
-                                </div>
-                                <div class="order__block order__message">
-                                    <p class="order__text">Любые вопросы по покупке книги: <a href="tel:+74993021872">+7 499 302-18-72</a>,
-                                        <a href="tel:+79993333303">+7 999 333-33-03</a>, <a
-                                            href="mailto:book@rus.study">book@rus.study</a></p>
-                                    <p class="order__text">Если вы не получили ответ, продублируйте, пожалуйста, письмо
-                                        координатору проекта на <a href="mailto:pressantonov2013@gmail.com">pressantonov2013@gmail.com</a>
-                                    </p>
-                                    <p class="order__text">If you did not receive a response, please duplicate the
-                                        letter to the project coordinator at <a
-                                            href="mailto:pressantonov2013@gmail.com">pressantonov2013@gmail.com</a></p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </Form>
->>>>>>> a0b0ad9ee6bc052b212a4349891059168b0de9db
 
 
             <div class="order__container">
@@ -315,7 +152,7 @@ d="M16.4031 17.237C16.728 17.686 17.0485 18.1299 17.3899 18.6018C16.7344 19.0873
                 <div class="order__block">
                   <div class="between-block">
                     <p class="order__title">Итого</p>
-                    <p class="order__price order__price--bold">0 ₽</p>
+                    <p class="order__price order__price--bold">{{ total }} ₽</p>
                   </div>
                   <div class="between-block">
                     <p class="order__text">Товары, {{ selectedProducts.length }}  шт.</p>
@@ -386,7 +223,6 @@ configure({
 });
 
 export default {
-<<<<<<< HEAD
   props: ['books'],
   components: {VueTelInput, Form, Field, ErrorMessage, OrderItem, Pochta, ModalAfterSubmit},
   data() {
@@ -405,29 +241,8 @@ export default {
       paymentValue: '',
       currencyValue: 'rub',
       delivery: '',
-      showModalSubmit: false
-=======
-    props: ['books'],
-    components: {VueTelInput, Form, Field, ErrorMessage, OrderItem, Pochta, ModalAfterSubmit},
-    data() {
-        return {
-            phone: 0,
-            activeCountry: 0,
-            productAmount: 0,
-            fio: '',
-            country: '',
-            email: '',
-            errorFio: false,
-            errorEmail: false,
-            phoneValid: false,
-            selectedProducts: [],
-            deliveryValue: '',
-            paymentValue: '',
-            currencyValue: 'rub',
-            delivery: '',
-            showModalSubmit: false,
-            totalPrice: 0
->>>>>>> a0b0ad9ee6bc052b212a4349891059168b0de9db
+      showModalSubmit: false,
+      totalPrice: 0
 
     }
   },
@@ -484,150 +299,10 @@ export default {
         this.errorCountry = true
       }
 
-<<<<<<< HEAD
       if (e.target.nextSibling.getAttribute('name') == 'email') {
         this.email = '';
         this.errorEmail = true
       }
-=======
-        onInvalidSubmit(e) {
-            if (e.errors.fio) {
-                this.errorFio = true
-            }
-
-            if (e.errors.country) {
-                this.errorCountry = true
-            }
-
-            if (e.errors.email) {
-                this.errorEmail = true
-            }
-        },
-
-        validateFio(value) {
-            if (!value) {
-                return 'Введите Ф.И.О';
-            }
-
-            return true;
-        },
-
-
-        validateEmail(value) {
-            if (!value) {
-                return 'Введите E-mail!';
-            }
-            const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-            if (!regex.test(value)) {
-                return 'Введите корректный E-mail!';
-            }
-
-            return true;
-        },
-
-        clearInput(e) {
-            e.target.classList.add('hidden');
-            if (e.target.nextSibling.getAttribute('name') == 'fio') {
-                this.fio = '';
-                this.errorFio = true
-            }
-            if (e.target.nextSibling.getAttribute('name') == 'country') {
-                this.country = '';
-                this.errorCountry = true
-            }
-
-            if (e.target.nextSibling.getAttribute('name') == 'email') {
-                this.email = '';
-                this.errorEmail = true
-            }
-
-
-        },
-
-        inputChange(e) {
-            const btn = e.target.previousSibling;
-            if (e.target.getAttribute('name') == 'fio') {
-                this.errorFio = false
-            }
-
-
-            if (e.target.getAttribute('name') == 'email') {
-                this.errorEmail = false
-            }
-
-            console.log(e)
-
-            if (e.target.value != '') {
-                btn.classList.remove('hidden')
-
-            } else btn.classList.add('hidden')
-
-        },
-
-        customValidate(value) {
-            if (value.valid == true) {
-                this.phoneValid = true
-            } else this.phoneValid = false
-        },
-
-        deleteNumber(e) {
-            if (e.key.match(/[0-9]/)) return e.preventDefault();
-        },
-
-        deleteLetter(e) {
-            if (e.key.match(/^[a-zA-Zа-яА-Я]$/)) return e.preventDefault();
-        },
-
-        selectedDelivery(e) {
-            this.deliveryValue = e.target.value
-        },
-
-        selectedPayment(e) {
-            this.paymentValue = e.target.value
-        },
-
-        selectedCurrency(e) {
-            this.currencyValue = e.target.value
-        },
-
-        async onSubmit(e) {
-            let res = {
-                fio: this.fio,
-                email: this.email,
-                country: this.country,
-                telephone: this.phone.replaceAll(' ', ''),
-            }
-
-            try {
-                const response = await axios.post('/api/payment', res,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                this.showModalSubmit = true
-                return response.data;
-            } catch (error) {
-                if (error.response) {
-                    console.error('Ошибка:', error.response.data);
-                    console.error('Статус ошибки:', error.response.status);
-                    console.error('Заголовки:', error.response.headers);
-                } else if (error.request) {
-                    console.error('Ошибка при ожидании ответа от сервера:', error.request);
-                } else {
-                    console.error('Ошибка:', error.message);
-                }
-                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
-            }
-        },
-
-
-
-            closeSubmit() {
-                this.showModalSubmit = false;
-                this.$emit('close-order');
-            }
->>>>>>> a0b0ad9ee6bc052b212a4349891059168b0de9db
 
 
     },
@@ -709,20 +384,11 @@ export default {
       }
     },
 
-<<<<<<< HEAD
-    updateTotal(total) {
-      console.log(total)
-    },
+
 
     closeSubmit() {
       this.showModalSubmit = false;
       this.$emit('close-order');
-=======
-        total() {
-                return this.selectedProducts.reduce((total, item) => total + item[this.currencyValue], 0)
-            },
-
->>>>>>> a0b0ad9ee6bc052b212a4349891059168b0de9db
     }
 
   },
@@ -731,6 +397,10 @@ export default {
     validate() {
       if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0)
         return true
+    },
+
+    total() {
+      return this.selectedProducts.reduce((total, item) => total + item[this.currencyValue], 0)
     },
 
   }
