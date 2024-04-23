@@ -21,7 +21,8 @@ class PublicationResource extends JsonResource
             'brief' => $this->brief,
             'content' => $this->content,
             'source' => $this->source,
-            'published_at' => $this->published_at
+            'published_at' => $this->published_at,
+            'type' => "publication"
         ];
     }
 }

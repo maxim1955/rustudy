@@ -1,8 +1,12 @@
 <template>
     <div>
+        <div v-show="!newsLoading || !loaderValue" class="loader-block">
+            <span class="loader"></span>
+        </div>
         <Header></Header>
 
         <main>
+
             <div class="container">
                     <router-link to="/" class="back">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.47007 11.4702C3.32962 11.6108 3.25073 11.8014 3.25073 12.0002C3.25073 12.1989 3.32962 12.3895 3.47007 12.5302L9.47007 18.5302C9.53873 18.6038 9.62153 18.6629 9.71353 18.7039C9.80553 18.7449 9.90485 18.767 10.0056 18.7687C10.1063 18.7705 10.2063 18.752 10.2997 18.7143C10.3931 18.6766 10.4779 18.6204 10.5491 18.5492C10.6203 18.478 10.6765 18.3931 10.7142 18.2998C10.7519 18.2064 10.7704 18.1063 10.7687 18.0056C10.7669 17.9049 10.7448 17.8056 10.7039 17.7136C10.6629 17.6216 10.6038 17.5388 10.5301 17.4702L5.81007 12.7502H20.0001C20.199 12.7502 20.3898 12.6711 20.5304 12.5305C20.6711 12.3898 20.7501 12.1991 20.7501 12.0002C20.7501 11.8012 20.6711 11.6105 20.5304 11.4698C20.3898 11.3292 20.199 11.2502 20.0001 11.2502H5.81007L10.5301 6.53015C10.6038 6.46149 10.6629 6.37869 10.7039 6.28669C10.7448 6.19469 10.7669 6.09538 10.7687 5.99468C10.7704 5.89397 10.7519 5.79394 10.7142 5.70056C10.6765 5.60717 10.6203 5.52233 10.5491 5.45112C10.4779 5.3799 10.3931 5.32375 10.2997 5.28603C10.2063 5.24831 10.1063 5.22979 10.0056 5.23156C9.90485 5.23334 9.80553 5.25538 9.71353 5.29637C9.62153 5.33736 9.53873 5.39647 9.47007 5.47015L3.47007 11.4702Z" fill="#0A2B49" fill-opacity="0.6"></path></svg>
@@ -22,7 +26,10 @@
                     </svg>
                     Предложить новость</button>
                     </div>
-                        <News :filteredNews="filteredNews"></News>
+                        <News @loader="loaderValue" :filteredNews="filteredNews"></News>
+
+
+
                 </div>
 
                 <offer-news-modal  v-if="showModal" @close-modal="closeModal"/>
@@ -52,7 +59,7 @@ import newsStore from "@/stores/NewsStore.js";
                     {
                         id: 1,
                         name: 'Все',
-                        component: 'allNews',
+                        component: 'news',
                     },
                     {
                         id: 2,
@@ -71,6 +78,7 @@ import newsStore from "@/stores/NewsStore.js";
                     },
                 ],
                 showModal: false,
+                newsLoading: false,
             }
         },
 
@@ -81,7 +89,7 @@ import newsStore from "@/stores/NewsStore.js";
             },
 
             filteredNews() {
-              if (newsStore().activeTab === 'allNews') return newsStore().allNews
+              if (newsStore().activeTab === 'news') return newsStore().allNews
               if (newsStore().activeTab === 'activities') return newsStore().activities
               if (newsStore().activeTab === 'publications') return newsStore().publications
               if (newsStore().activeTab === 'events') return newsStore().events
@@ -95,16 +103,30 @@ import newsStore from "@/stores/NewsStore.js";
                 newsStore().activeTab = component;
 
                 if (this.activeTab == 'activities') {
-                    newsStore().fetchActivities();
+                    this.newsLoading = false;
+                    newsStore().fetchActivities().then(() => {
+                        this.newsLoading = true;
+                    });
+
                 } else
                 if (this.activeTab == 'events') {
-                    newsStore().fetchEvents();
+                    this.newsLoading = false;
+                    newsStore().fetchEvents().then(() => {
+                        this.newsLoading = true;
+                    });
                 } else
                 if (this.activeTab == 'publications') {
-                    newsStore().fetchNews();
+                    this.newsLoading = false;
+                    newsStore().fetchNews().then(() => {
+                        this.newsLoading = true;
+                        
+                    });
                 } else
-                if (this.activeTab == 'allNews') {
-                    newsStore().fetchAllNews();
+                if (this.activeTab == 'news') {
+                    this.newsLoading = false;
+                    newsStore().fetchAllNews().then(() => {
+                        this.newsLoading = true;
+                    });
                 }
 
 
@@ -116,14 +138,20 @@ import newsStore from "@/stores/NewsStore.js";
 
             closeModal() {
                 this.showModal = false;
+            },
+
+            loaderValue(value) {
+                this.newsLoading = value
+                console.log(value)
             }
 
         },
 
         mounted() {
-            // newsStore().reset();
-            newsStore().fetchAllNews();
-
+            this.newsLoading = false;
+            newsStore().fetchAllNews().then(() => {
+                this.newsLoading = true;
+            });
             useHead({
                 title: 'Актуальные события и новости в РКИ | Rus.Study',
                 meta: [

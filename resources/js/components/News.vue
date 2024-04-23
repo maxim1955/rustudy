@@ -1,12 +1,22 @@
 <template>
     <div>
+        <!-- <div v-show="!newsLoading" class="loader-block">
+            <span class="loader"></span>
+        </div> -->
         <div class="news__block all">
             <div class="all__block" v-for="(item, index) in toBeShow" :key="item.id" :id="item.id"
                  @click.prevent="openModalNews(index, item.id)">
-                <img src="../../../public/img/new-2.webp" alt="logo">
-                <p :class="{'all__title--preview': item.tag === 'Анонсы', 'all__title--event': item.tag === 'Мероприятия', 'all__title--new': item.tag === 'Новости'}"
-                   class="all__title all__title--new">Новости</p>
-                <button class="all__btn btn-reset" v-if="item.tag == 'Мероприятия'">
+                <img  :src="'/'+item.img" alt="logo">
+                <p v-if="activeTab == 'news'" :class="{'all__title--preview': item.type === 'activity', 'all__title--event': item.type === 'event', 'all__title--new': item.type === 'publication'}"
+                   class="all__title">
+                    <span v-if="item.type === 'activity'">Анонсы</span>
+                    <span v-else-if="item.type === 'publication'">Новости</span>
+                    <span v-else-if="item.type === 'event'">Мероприятия</span>
+                </p>
+                <p v-else-if="activeTab == 'publications'" class="all__title--new all__title">Новости</p>
+                <p v-else-if="activeTab == 'events'" class="all__title--event all__title">Мероприятия</p>
+                <p v-else-if="activeTab == 'activities'" class="all__title--preview all__title">Анонсы</p>
+                <button class="all__btn btn-reset" v-if="item.type == 'events'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                         <path
                             d="M18 13.498H13V18.498C13 18.7633 12.8946 19.0176 12.7071 19.2052C12.5196 19.3927 12.2652 19.498 12 19.498C11.7348 19.498 11.4804 19.3927 11.2929 19.2052C11.1054 19.0176 11 18.7633 11 18.498V13.498H6C5.73478 13.498 5.48043 13.3927 5.29289 13.2052C5.10536 13.0176 5 12.7633 5 12.498C5 12.2328 5.10536 11.9785 5.29289 11.7909C5.48043 11.6034 5.73478 11.498 6 11.498H11V6.49805C11 6.23283 11.1054 5.97848 11.2929 5.79094C11.4804 5.6034 11.7348 5.49805 12 5.49805C12.2652 5.49805 12.5196 5.6034 12.7071 5.79094C12.8946 5.97848 13 6.23283 13 6.49805V11.498H18C18.2652 11.498 18.5196 11.6034 18.7071 11.7909C18.8946 11.9785 19 12.2328 19 12.498C19 12.7633 18.8946 13.0176 18.7071 13.2052C18.5196 13.3927 18.2652 13.498 18 13.498Z"
@@ -77,6 +87,7 @@ export default {
             showModal: false,
             currentPage: 1,
             hiddenBtn: false,
+            newsLoading: false,
         }
     },
 
@@ -121,10 +132,17 @@ export default {
         // },
 
         async showMore(currentPage, activeTab) {
+            this.newsLoading = false;
             console.log(currentPage, activeTab)
             if (currentPage < this.totalPage) {
                 this.hiddenBtn = true;
-                let res = await newsStore().ShowMore(currentPage, activeTab)
+                this.newsLoading = false;
+                this.$emit('loader', this.newsLoading);
+                let res = await newsStore().ShowMore(currentPage, activeTab).then(() => {
+                    this.newsLoading = true;
+                    this.$emit('loader', this.newsLoading);
+
+                })
             }
 
         },
@@ -140,8 +158,10 @@ export default {
     },
 
     mounted() {
-
-         newsStore().fetchAllNews();
+        // this.newsLoading = false;
+        //     newsStore().fetchAllNews().then(() => {
+        //         this.newsLoading = true;
+        //     });
 
 
     }
