@@ -66,18 +66,19 @@ const useNewsStore = defineStore('NewsStore', {
                     const exists = this.allNew.some(item => item.id === el.id);
                     // Если такой новости еще нет, делаем запрос
                     if (!exists) {
-                        if (el.type === 'activity') {
-                            const response = await axios.get(`/api/activities/${el.id}`);
-                            const data = response.data.data;
-                            this.allNew.push(data);
-                        } else
+
                         if (el.type === 'publication') {
                             const response = await axios.get(`/api/publications/${el.id}`);
                             const data = response.data.data;
                             this.allNew.push(data);
-                        } else
+                        }
                         if (el.type === 'event') {
                             const response = await axios.get(`/api/events/${el.id}`);
+                            const data = response.data.data;
+                            this.allNew.push(data);
+                        }
+                        if (el.type === 'activity') {
+                            const response = await axios.get(`/api/activities/${el.id}`);
                             const data = response.data.data;
                             this.allNew.push(data);
                         }
