@@ -36,7 +36,7 @@
                             <p v-else-if="activeTab == 'activities'" class="all__title--preview all__title">Анонсы</p>
 
                             {{ type }}
-                            <img :src="item.img_path" :alt="item.title">
+                            <img :src="'storage/'+item.img_path" :alt="item.title">
                         </div>
 
 
@@ -100,10 +100,10 @@ import newsStore from "@/stores/NewsStore.js";
             },
 
             filteredNews() {
-              if (newsStore().activeTab == 'news') return newsStore().allNew
-              if (newsStore().activeTab == 'activities') return newsStore().activity
-              if (newsStore().activeTab == 'publications') return newsStore().publication
-              if (newsStore().activeTab == 'events') return newsStore().event
+              if (newsStore().activeTab === 'news') return newsStore().allNew
+              if (newsStore().activeTab === 'activities') return newsStore().activity
+              if (newsStore().activeTab === 'publications') return newsStore().publication
+              if (newsStore().activeTab === 'events') return newsStore().event
             },
 
             currentActiveSlide() {
@@ -117,7 +117,6 @@ import newsStore from "@/stores/NewsStore.js";
             const next = ref(null);
             const onSwiper = (swiper) => {
                 const NewsStore = useNewsStore();
-
                 // NewsStore.currentActiveSlide
                 swiper.activeIndex = NewsStore.currentActiveSlide
                 console.log(swiper.activeIndex)

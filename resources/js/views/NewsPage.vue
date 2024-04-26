@@ -119,6 +119,7 @@ import newsStore from "@/stores/NewsStore.js";
                     this.newsLoading = false;
                     newsStore().fetchNews().then(() => {
                         this.newsLoading = true;
+                        
                     });
                 } else
                 if (this.activeTab == 'news') {
