@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\api\ActivityController;
+use App\Http\Controllers\Api\ActivityController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PartnerController;
