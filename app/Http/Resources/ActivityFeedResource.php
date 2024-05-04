@@ -16,7 +16,7 @@ class ActivityFeedResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'img_path' => $this->img,
+            'img' => $this->img,
             'title' => $this->title,
             'brief' => $this->brief
         ];
