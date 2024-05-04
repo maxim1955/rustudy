@@ -36,7 +36,7 @@
                             <p v-else-if="activeTab == 'activities'" class="all__title--preview all__title">Анонсы</p>
 
                             {{ type }}
-                            <img :src="'storage/'+item.img_path" :alt="item.title">
+                            <img :src="'/storage/'+item.img_path" :alt="item.title">
                         </div>
 
 

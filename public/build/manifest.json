@@ -183,10 +183,6 @@
     "file": "assets/mute-DR3pbZRL.svg",
     "src": "public/img/mute.svg"
   },
-  "public/img/new-2.webp": {
-    "file": "assets/new-2-CBgOgJJf.webp",
-    "src": "public/img/new-2.webp"
-  },
   "public/img/play-hover.svg": {
     "file": "assets/play-hover-CC553yDV.svg",
     "src": "public/img/play-hover.svg"
@@ -224,12 +220,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DwRjVLUX.js",
+    "file": "assets/app-DGxh0jo_.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-B2Nl7UJ5.css"
+      "assets/app-Cb0sZ_k4.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",
@@ -245,7 +241,6 @@
       "assets/Facebook_hover-iQxZtImV.svg",
       "assets/Instagram-CMG1ip7O.svg",
       "assets/Instagram_hover-BFm8g3bp.svg",
-      "assets/new-2-CBgOgJJf.webp",
       "assets/Manrope-Regular-CFvnD1l6.woff",
       "assets/Manrope-Medium-B06codu0.woff",
       "assets/Manrope-Bold-B3VgaMYs.woff",
