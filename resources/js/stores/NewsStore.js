@@ -23,6 +23,33 @@ const useNewsStore = defineStore('NewsStore', {
 
         async fetchAllNews() {
             try {
+<<<<<<< HEAD
+                 axios.all([
+                    axios.get(`/api/publications`),
+                    /*axios.get(`/api/activities`),
+                    axios.get(`/api/events`),*/
+                ]).then(axios.spread((newsData, activitiesData, eventsData) => {
+                    console.log(newsData.data.data.data)
+                    this.publications = newsData.data.data.data;
+                    this.activities = activitiesData.data.data.data;
+                    this.events = eventsData.data.data.data;
+
+                    this.allNews = [...this.publications, ...this.activities, ...this.events];
+
+                    // console.log(this.allNews)
+
+                    for (const el of this.publications) {
+                        // Проверяем, есть ли уже новость с таким идентификатором в массиве new
+                        const exists = this.publication.some(item => item.id === el.id);
+                        // Если такой новости еще нет, делаем запрос
+                        if (!exists) {
+                            // console.log('new push');
+                            axios.get(`/api/publications/${el.id}`)
+                            .then((response) => {
+                                this.publication.push(response.data.data);
+                            })
+
+=======
                 //  axios.all([
                 //     axios.get(`/api/publications`),
                 //     axios.get(`/api/activities`),
@@ -60,6 +87,7 @@ const useNewsStore = defineStore('NewsStore', {
                 const data = response.data.data.data;
                 this.allNews = data;
                 // console.log(response.data)
+>>>>>>> 4d22fc2f2299f1ae329dae5fa083084fada80f53
 
                 for (const el of this.allNews) {
                     // Проверяем, есть ли уже новость с таким идентификатором в массиве new

@@ -1,0 +1,1 @@
+/rustudy.sprint.1t.ru/public
