@@ -275,9 +275,6 @@ export default {
     },
     mounted() {
         let getPartnersDb = async () => {
-/*
-            axios.get('news')
-*/
             try {
                 let partners = await getPartners();
                 console.log(partners) // Надо проверить что приходит и опдставить правильные данные
