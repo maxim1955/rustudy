@@ -71,7 +71,7 @@ const router = useRouter()
 
 const createMaterial = ref(false)
 const serviceName = [
-    {name: 'material', label: 'Учебно-методические материалы',},
+    /*{name: 'material', label: 'Учебно-методические материалы',},*/
     {name: 'game', label: 'Игра', title: 'Игра РКИ онлайн'},
     {name: 'kalinka', label: 'Kalinka - Russian Fast & Easy'},
     /*
@@ -89,7 +89,7 @@ const tests = ref([
     {id: 4, name: 'Уровень B2', image: 'img/tests/b2.svg'},
     {id: 5, name: 'Уровень C1', image: 'img/tests/c1.svg'},
 ])
-const selectedService = ref({name: 'material', label: 'Учебно-методические материалы'})
+const selectedService = ref({name: 'game', label: 'Игра РКИ онлайн'})
 const changeServiceName = (serviceName) => {
     selectedService.value = serviceName
 };
@@ -106,8 +106,7 @@ const activeMaterialInfo = ref({
     likes: '',
 })
 let returnToBack = () => {
-    router.push('/service')
-    selectedService.value = {name: 'material', label: 'Учебно-методические материалы'}
+    router.push('/')
 }
 </script>
 <style scoped>
