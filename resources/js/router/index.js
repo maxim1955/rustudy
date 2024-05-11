@@ -29,9 +29,7 @@ const routes = [
         component: service,
         children: [
             { path: '', name: '', component: game },
-/*
             { path: 'material', name: 'material', component: material },
-*/
             { path: 'game', name: 'game', component: game },
             { path: 'kalinka', name: 'kalinka' ,component: kalinka },
         ],
