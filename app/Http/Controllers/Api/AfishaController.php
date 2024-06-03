@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\PartnerResource;
-use App\Models\Partner;
+// use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\AfishaResource;
+use App\Models\Afisha;
 use Illuminate\Support\Facades\Storage;
 
-use function Laravel\Prompts\error;
-
-class PartnerController extends RestController
+class AfishaController extends RestController
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request){
 
-    public function index(Request $request)
-    {
-        $partners = Partner::all();        
-        //return $this->sendResponse($partners);
-        return $this->sendResponse(PartnerResource::collection($partners));
+        $afishas = Afisha::all();
+        //where('active', '=', '1');
+        return $this->sendResponse(AfishaResource::collection($afishas));
     }
 
     public function create(Request $request)
@@ -47,11 +48,10 @@ class PartnerController extends RestController
 
 
             $input = [];
-            $input['name'] = $request->input('name');
-            $input['url'] = $request->input('url');
+            $input['image'] = $request->input('image');
 
-            if ($input['name'] == null) {
-                $errors[] = "Имя партнера не указано";
+            if ($input['image'] == null) {
+                $errors[] = "Изображение не выбрано";
             }
 
             if (empty($errors)) {
@@ -59,17 +59,17 @@ class PartnerController extends RestController
                 $imageName = uniqid(20) . '.' . $extension;
                 
                 // Сохраняем изображение в хранилище с уникальным именем
-                $path = $image->storeAs('public/partners', $imageName);
+                $path = $image->storeAs('public/afishas', $imageName);
                 if($path == null){
                     $errors[] = "Ошибка сохрания изображения";
                 } else{
 
                 
-                $input['photo_path'] = '/storage/partners/' . $imageName;
+                $input['photo_path'] = '/storage/afishas/' . $imageName;
 
-                $partner = Partner::create($input);
+                $afisha = Afisha::create($input);
 
-                return $this->sendResponse($partner);
+                return $this->sendResponse($afisha);
                 }
 
             }
@@ -78,22 +78,22 @@ class PartnerController extends RestController
         }
 
         if (!empty($errors)) {
-            return $this->sendError("Ошибка добавления партнера", $errors, 400);
+            return $this->sendError("Ошибка добавления афиши", $errors, 400);
         }
     }
 
     public function destroy(Request $request, string $id)
     {
-        $partner = Partner::find($id);
+        $afisha = Afisha::find($id);
 
-        if($partner == null){
-            return $this->sendError("Партнер не найден", [], 404);
+        if($afisha == null){
+            return $this->sendError("Афиша не найдена", [], 404);
         }
 
-        $pathArr = explode('/', $partner->photo_path);
+        $pathArr = explode('/', $afisha->photo_path);
         $photo_name = end($pathArr);
-        $photo_path = '/public/partners/' . $photo_name;
+        $photo_path = '/public/afishas/' . $photo_name;
         Storage::delete($photo_path);
-        $partner->delete();
+        $afisha->delete();
     }
 }
