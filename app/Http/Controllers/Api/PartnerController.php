@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\PartnerResource;
 use App\Models\Partner;
 use Illuminate\Http\Request;
@@ -15,10 +14,7 @@ class PartnerController extends RestController
 
     public function index(Request $request)
     {
-        $partners = Partner::all();
-
-
-        
+        $partners = Partner::all();        
         //return $this->sendResponse($partners);
         return $this->sendResponse(PartnerResource::collection($partners));
     }

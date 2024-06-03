@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\ActivityController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AfishaController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
@@ -51,3 +51,5 @@ Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
 Route::post('/payment',  [PaymentController::class, 'submit']);
+
+Route::get('/afishas', [AfishaController::class, 'index']);
