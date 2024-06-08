@@ -35,17 +35,29 @@
                             </div>
 
                             <div>
+                                <span class="form__text">Тип новости *</span>
+                                <label for="" class="form__label">
+                                    <multiselect v-model="type" :options="options" placeholder="Выберите тип новости" select-label="" :searchable="false" @update:modelValue="updateValueAction"></multiselect>
+                                    <span v-show="this.errorType" class="error-icon"></span>
+                                    <span v-show="this.errorType" class="form__error">Выберите тип новости</span>
+                                </label>
+
+                            </div>
+
+                            <div>
                                 <span class="form__text">Название новости *</span>
                                 <label for="" class="form__label">
-
                                     <button class="modal__btn hidden" @click.prevent="clearInput"></button>
-
                                     <Field :class="{'error-input': errorTitle}" class="form__input" name="title"
                                            v-model="title" type="text" placeholder="Введите название"
                                            :rules="validateTitle" @input="inputChange" @keydown="deleteNumber"/>
                                     <span v-show="errorTitle" class="error-icon"></span>
                                     <ErrorMessage class="form__error" name="title"/>
                                 </label>
+                            </div>
+
+                            <div>
+
                             </div>
 
                             <div>
@@ -57,10 +69,6 @@
                                            placeholder="Ссылка на ваш видеоматериал" @input="inputChange"/>
                                 </label>
                             </div>
-
-                            <label class="form__label">
-
-                            </label>
 
                             <div>
                                 <span class="form__text">Загрузите файл</span>
@@ -76,6 +84,7 @@
                                         @errorAdd="onError"
                                         @removedFile="onFileRemove"
                                         @sending="onFileAdd"
+                                        :acceptedFiles =" ['jpg', 'jpeg', 'png', 'webp', 'svg'] "
                                     />
                                     <cropper
                                         ref="cropperImage"
@@ -104,7 +113,7 @@
                         </div>
 
                         <div class="information__right">
-                            <div class="h-100">
+                            <div style="height: 50%;margin-bottom: 30px;">
                                 <span class="form__text">Описание новости *</span>
                                 <label for="" class="form__label h-100">
 
@@ -115,6 +124,19 @@
                                            :rules="validateDescr" @input="inputChange"/>
                                     <span v-show="errorDescr" class="error-icon"></span>
                                     <ErrorMessage class="form__error" name="descr"/>
+                                </label>
+                            </div>
+                            <div style="height: 50%;">
+                                <span class="form__text">Краткое описание новости *</span>
+                                <label for="" class="form__label h-100">
+
+                                    <button class="modal__btn hidden" @click.prevent="clearInput"></button>
+
+                                    <Field as="textarea" :class="{'error-input': errorShortDescr}" class="form__input h-100"
+                                           name="shortDescr" v-model="shortDescr" type="field" placeholder="Введите краткое описание"
+                                           :rules="validateShortDescr" @input="inputChange"/>
+                                    <span v-show="errorShortDescr" class="error-icon"></span>
+                                    <ErrorMessage class="form__error" name="shortDescr"/>
                                 </label>
                             </div>
 
@@ -153,6 +175,7 @@ import DropZone from 'dropzone-vue';
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import {Cropper} from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
+ import Multiselect from 'vue-multiselect'
 
 
 configure({
@@ -164,7 +187,7 @@ configure({
 
 
 export default {
-    components: {Cropper, Form, Field, ErrorMessage, DropZone},
+    components: {Cropper, Form, Field, ErrorMessage, DropZone, Multiselect},
     data() {
         return {
             activeTab: 'Информация',
@@ -186,30 +209,40 @@ export default {
             title: '',
             link: '',
             descr: '',
+            shortDescr: '',
             errorFio: false,
             errorJob: false,
             errorTitle: false,
             errorDescr: false,
+            errorShortDescr: false,
             errorFile: false,
+            errorType: false,
             dropzone: null,
             cropImage: null,
             cropperImage: null,
             cropperKey: 0,
             previewCropImage: '',
             dropzone: null,
+            type: '',
+            options: ['Анонс', 'Новость', 'Мероприятие'],
 
         }
     },
 
     computed: {
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true)
+            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true && this.validateShortDescr(this.shortDescr) == true && this.type.length > 0)
                 return true
 
         },
     },
 
     methods: {
+        updateValueAction() {
+            document.querySelector('.multiselect__tags').classList.remove('error-input');
+            this.errorType = false
+        },
+
         clearInput(e) {
             e.target.classList.add('hidden');
             if (e.target.nextSibling.getAttribute('name') == 'fio') {
@@ -235,6 +268,11 @@ export default {
                 this.errorDescr = true
             }
 
+            if (e.target.nextSibling.getAttribute('name') == 'shortDescr') {
+                this.shortDescr = '';
+                this.errorShortDescr = true
+            }
+
         },
 
         changeTab(name) {
@@ -257,6 +295,10 @@ export default {
 
             if (e.target.getAttribute('name') == 'descr') {
                 this.errorDescr = false
+            }
+
+            if (e.target.getAttribute('name') == 'shortDescr') {
+                this.errorShortDescr = false
             }
 
 
@@ -291,6 +333,14 @@ export default {
             return true;
         },
 
+        validateShortDescr(value) {
+            if (!value) {
+                return 'Введите краткое описание новости';
+            }
+
+            return true;
+        },
+
 
         deleteNumber(e) {
             if (e.key.match(/[0-9]/)) return e.preventDefault();
@@ -312,6 +362,16 @@ export default {
             if (e.errors.descr) {
                 this.errorDescr = true
             }
+
+            if (e.errors.shortDescr) {
+                this.errorShortDescr = true
+            }
+
+            if (this.type == '') {
+                document.querySelector('.multiselect__tags').classList.add('error-input');
+                this.errorType = true
+            }
+
         },
 
         onError() {
@@ -334,10 +394,7 @@ export default {
         },
 
         submitForm() {
-
-            if (this.validate == true) {
-            }
-
+            if (this.validate = true && this.type.length > 0)
             this.activeTab = 'Проверка'
         },
         onFileAdd(e) {
@@ -361,14 +418,18 @@ export default {
         const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
         text.innerHTML =
             `<div class="file">
-                            <p class="file__title">Загрузка файлов</p>
+                            <p class="file__title">Загрузка фото</p>
                             <p>Чтобы начать загрузку, выберите файлы на компьютере или перетащите их в это окно.</p>
+                            <p class="">Допустимый формат: jpg, jpeg, png, webp, svg</p>
                             <p class="file__size">Максимальный размер файлов 125 MB</p>
+
                             <button class="btn-reset btn-outline file__btn">Выбрать файлы</button>
                         </div>`
     }
 
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
 
 
