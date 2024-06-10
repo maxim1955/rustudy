@@ -60,12 +60,7 @@
 
                     <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
                         <swiper-slide v-for="item in affiche" :key="item.id">
-                            <img :src="item.path" :alt="item.name">
-                            <!-- <picture>
-                                <source :srcset="item.phone" media="(max-width: 576px)">
-                                <source :srcset="item.tablet" media="(max-width: 1180px)">
-                                <img class="right-background" :src="item.image" alt="Курсы для педагогов">
-                            </picture> -->
+                            <img :src="'storage/'+item.image" :alt="item.name">
                         </swiper-slide>
                     </Swiper>
 
