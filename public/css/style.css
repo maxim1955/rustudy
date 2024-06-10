@@ -70,7 +70,7 @@ h5 {
 .affiche-img {
     height: 100%;
     /* object-fit: cover; */
-    mask: url(img/mask.webp);
+    mask: url(../img/mask.webp);
     mask-repeat: no-repeat;
     mask-size: cover;
 }
