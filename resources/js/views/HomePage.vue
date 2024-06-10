@@ -5,8 +5,9 @@
             <div class="container title">
                 <h1 class="title__text">Информационный портал для преподавателей РКИ</h1>
             </div>
-            <section class="container promo flex">
-                <div class="promo-left flex">
+            <section class="container">
+                <div class="promo">
+                    <div class="promo-left flex">
                     <div class="promo-top">
                         <div class="card-content">
                             <h2 class="card-title">Привет, Россия!</h2>
@@ -59,6 +60,9 @@
                     <!-- Слайдер -->
 
                     <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
+                        <swiper-slide>
+                            <img class="affiche-img" src="img/affiche-1.jpg" alt="">
+                        </swiper-slide>
                         <swiper-slide v-for="item of affiche" :key="item.id">
                             <img :src="'storage/'+item.image" alt="">
                         </swiper-slide>
@@ -73,6 +77,8 @@
                         </svg>
                     </a>
                 </div>
+                </div>
+
             </section>
 
             <section class="container subscription">
@@ -324,4 +330,19 @@ export default {
 
 </script>
 <style>
+.affiche-img {
+    height: 100%;
+    /* object-fit: cover; */
+    mask: url(img/mask.webp);
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}
+
+@media (max-width: 1200px) {
+    .affiche-img {
+        mask: url(img/mask-1024.webp);
+        mask-repeat: no-repeat;
+        mask-size: cover;
+    }
+}
 </style>
