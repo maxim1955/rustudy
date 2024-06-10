@@ -59,8 +59,8 @@
                     <!-- Слайдер -->
 
                     <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
-                        <swiper-slide v-for="item in affiche" :key="item.id">
-                            <img :src="'storage/'+item.image" :alt="item.name">
+                        <swiper-slide v-for="item of affiche" :key="item.id">
+                            <img :src="'storage/'+item.image" alt="">
                         </swiper-slide>
                     </Swiper>
 
@@ -154,6 +154,7 @@ export default {
         return {
             email: '',
             errorEmail: false,
+            affiche: [],
             // affiche: [
             //     {
             //         id: 1,
@@ -288,7 +289,7 @@ export default {
             try {
                 let affiche = await getAffiche();
                 console.log(affiche) // Надо проверить что приходит и опдставить правильные данные
-                this.affiche = affiche.data[0]
+                this.affiche = affiche.data
 
                 console.log('Data from API:', this.affiche);
             } catch (error) {
