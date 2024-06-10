@@ -326,20 +326,4 @@ export default {
 }
 
 </script>
-<style>
-.affiche-img {
-    height: 100%;
-    /* object-fit: cover; */
-    mask: url(img/mask.webp);
-    mask-repeat: no-repeat;
-    mask-size: cover;
-}
 
-@media (max-width: 1200px) {
-    .affiche-img {
-        mask: url(img/mask-1024.webp);
-        mask-repeat: no-repeat;
-        mask-size: cover;
-    }
-}
-</style>

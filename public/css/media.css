@@ -357,6 +357,14 @@
   }
 }
 
+@media (max-width: 1200px) {
+    .affiche-img {
+        mask: url(../img/mask-1024.webp);
+        mask-repeat: no-repeat;
+        mask-size: cover;
+    }
+}
+
 @media (max-width: 1180px) {
   .center_content {
     padding-right: 20px;
