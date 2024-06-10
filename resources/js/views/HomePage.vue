@@ -288,7 +288,7 @@ export default {
             try {
                 let affiche = await getAffiche();
                 console.log(affiche) // Надо проверить что приходит и опдставить правильные данные
-                this.affiche = affiche.data
+                this.affiche = affiche.data[0]
 
                 console.log('Data from API:', this.affiche);
             } catch (error) {
