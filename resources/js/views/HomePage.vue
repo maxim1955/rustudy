@@ -60,11 +60,8 @@
                     <!-- Слайдер -->
 
                     <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
-                        <swiper-slide>
-                            <img class="affiche-img" src="img/affiche-1.jpg" alt="">
-                        </swiper-slide>
                         <swiper-slide v-for="item of affiche" :key="item.id">
-                            <img :src="'storage/'+item.image" alt="">
+                            <img class="affiche-img" :src="'storage/'+item.image" alt="">
                         </swiper-slide>
                     </Swiper>
 
