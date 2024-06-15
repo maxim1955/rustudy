@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PublicationController;
+use App\Http\Controllers\Api\TeachersfeedbackController;
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Models\Role;
 
@@ -53,3 +54,6 @@ Route::post('register', [AuthController::class, 'signup']);
 Route::post('/payment',  [PaymentController::class, 'submit']);
 
 Route::get('/afishas', [AfishaController::class, 'index']);
+
+Route::get('/teachersfeedbacks', [TeachersfeedbackController::class, 'index']);
+Route::get('/teachersfeedbacks/{teachersfeedback}', [TeachersfeedbackController::class, 'show']);
