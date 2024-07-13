@@ -5,7 +5,7 @@ import api from "@/dbquery/dbConnect";
 export const getReviews = async () => {
     try {
         console.log(import.meta.env)
-        const response = await api.get('api/feedback');
+        const response = await api.get('api/teachersfeedbacks');
         console.log(response)
         return response.data;
     } catch (error) {
