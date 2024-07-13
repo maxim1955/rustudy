@@ -13,20 +13,21 @@
         >
         <swiper-slide class="review" v-for="review in reviews" :key="review.id" @click.prevent="openModal(review.id)">
             <div class="review__card">
-                <picture>
+                <img class="review__image" :src="review.image" :alt="review.teachername">
+                <!-- <picture>
                     <source :srcset="review.tablet" media="(max-width:1024px)">
-                    <img class="review__image" :src="review.image" :alt="review.name">                    
-                </picture>
+                    <img class="review__image" :src="review.image" :alt="review.name">
+                </picture> -->
                 <div class="review__block">
                     <img class="" :src="review.image" alt="">
-                    <p class="review__name">{{ review.name }}</p>
-                    <p class="review__info">{{ review.info }}</p>
+                    <p class="review__name">{{ review.teachername }}</p>
+                    <p class="review__info">{{ review.title }}</p>
                 </div>
             </div>
         </swiper-slide>
         </swiper>
 
-        <ReviewsModal :class="{active: showModal}" :reviews="reviews" :currentActiveSlide="currentActiveSlide" v-show="showModal" @close-modal="closeModal"></ReviewsModal>
+        <ReviewsModal :class="{active: showModal}" :review="review" :currentActiveSlide="currentActiveSlide" v-show="showModal" @close-modal="closeModal"></ReviewsModal>
     </div>
 </template>
 
@@ -37,7 +38,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
     export default {
-        props: ['reviews'],
+        props: ['reviews', 'review'],
         components: {Swiper, SwiperSlide, ReviewsModal},
         setup() {
 
