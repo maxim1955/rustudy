@@ -2,7 +2,7 @@ import api from "@/dbquery/dbConnect";
 
 
 // Функция для выполнения GET-запроса для получения партнеров
-export const getAffiche = async () => {
+export const getReviews = async () => {
     try {
         console.log(import.meta.env)
         const response = await api.get('api/feedback');
