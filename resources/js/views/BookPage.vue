@@ -557,7 +557,7 @@
                     <div class="container">
                         <h2 class="section-title game__title">Отзывы учителей</h2>
 
-                        <ReviewsSlider :reviews="reviews"></ReviewsSlider>
+                        <!-- <ReviewsSlider :reviews="reviews"></ReviewsSlider> -->
                     </div>
                 </section>
 
@@ -625,6 +625,7 @@ import FAQList from '../components/FAQList.vue';
 import router from '../router';
 import FeedbackModal from '../components/FeedbackModal.vue';
 import {useHead} from "unhead";
+import {getReviews} from "../dbquery/getReviews";
 /*
 window.addEventListener('scroll', () => {
     const element = document.querySelector('.hide-on-scroll');
@@ -730,68 +731,69 @@ export default {
                     url: 'img/author-4.webp'
                 },
             ],
-            reviews: [
-                {
-                    id: 1,
-                    name: 'Канарский Кирилл',
-                    review: '',
-                    info: 'Польша, Директор языковой школы XYZ',
-                    image: 'img/review-1.webp',
-                    tablet: 'img/review-1-1024.webp',
-                    video: '',
-                },
-                {
-                    id: 2,
-                    name: 'Карпенко Марина',
-                    review: '',
-                    info: 'Италия, Преподаватель РКИ',
-                    image: 'img/review-2.webp',
-                    tablet: 'img/review-2-1024.webp',
-                    video: '',
-                },
-                {
-                    id: 3,
-                    name: 'Кроер Юлиана',
-                    review: '',
-                    info: 'Австрия, Преподаватель РКИ',
-                    image: 'img/review-3.webp',
-                    tablet: 'img/review-3-1024.webp',
-                    video: '',
-                },
-                {
-                    id: 4,
-                    name: 'Милова Светлана ',
-                    review: '',
-                    info: 'Турция, Преподаватель курсов РКИ',
-                    image: 'img/review-4.webp',
-                    tablet: 'img/review-4-1024.webp',
-                    video: '',
-                },
-                {
-                    id: 5,
-                    name: 'Милова Светлана ',
-                    review: '',
-                    info: 'Турция, Преподаватель курсов РКИ',
-                    image: 'img/review-4.webp',
-                    tablet: 'img/review-4-1024.webp',
-                    video: '',
-                },
-                {
-                    id: 6,
-                    name: 'Милова Светлана ',
-                    review: '',
-                    info: 'Турция, Преподаватель курсов РКИ',
-                    image: 'img/review-4.webp',
-                    tablet: 'img/review-4-1024.webp',
-                    video: '',
-                },
-            ],
+            // reviews: [
+            //     {
+            //         id: 1,
+            //         name: 'Канарский Кирилл',
+            //         review: '',
+            //         info: 'Польша, Директор языковой школы XYZ',
+            //         image: 'img/review-1.webp',
+            //         tablet: 'img/review-1-1024.webp',
+            //         video: '',
+            //     },
+            //     {
+            //         id: 2,
+            //         name: 'Карпенко Марина',
+            //         review: '',
+            //         info: 'Италия, Преподаватель РКИ',
+            //         image: 'img/review-2.webp',
+            //         tablet: 'img/review-2-1024.webp',
+            //         video: '',
+            //     },
+            //     {
+            //         id: 3,
+            //         name: 'Кроер Юлиана',
+            //         review: '',
+            //         info: 'Австрия, Преподаватель РКИ',
+            //         image: 'img/review-3.webp',
+            //         tablet: 'img/review-3-1024.webp',
+            //         video: '',
+            //     },
+            //     {
+            //         id: 4,
+            //         name: 'Милова Светлана ',
+            //         review: '',
+            //         info: 'Турция, Преподаватель курсов РКИ',
+            //         image: 'img/review-4.webp',
+            //         tablet: 'img/review-4-1024.webp',
+            //         video: '',
+            //     },
+            //     {
+            //         id: 5,
+            //         name: 'Милова Светлана ',
+            //         review: '',
+            //         info: 'Турция, Преподаватель курсов РКИ',
+            //         image: 'img/review-4.webp',
+            //         tablet: 'img/review-4-1024.webp',
+            //         video: '',
+            //     },
+            //     {
+            //         id: 6,
+            //         name: 'Милова Светлана ',
+            //         review: '',
+            //         info: 'Турция, Преподаватель курсов РКИ',
+            //         image: 'img/review-4.webp',
+            //         tablet: 'img/review-4-1024.webp',
+            //         video: '',
+            //     },
+            // ],
             showOrder: false,
             valueWater: '',
             valueVase: '',
             valueUmbrella: '',
             valueFrost: '',
-            showFeedback: false
+            showFeedback: false,
+            reviews: []
         }
     },
 
@@ -849,6 +851,19 @@ export default {
     },
 
     mounted() {
+        let getReviewsDb = async () => {
+            try {
+                let reviews = await getAffiche();
+                console.log(reviews) // Надо проверить что приходит и опдставить правильные данные
+                this.reviews = reviews.data
+
+                console.log('Data from API:', this.reviews);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getReviewsDb();
+
         useHead({
             title: 'Бумажные и онлайн-учебники РКИ по методике Нахабиной М.М.',
             meta: [
