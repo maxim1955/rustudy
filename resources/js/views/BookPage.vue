@@ -853,7 +853,7 @@ export default {
     mounted() {
         let getReviewsDb = async () => {
             try {
-                let reviews = await getAffiche();
+                let reviews = await getReviews();
                 console.log(reviews) // Надо проверить что приходит и опдставить правильные данные
                 this.reviews = reviews.data
 
