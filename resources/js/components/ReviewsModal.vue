@@ -19,14 +19,14 @@
        >
         <swiper-slide class="review" v-for="review in reviews" :key="review.id">
             <div class="review__card flex">
-                <img class="review__image" :src="review.image" :alt="review.teachername">
+                <img class="review__image" :src="'storage/'+review.image" :alt="review.teachername">
                 <!-- <picture>
                     <source srcset="">
                     <img class="review__image" :src="review.image" :alt="review.name">
                 </picture> -->
                 <div class="review__content">
                 <div class="review__block">
-                    <img class="" :src="review.image" :alt="review.teachername">
+                    <img class="" :src="'storage/'+review.image" :alt="review.teachername">
                     <p class="review__name">{{ review.teachername }}</p>
 
                 </div>

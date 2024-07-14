@@ -865,7 +865,7 @@ export default {
         }
         getReviewsDb();
 
-        this.reviews.map(el => {
+        this.reviews.forEach(el => {
             let getReviewDb = async () => {
             try {
                 let review = await getReview(el.id);
