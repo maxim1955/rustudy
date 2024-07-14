@@ -19,17 +19,18 @@
        >
         <swiper-slide class="review" v-for="review in reviews" :key="review.id">
             <div class="review__card flex">
-                <picture>
+                <img class="review__image" :src="review.image" :alt="review.teachername">
+                <!-- <picture>
                     <source srcset="">
                     <img class="review__image" :src="review.image" :alt="review.name">
-                </picture>
+                </picture> -->
                 <div class="review__content">
                 <div class="review__block">
-                    <img class="" :src="review.image" :alt="review.name">
-                    <p class="review__name">{{ review.name }}</p>
+                    <img class="" :src="review.image" :alt="review.teachername">
+                    <p class="review__name">{{ review.teachername }}</p>
 
                 </div>
-                <p class="review__desc">Наконец появился учебник, где интересно рассказано о современной России! Студенты узнают много нового и удивительного.</p>
+                <p class="review__desc">{{ review.text }}</p>
                 </div>
             </div>
         </swiper-slide>
@@ -49,7 +50,7 @@ import 'swiper/css';
 
 
     export default {
-        props: ['reviews', 'currentActiveSlide'],
+        props: ['review', 'currentActiveSlide'],
         components: {Swiper, SwiperSlide },
 
         setup(props) {

@@ -557,7 +557,7 @@
                     <div class="container">
                         <h2 class="section-title game__title">Отзывы учителей</h2>
 
-                        <!-- <ReviewsSlider :reviews="reviews"></ReviewsSlider> -->
+                        <ReviewsSlider :reviews="reviews" :review="review"></ReviewsSlider>
                     </div>
                 </section>
 
@@ -625,7 +625,7 @@ import FAQList from '../components/FAQList.vue';
 import router from '../router';
 import FeedbackModal from '../components/FeedbackModal.vue';
 import {useHead} from "unhead";
-import {getReviews} from "../dbquery/getReviews";
+import {getReviews, getReview} from "../dbquery/getReviews";
 /*
 window.addEventListener('scroll', () => {
     const element = document.querySelector('.hide-on-scroll');
@@ -793,7 +793,8 @@ export default {
             valueUmbrella: '',
             valueFrost: '',
             showFeedback: false,
-            reviews: []
+            reviews: [],
+            review: []
         }
     },
 
@@ -855,7 +856,7 @@ export default {
             try {
                 let reviews = await getReviews();
                 console.log(reviews) // Надо проверить что приходит и опдставить правильные данные
-                this.reviews = reviews.data
+                this.reviews = reviews.data;
 
                 console.log('Data from API:', this.reviews);
             } catch (error) {
@@ -863,6 +864,23 @@ export default {
             }
         }
         getReviewsDb();
+
+        this.reviews.map(el => {
+            let getReviewDb = async () => {
+            try {
+                let review = await getReview(el.id);
+                console.log(review) // Надо проверить что приходит и опдставить правильные данные
+                this.review.push(review.data);
+
+                console.log('Data from API:', this.review);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getReviewDb();
+        })
+
+
 
         useHead({
             title: 'Бумажные и онлайн-учебники РКИ по методике Нахабиной М.М.',
