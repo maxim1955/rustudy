@@ -163,6 +163,14 @@
     "file": "assets/logo_tablet-DNkyDqw2.svg",
     "src": "public/img/logo_tablet.svg"
   },
+  "public/img/mask-1024.webp": {
+    "file": "assets/mask-1024-BvY9sC5s.webp",
+    "src": "public/img/mask-1024.webp"
+  },
+  "public/img/mask.webp": {
+    "file": "assets/mask-DtsFOJ5v.webp",
+    "src": "public/img/mask.webp"
+  },
   "public/img/message-1024.svg": {
     "file": "assets/message-1024-hzSkgsAp.svg",
     "src": "public/img/message-1024.svg"
@@ -220,12 +228,12 @@
     "src": "public/img/x-circle.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-B1zL_MNg.js",
+    "file": "assets/app-BlmeQIR-.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-Cb0sZ_k4.css"
+      "assets/app-7iFahn8s.css"
     ],
     "assets": [
       "assets/logo_tablet-DNkyDqw2.svg",
@@ -245,6 +253,7 @@
       "assets/Manrope-Medium-B06codu0.woff",
       "assets/Manrope-Bold-B3VgaMYs.woff",
       "assets/Repo-Bold-DBbqD7yt.woff",
+      "assets/mask-DtsFOJ5v.webp",
       "assets/background1-B1v680D9.webp",
       "assets/background1_hover-U3ROjspo.webp",
       "assets/blonde-BpjWKtQv.png",
@@ -269,6 +278,7 @@
       "assets/background2_hover_tablet-fuGFy7LT.webp",
       "assets/bacrground3_tablet--jJILgPC.webp",
       "assets/background3_hover_tablet-oAXTuwRw.webp",
+      "assets/mask-1024-BvY9sC5s.webp",
       "assets/blonde_tablet-MRRwHJdN.png",
       "assets/download-DBZM4f-z.svg",
       "assets/book-banner-DXennzev.webp",
