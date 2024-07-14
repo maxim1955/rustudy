@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Api\RestController;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ActivityFeedCollection;
+use App\Http\Resources\TeachersfeedbackFeedCollection;
 use App\Http\Resources\TeachersfeedbackResource;
 use App\Models\Teachersfeedback;
 use Illuminate\Http\Request;
@@ -16,9 +16,9 @@ class TeachersfeedbackController extends RestController
      */
     public function index(Request $request){
 
-        $teachersfeedbacks = Teachersfeedback::orderByDesc('created_at')->paginate(10);
+        $teachersfeedbacks = Teachersfeedback::orderByDesc('created_at');
 
-        return $this->sendResponse(new ActivityFeedCollection($teachersfeedbacks));
+        return $this->sendResponse(new TeachersfeedbackFeedCollection($teachersfeedbacks));
     }
 
     public function show(Request $request,  int $id){
