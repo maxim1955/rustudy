@@ -15,7 +15,7 @@ class TeachersfeedbackFeedCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => $this->collection,
+            $this->collection,
             'meta' => [
                 'pagination' => [
                     'total' => $this->resource->total(),

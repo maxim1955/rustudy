@@ -17,7 +17,7 @@ class TeachersfeedbackFeedResource extends JsonResource
         return [
             'id' => $this->id,
             'teachername' => $this->teachername,
-            'imgage' => $this->imgage,
+            'image' => $this->image,
             'title' => $this->title
         ];
     }
