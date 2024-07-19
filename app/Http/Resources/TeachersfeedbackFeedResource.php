@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TeachersfeedbackResource extends JsonResource
+class TeachersfeedbackFeedResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,9 +18,7 @@ class TeachersfeedbackResource extends JsonResource
             'id' => $this->id,
             'teachername' => $this->teachername,
             'image' => $this->image,
-            'title' => $this->title,
-            'text' => $this->text,
-            'created_at' => $this->created_at,
+            'title' => $this->title
         ];
     }
 }
