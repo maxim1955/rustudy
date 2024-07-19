@@ -46,13 +46,14 @@ const routes = [
         component: BookPage,
     },
     {
-        path: "/newss",
+        path: "/news",
         name: "news",
         component: NewsPage,
+        props: true,
     },
 
     {
-        path: "/newss/:id",
+        path: "/news/:id",
         name: "newItem",
         component: NewsModal,
         props: true,
