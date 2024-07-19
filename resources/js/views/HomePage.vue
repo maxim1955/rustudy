@@ -5,8 +5,9 @@
             <div class="container title">
                 <h1 class="title__text">Информационный портал для преподавателей РКИ</h1>
             </div>
-            <section class="container promo flex">
-                <div class="promo-left flex">
+            <section class="container">
+                <div class="promo">
+                    <div class="promo-left flex">
                     <div class="promo-top">
                         <div class="card-content">
                             <h2 class="card-title">Привет, Россия!</h2>
@@ -59,12 +60,8 @@
                     <!-- Слайдер -->
 
                     <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
-                        <swiper-slide v-for="item in affiche" :key="item.id">
-                            <picture>
-                                <source :srcset="item.phone" media="(max-width: 576px)">
-                                <source :srcset="item.tablet" media="(max-width: 1180px)">
-                                <img class="right-background" :src="item.image" alt="Курсы для педагогов">
-                            </picture>
+                        <swiper-slide v-for="item of affiche" :key="item.id">
+                            <img class="affiche-img" :src="'storage/'+item.image" alt="">
                         </swiper-slide>
                     </Swiper>
 
@@ -77,6 +74,8 @@
                         </svg>
                     </a>
                 </div>
+                </div>
+
             </section>
 
             <section class="container subscription">
@@ -146,6 +145,7 @@ import {Navigation, Pagination} from 'swiper/modules';
 import {Form, Field, ErrorMessage} from 'vee-validate';
 
 import {getPartners} from "../dbquery/getPartners";
+import {getAffiche} from "../dbquery/getAffiche";
 import {useHead} from "unhead";
 
 
@@ -157,21 +157,22 @@ export default {
         return {
             email: '',
             errorEmail: false,
-            affiche: [
-                {
-                    id: 1,
-                    image: 'img/card-right.webp',
-                    tablet: 'img/right-card-tablet.webp',
-                    phone: 'img/right-card-mobile.webp'
-                },
-                {
-                    id: 2,
-                    image: 'img/card-right.webp',
-                    tablet: 'img/right-card-tablet.webp',
-                    phone: 'img/right-card-mobile.webp'
-                },
+            affiche: [],
+            // affiche: [
+            //     {
+            //         id: 1,
+            //         image: 'img/card-right.webp',
+            //         tablet: 'img/right-card-tablet.webp',
+            //         phone: 'img/right-card-mobile.webp'
+            //     },
+            //     {
+            //         id: 2,
+            //         image: 'img/card-right.webp',
+            //         tablet: 'img/right-card-tablet.webp',
+            //         phone: 'img/right-card-mobile.webp'
+            //     },
 
-            ],
+            // ],
 
             partners: [
                /* {
@@ -285,7 +286,22 @@ export default {
                 console.log(error)
             }
         }
-        getPartnersDb()
+        getPartnersDb();
+
+        let getAfficheDb = async () => {
+            try {
+                let affiche = await getAffiche();
+                console.log(affiche) // Надо проверить что приходит и опдставить правильные данные
+                this.affiche = affiche.data
+
+                console.log('Data from API:', this.affiche);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getAfficheDb();
+
+
 
         useHead({
             title: 'Обучение русскому как иностранному | Привет, Россия! | Rus.Study',
@@ -310,5 +326,4 @@ export default {
 }
 
 </script>
-<style>
-</style>
+

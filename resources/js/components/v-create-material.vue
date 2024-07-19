@@ -137,6 +137,7 @@
                         <span class="form__text">Загрузите файл</span>
                         <div class="form__label">
                             <DropZone
+                                ref="dropzone"
                                 :maxFiles="1"
                                 url="http://localhost:5000/item"
                                 :uploadOnDrop="true"
@@ -144,7 +145,26 @@
                                 :parallelUpload="3"
                                 :maxFileSize="Number(131072000)"
                                 @errorAdd="onError"
-                                @removedFile="onFileRemove"/>
+                                @removedFile="onFileRemove"
+                                @sending="onFileAdd"
+                            >
+                            </DropZone>
+                            <cropper
+                                ref="cropperImage"
+                                :key="cropperKey"
+                                v-if="cropImage"
+                                class="cropper"
+                                :src="cropImage.thumbnail"
+                                @change="change"
+                            />
+                            <div  v-if="previewCropImage">
+                                <h2>Превью изображения</h2>
+                                <img :src="previewCropImage">
+                            </div>
+
+                            <div class="d-flex pb-4" v-if="cropImage">
+                                <button class="modal_form_next" type="button" @click="uploadImage">Обрезать</button>
+                            </div>
                             <span class="form__error" v-show="errorFile">Размер файла превышает 125MB</span>
                         </div>
                         <div class="d-flex">
@@ -182,9 +202,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useVuelidate} from '@vuelidate/core'
-import {required, email, maxLength,minLength} from '@vuelidate/validators'
+import {required, email, maxLength, minLength} from '@vuelidate/validators'
 import VModalSelect from "@/components/v-modal-select.vue";
 import DropZone from 'dropzone-vue';
+import {Cropper} from 'vue-advanced-cropper';
+import 'vue-advanced-cropper/dist/style.css';
+
 
 const emit = defineEmits(['closemodal'])
 
@@ -208,8 +231,28 @@ const themeFilter = [
 ]
 const statusCreated = ref('info')
 let errorFile = false
+
+
+// Выбор области
+let cropImage= ref()
+const cropperImage = ref()
+const cropperKey = ref(0);
+const previewCropImage = ref('')
+let onFileAdd = (e) => {
+    cropperKey.value += 1;
+    cropImage.value = dropzone.value.all[Object.keys(dropzone.value.all)[0]]
+}
+let dropzone = ref()
+
+let uploadImage = ()=>{
+        const { canvas } = cropperImage.value.getResult();
+        if (canvas) {
+            previewCropImage.value= canvas.toDataURL() // вывод превью
+        }
+}
 let onError = () => {
     errorFile = true
+    alert('Ошибка')
 }
 let onFileRemove = () => {
     setTimeout(() => {
@@ -248,17 +291,34 @@ const file = ref(false);
 
 
 let sendForm = () => {
+    const cropper = cropImage.cropper; // Получаем доступ к cropper
+    const croppedCanvas = cropper.getCroppedCanvas(); // Получаем обрезанное изображение в виде canvas
+
+    // Преобразуем canvas в Blob для отправки на сервер
+    croppedCanvas.toBlob((blob) => {
+        // Отправляем обрезанное изображение на сервер
+        const formData = new FormData();
+        formData.append('croppedImage', blob);
+
+        axios.post('http://your-server-url/save-cropped-image', formData)
+            .then(response => {
+                console.log('Cropped image saved successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error saving cropped image:', error);
+            });
+    })
     statusCreated.value = 'checking'
 }
 //validate
 
 const rules = {
     name: {required, minLength: minLength(5)},
-    position: {required,minLength: minLength(5)},
+    position: {required, minLength: minLength(5)},
     about: {required, minLength: minLength(5)},
-    titleMaterial: {required,minLength: minLength(5)},
+    titleMaterial: {required, minLength: minLength(5)},
     description: {required, maxLength: maxLength(255)},
-    link: {required,minLength: minLength(5)},
+    link: {required, minLength: minLength(5)},
 };
 const v$ = useVuelidate(rules, {
     name,
@@ -269,12 +329,12 @@ const v$ = useVuelidate(rules, {
     link,
 });
 
-let submitForm =async () => {
+let submitForm = async () => {
     console.log(v$.value)
     v$.value.$touch()
-    if(v$.value.$invalid){
+    if (v$.value.$invalid) {
         return
-    }else {
+    } else {
         sendForm()
     }
 }
@@ -283,10 +343,11 @@ let submitForm =async () => {
 </script>
 
 <style>
-.isInvalidInput{
-    border:  1.5px solid red!important;
+.isInvalidInput {
+    border: 1.5px solid red !important;
 }
-input:focus-visible,textarea:focus-visible {
-    outline: none!important;
+
+input:focus-visible, textarea:focus-visible {
+    outline: none !important;
 }
 </style>

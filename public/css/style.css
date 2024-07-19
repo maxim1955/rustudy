@@ -67,6 +67,14 @@ h5 {
   font-display: swap;
 }
 
+.affiche-img {
+    height: 100%;
+    /* object-fit: cover; */
+    mask: url(../img/mask.webp);
+    mask-repeat: no-repeat;
+    mask-size: cover;
+}
+
 .loader-block {
     position: fixed;
     height: 100vh;
@@ -327,13 +335,16 @@ body {
 /* promo */
 
 .promo {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
   margin-bottom: 80px;
   gap: 20px;
 }
 
 .promo-left {
   flex-direction: column;
-  width: 41.1%;
+  /* width: 41.1%; */
+  grid-column: 5 span;
 }
 
 .promo-top {
@@ -461,7 +472,8 @@ body {
 }
 
 .promo-center {
-  width: 24.45%;
+    grid-column: 3 span;
+  /* width: 24.45%; */
   position: relative;
   display: flex;
   flex-direction: column;
@@ -512,7 +524,8 @@ body {
 }
 
 .promo-right {
-  width: 32.5%;
+    grid-column: 4 span;
+  /* width: 32.5%; */
   position: relative;
   border-radius: 30px;
   overflow: hidden;
@@ -629,7 +642,7 @@ body .swiper-button-prev:hover::after {
   background: #fff;
   color: #0a2b49;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 120%;
 }
 
