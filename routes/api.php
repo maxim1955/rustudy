@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\TeachersfeedbackController;
+use App\Http\Controllers\Api\AddNewsController;
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Models\Role;
 
@@ -57,3 +58,5 @@ Route::get('/afishas', [AfishaController::class, 'index']);
 
 Route::get('/teachersfeedbacks', [TeachersfeedbackController::class, 'index']);
 Route::get('/teachersfeedbacks/{teachersfeedback}', [TeachersfeedbackController::class, 'show']);
+
+Route::post('/addnews',  [AddNewsController::class, 'submit']);
