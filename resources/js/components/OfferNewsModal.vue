@@ -37,7 +37,7 @@
                             <div>
                                 <span class="form__text">Тип новости *</span>
                                 <label for="" class="form__label">
-                                    <multiselect v-model="type" :options="options" placeholder="Выберите тип новости" select-label="" :searchable="false" @update:modelValue="updateValueAction"></multiselect>
+                                    <multiselect v-model="type" :options="options" label="label" placeholder="Выберите тип новости" select-label="" :searchable="false" @update:modelValue="updateValueAction"></multiselect>
                                     <span v-show="this.errorType" class="error-icon"></span>
                                     <span v-show="this.errorType" class="form__error">Выберите тип новости</span>
                                 </label>
@@ -92,7 +92,7 @@
                                         v-if="cropImage"
                                         class="cropper"
                                         :src="cropImage.thumbnail"
-                                        @change="change"
+                                        @change="validatefile"
                                     />
 
                                     <div v-if="previewCropImage" class="previewCropImage">
@@ -105,8 +105,7 @@
                                             Обрезать
                                         </button>
                                     </div>
-
-                                    <span class="form__error" v-show="errorFile">Размер файла превышает 125MB</span>
+                                    <span class="form__error" v-show="errorFile">Изображение не загружено, попробуйте снова</span>
                                 </div>
                             </div>
 
@@ -176,7 +175,8 @@ import DropZone from 'dropzone-vue';
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import {Cropper} from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
- import Multiselect from 'vue-multiselect'
+import Multiselect from 'vue-multiselect'
+import axios from "axios";
 
 
 configure({
@@ -224,14 +224,14 @@ export default {
             previewCropImage: '',
             dropzone: null,
             type: '',
-            options: ['Анонс', 'Новость', 'Мероприятие'],
+            options: [{label: 'Анонс',value:'activity'},{label: 'Новости',value: 'publication'} , {label: 'Мероприятие',value: 'event'}],
 
         }
     },
 
     computed: {
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true && this.validateShortDescr(this.shortDescr) == true && this.type.length > 0)
+            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true && this.validateShortDescr(this.shortDescr) == true && this.type.value.length > 0 && this.validatefile(this.previewCropImage))
                 return true
 
         },
@@ -340,6 +340,15 @@ export default {
 
             return true;
         },
+        validatefile(value) {
+            if (!value) {
+                document.querySelector('.dropzone').classList.add('error-input');
+                this.errorFile = true
+                return 'Выберите изображение';
+            }
+            this.errorFile = false
+            return true;
+        },
 
 
         deleteNumber(e) {
@@ -372,6 +381,11 @@ export default {
                 this.errorType = true
             }
 
+            if (this.previewCropImage == '') {
+                document.querySelector('.dropzone').classList.add('error-input');
+                this.errorFile = true
+            }
+
         },
 
         onError() {
@@ -395,9 +409,35 @@ export default {
 
         },
 
-        submitForm() {
-            if (this.validate = true && this.type.length > 0)
-            this.activeTab = 'Проверка'
+       async submitForm() {
+            if (this.validate == true && this.type.value && this.previewCropImage){
+                try {
+                    const newsData = {
+                        news_type: this.type.value,
+                        title: this.title,
+                        shortDescr: this.shortDescr,
+                        descr: this.descr,
+                        fio: this.fio
+                    };
+                    if(this.previewCropImage)newsData.img = this.previewCropImage
+                    const response = await axios.post('/api/addnews', newsData);
+                    console.log(response)
+                    this.activeTab = 'Проверка'
+                }catch (error){
+                    if (error.response) {
+                        console.error('Error response:', error.response.data);
+                    } else if (error.request) {
+                        console.error('Error request:', error.request);
+                    } else {
+                        console.error('Error:', error.message);
+                    }
+                }
+            }else {
+                console.log('submitForm false')
+            }
+
+
+
         },
         onFileAdd(e) {
             this.cropperKey += 1;
