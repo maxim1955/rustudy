@@ -76,7 +76,6 @@
                                     <DropZone
                                         ref="dropzone"
                                         :maxFiles="1"
-                                        url="http://localhost:5000/item"
                                         :uploadOnDrop="true"
                                         :multipleUpload="true"
                                         :parallelUpload="3"
@@ -87,6 +86,7 @@
                                         :acceptedFiles =" ['jpg', 'jpeg', 'png', 'webp', 'svg'] "
                                     />
                                     <cropper
+                                        style="max-width: 560px"
                                         ref="cropperImage"
                                         :key="cropperKey"
                                         v-if="cropImage"
@@ -95,13 +95,14 @@
                                         @change="change"
                                     />
 
-                                    <div v-if="previewCropImage">
-                                        <h2>Превью изображения</h2>
-                                        <img :src="previewCropImage">
+                                    <div v-if="previewCropImage" class="previewCropImage">
+                                        <span class="form__text">Превью изображения</span>
+                                        <img :src="previewCropImage" size="300px">
                                     </div>
 
-                                    <div class="d-flex pb-4" v-if="cropImage">
-                                        <button class="modal_form_next" type="button" @click="uploadImage">Обрезать
+                                    <div class="d-flex previewCropImage_сut" v-if="cropImage && !previewCropImage">
+                                        <button class="modal_form_next" type="button" @click="uploadImage">
+                                            Обрезать
                                         </button>
                                     </div>
 
@@ -217,7 +218,6 @@ export default {
             errorShortDescr: false,
             errorFile: false,
             errorType: false,
-            dropzone: null,
             cropImage: null,
             cropperImage: null,
             cropperKey: 0,
@@ -380,7 +380,6 @@ export default {
 
         onFileRemove() {
             setTimeout(() => {
-                console.log(document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable'))
                 const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
                 text.innerHTML =
                     `<div class="file">
@@ -390,6 +389,9 @@ export default {
                             <button class="btn-reset btn-outline file__btn">Выбрать файлы</button>
                         </div>`
             }, 5)
+            this.cropImage = null
+            this.previewCropImage = ''
+
 
         },
 
@@ -402,14 +404,13 @@ export default {
             this.cropImage = this.$refs.dropzone.all[Object.keys(this.$refs.dropzone.all)[0]];
 
         },
-        change({coordinates, canvas}) {
-            console.log(coordinates, canvas);
-        },
+
         uploadImage() {
             const {canvas} = this.$refs.cropperImage.getResult();
             if (canvas) {
                 this.previewCropImage = canvas.toDataURL(); // вывод превью
             }
+            this.cropImage = null
         },
     },
 
@@ -431,5 +432,13 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style>
+.previewCropImage{
+    margin-top: 20px;
+}
+.previewCropImage_сut{
+    margin-top: 20px;
+}
+</style>
 
 

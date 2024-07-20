@@ -60,3 +60,4 @@ Route::get('/teachersfeedbacks', [TeachersfeedbackController::class, 'index']);
 Route::get('/teachersfeedbacks/{teachersfeedback}', [TeachersfeedbackController::class, 'show']);
 
 Route::post('/addnews',  [AddNewsController::class, 'submit']);
+
