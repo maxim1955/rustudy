@@ -654,6 +654,7 @@ export default {
             books: [
                 {
                     id: 1,
+                    course_id: 8,
                     name: 'Привет, Россия!',
                     type: 'Бумажный учебник',
                     level: 'А1',
@@ -667,6 +668,7 @@ export default {
                 },
                 {
                     id: 2,
+                    course_id: 8,
                     name: 'Привет, Россия!',
                     type: 'Онлайн-учебник',
                     level: 'А1',
@@ -675,11 +677,12 @@ export default {
                     rub: 900,
                     eur: 20,
                     usd: 15,
-                    amount: 0,
+                    amount: 1,
                     url: '/error402'
                 },
                 {
                     id: 3,
+                    course_id: 9,
                     name: 'Привет, Россия!',
                     type: 'Бумажный учебник',
                     level: 'А2',
@@ -693,6 +696,7 @@ export default {
                 },
                 {
                     id: 4,
+                    course_id: 9,
                     name: 'Привет, Россия!',
                     type: 'Онлайн-учебник',
                     level: 'А2',
@@ -701,7 +705,7 @@ export default {
                     rub: 900,
                     eur: 20,
                     usd: 15,
-                    amount: 0,
+                    amount: 1,
                     url: '/error404'
                 },
             ],

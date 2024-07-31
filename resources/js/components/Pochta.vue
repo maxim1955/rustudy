@@ -440,6 +440,12 @@ objects.addEvents('click', function (e) {
 
   },
 
+  watch: {
+    activeCity(newValue) {
+      this.$emit("address", newValue);
+    },
+  }
+
 
 }
 

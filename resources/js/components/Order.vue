@@ -46,9 +46,72 @@
 
                             <div class="order__left">
                                 <div class="products">
-                                    <OrderItem v-for="book in books" :key="book.id" :book="book"
-                                               :currencyValue="currencyValue" :selectedProducts="selectedProducts"/>
+                                    <!-- <OrderItem @book-item="getBookItem" @amount="amount" v-for="book in books" :key="book.id" :book="book"
+                                               :currencyValue="currencyValue"/> -->
+
+                             <label class="product" v-for="book in books" :key="book.id" :class="{active: bookItem.id == book.id}">
+                                <div class="order__product">
+                                   <input type="radio" class="visually-hidden product__input" name="product" v-model="bookItem" :value="book" @change="resetAmount">
+                                <span class="product__checkbox"></span>
+                                <img :src="book.image" alt="">
+                                <div class="product__name">
+                                    <p>{{ book.type }}</p>
+                                    <p>{{ book.name }} {{ book.level }}</p>
                                 </div>
+                                </div>
+
+                                <div v-if="!book.isOnline" class="product__count count">
+                                    <p class="count__text">Количество</p>
+                                    <div class="count__block">
+                                        <button @click.prevent="decrementProduct(book.amount)" class="btn-reset product__btn product__btn--decrement" :disabled="bookItem != book"></button>
+                                        <input v-if="bookItem.id == book.id" type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount">
+                                        <input v-else type="number" class="count__num" :name="'count['+ book.id +']'" value="0">
+                                        <button @click.prevent="incrementProduct(book.amount)" class="btn-reset product__btn product__btn--increment" :disabled="bookItem != book"></button>
+                                    </div>
+                                </div>
+
+                                <div v-else-if="book.isOnline" class="product__count sub">
+                                    <div class="sub__text">
+
+
+                                        <div class="tooltip">
+                                            Подписка
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                            <rect width="12" height="12" rx="6"/>
+                                            <path d="M6 9.5V9.505M6 7.5V2.5" stroke="#0A2B49" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+
+                                            <div class="tooltip__block">
+                                                <p class="tooltip__title">Подписка на 1 год</p>
+                                                <p class="tooltip__text">Имеется спорная точка зрения, гласящая примерно следующее: непосредственные участники технического прогресса представляют собой не что иное.</p>
+                                                <p class="tooltip__title">Подписка навсегда</p>
+                                                <p class="tooltip__text">Однозначно, некоторые особенности внутренней политики неоднозначны и будут заблокированы в рамках своих собственных рациональных ограничений.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex sub__block">
+                                        <label class="sub__label">
+                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="year" :disabled="bookItem != book" :checked="bookItem == book">
+                                            <span></span>
+                                            1 год
+                                        </label>
+                                        <label class="sub__label">
+                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="always" :disabled="bookItem != book" :checked="bookItem == book">
+                                            <span></span>
+                                            Навсегда
+                                        </label>
+
+
+                                    </div>
+                                </div>
+                                <p class="product__price">{{ book.rub }} ₽</p>
+                                <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
+                                <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
+                            </label>
+
+
+                                            </div>
                                 <div class="order__info info">
                                     <div>
                                         <span class="form__text">Ф.И.О *</span>
@@ -123,7 +186,7 @@
                                         <div>
                                             <label class="delivery__label">
                                                 <input type="radio" class="visually-hidden" name="delivery"
-                                                       value="pickup" @change="selectedDelivery" checked/>
+                                                       value="0" @change="selectedDelivery" checked/>
                                                 <span></span>
                                                 Самовывоз
                                             </label>
@@ -134,7 +197,7 @@
                                         <div>
                                             <label class="delivery__label">
                                                 <input type="radio" class="visually-hidden" name="delivery"
-                                                       value="pochta" @change="selectedDelivery"/>
+                                                       value="1" @change="selectedDelivery"/>
                                                 <span></span>
                                                 Доставка почтой России
                                             </label>
@@ -145,18 +208,18 @@
                                     </div>
                                 </div>
 
-                                <Pochta v-show="deliveryValue == 'pochta'"/>
+                                <Pochta @address="activeCity" v-show="deliveryValue == 1"/>
 
                             </div>
                             <div class="order__right">
                                 <div class="order__block">
                                     <div class="between-block">
                                         <p class="order__title">Итого</p>
-                                        <p class="order__price order__price--bold">{{ total }} ₽</p>
+                                        <p class="order__price order__price--bold">{{ totalPrice }} ₽</p>
                                     </div>
                                     <div class="between-block">
-                                        <p class="order__text">Товары, {{ selectedProducts.length }}  шт.</p>
-                                        <p class="order__price">0 ₽</p>
+                                        <p class="order__text">Товары, {{ productAmount }}  шт.</p>
+                                        <p class="order__price">{{ totalPrice }} ₽</p>
                                     </div>
 
                                     <p class="order__text order__text--info">
@@ -169,7 +232,7 @@
                                         Мы свяжемся с вами, чтобы уточнить сроки и стоимость доставки.
                                     </p>
 
-                                    <input class="order__input" type="text" placeholder="Промокод">
+                                    <input v-model="this.promocode" name="promocode" class="order__input" type="text" placeholder="Промокод">
 
                                     <button :disabled="!validate" class="btn-reset order__submit" type="submit">
                                         Заказать
@@ -236,18 +299,44 @@ export default {
             errorFio: false,
             errorEmail: false,
             phoneValid: false,
-            selectedProducts: [],
+            // selectedProducts: [],
             deliveryValue: '',
             paymentValue: '',
             currencyValue: 'rub',
             delivery: '',
             showModalSubmit: false,
-            totalPrice: 0
-
+            totalPrice: 0,
+            promocode: '',
+            address: null,
+            subscription: null,
+            bookItem: {},
+            amount: 0,
+            courseID: null,
+            pickupAddress: '',
         }
     },
 
     methods: {
+
+        resetAmount() {
+            this.amount = 0
+        },
+
+        incrementProduct() {
+            this.bookItem.amount += 1
+        },
+
+        decrementProduct() {
+            if (this.bookItem.amount > 1) {
+                this.bookItem.amount -= 1
+            }
+        },
+
+
+        activeCity(newValue) {
+            this.address = newValue;
+        },
+
         countryChanged(country) {
             this.activeCountry = country.dialCode
             this.phone = `+ ${country.dialCode}`
@@ -318,8 +407,6 @@ export default {
                 this.errorEmail = false
             }
 
-            console.log(e)
-
             if (e.target.value != '') {
                 btn.classList.remove('hidden')
 
@@ -354,12 +441,22 @@ export default {
         },
 
         async onSubmit(e) {
-            let res = {
-                fio: this.fio,
-                email: this.email,
-                country: this.country,
-                telephone: this.phone.replaceAll(' ', ''),
-            }
+
+              let  res = {
+                    fio: this.fio,
+                    email: this.email,
+                    country: this.country,
+                    telephone: this.phone.replaceAll(' ', ''),
+                    promocode: this.promocode,
+                    sum: this.totalPrice,
+                    address: this.getAddress,
+                    pickup: this.deliveryValue,
+                    payment: this.paymentValue,
+                    course_id: this.getCourseID,
+                    subscription: this.getSubscription
+                }
+
+            console.log(res)
 
             try {
                 const response = await axios.post('/api/payment', res,
@@ -394,14 +491,41 @@ export default {
     },
 
     computed: {
+        getAddress() {
+            if (this.deliveryValue == 0) return this.pickupAddress = 'г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора, слева от 5-го подъезда'
+            else return `${this.address.postal_code}, ${this.address.address}`
+        },
+
+        getCourseID() {
+            return this.bookItem.course_id;
+        },
+
+        getSubscription() {
+            if (this.bookItem.isOnline == true) return this.subscription = 1
+            else return this.subscription = 0
+        },
+        amount: {
+            get() {
+                return this.bookItem.amount
+            },
+
+            set(value) {
+                this.bookItem.amount = value
+            }
+        },
+
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0)
+            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0)
                 return true
         },
 
         total() {
-                return this.selectedProducts.reduce((total, item) => total + item[this.currencyValue], 0)
-            },
+                return this.totalPrice =  this.bookItem.amount * this.bookItem.rub;
+
+        },
+        product() {
+            return this.bookItem
+        }
 
     }
 

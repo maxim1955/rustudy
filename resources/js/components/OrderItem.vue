@@ -1,7 +1,7 @@
 <template>
-     <label :class="{active: selectedProducts.includes(book)}" class="product">
+     <label class="product">
                                 <div class="order__product">
-                                   <input type="checkbox" class="visually-hidden product__input" :name="'product-'+book.id+''"  @change="addProduct(book)">
+                                   <input type="radio" class="visually-hidden product__input" name="product" v-model="bookItem" :value="book">
                                 <span class="product__checkbox"></span>
                                 <img :src="book.image" alt="">
                                 <div class="product__name">
@@ -13,9 +13,9 @@
                                 <div v-if="!book.isOnline" class="product__count count">
                                     <p class="count__text">Количество</p>
                                     <div class="count__block">
-                                        <button @click.prevent="decrementProduct(book.amount)" class="btn-reset product__btn product__btn--decrement" :disabled="!selectedProducts.includes(book)"></button>
+                                        <button @click.prevent="decrementProduct(book.amount)" class="btn-reset product__btn product__btn--decrement" :disabled="bookItem != book"></button>
                                         <input type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount">
-                                        <button @click.prevent="incrementProduct(book.amount)" class="btn-reset product__btn product__btn--increment" :disabled="!selectedProducts.includes(book)"></button>
+                                        <button @click.prevent="incrementProduct(book.amount)" class="btn-reset product__btn product__btn--increment" :disabled="bookItem != book"></button>
                                     </div>
                                 </div>
 
@@ -40,12 +40,12 @@
                                     </div>
                                     <div class="flex sub__block">
                                         <label class="sub__label">
-                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="year" :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book.id)">
+                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="year" :disabled="bookItem != book" :checked="bookItem == book">
                                             <span></span>
                                             1 год
                                         </label>
                                         <label class="sub__label">
-                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="always" :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book.id)">
+                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="always" :disabled="bookItem != book" :checked="bookItem == book">
                                             <span></span>
                                             Навсегда
                                         </label>
@@ -54,9 +54,9 @@
                                     </div>
                                 </div>
                                 <p class="product__price">{{ book.rub }} ₽</p>
-                                <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
                                 <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
-                                <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p>
+                                <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
                             </label>
 </template>
 
@@ -65,25 +65,44 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
     export default {
         data() {
             return {
-                total: this.totalPrice
+                total: this.totalPrice,
+                subscription: 0,
+                bookItem: {}
             }
         },
 
-        props: ['book', 'selectedProducts'],
+        props: ['book'],
         components: {Form, Field, ErrorMessage },
 
         computed: {
             amount: {
                 get() {
-                return this.book.amount
+                    return this.bookItem.amount
+                },
+
+                set(value) {
+                    this.bookItem.amount = value
+                }
             },
 
-            set(value) {
-                this.book.amount = value
+        },
+
+        watch: {
+            // bookItem(newValue) {
+            //     this.$emit('bookItem', newValue);
+            // },
+
+            bookItem: {
+                handler: function(newValue) {
+                    this.$emit('bookItem', newValue);
+                },
+                deep: true,
+                immediate: true
+            },
+
+            amount(newValue) {
+                this.$emit('amount', newValue)
             }
-            },
-
-
         },
 
         methods: {
@@ -97,18 +116,18 @@ import { Form, Field, ErrorMessage   } from 'vee-validate';
                 }
             },
 
-            addProduct(product) {
-                if (!this.selectedProducts.includes(product)) {
-                    this.selectedProducts.push(product);
-                    product.amount = 1;
+            // addProduct(product) {
+            //     if (!this.selectedProducts.includes(product)) {
+            //         this.selectedProducts.push(product);
+            //         product.amount = 1;
 
-                } else {
-                   const index = this.selectedProducts.indexOf(product);
-                   this.selectedProducts.splice(index, 1);
-                   product.amount = 0;
-                }
+            //     } else {
+            //        const index = this.selectedProducts.indexOf(product);
+            //        this.selectedProducts.splice(index, 1);
+            //        product.amount = 0;
+            //     }
 
-            }
+            // },
         }
     }
 </script>
