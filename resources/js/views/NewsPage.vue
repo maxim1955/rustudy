@@ -27,9 +27,6 @@
                     Предложить новость</button>
                     </div>
                         <News @loader="loaderValue" :filteredNews="filteredNews"></News>
-
-
-
                 </div>
 
                 <offer-news-modal  v-if="showModal" @close-modal="closeModal"/>
@@ -119,7 +116,7 @@ import newsStore from "@/stores/NewsStore.js";
                     this.newsLoading = false;
                     newsStore().fetchNews().then(() => {
                         this.newsLoading = true;
-                        
+
                     });
                 } else
                 if (this.activeTab == 'news') {

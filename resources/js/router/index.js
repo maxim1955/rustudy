@@ -49,6 +49,7 @@ const routes = [
         path: "/news",
         name: "news",
         component: NewsPage,
+        props: true,
     },
 
     {

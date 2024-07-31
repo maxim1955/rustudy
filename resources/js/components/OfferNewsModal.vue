@@ -37,7 +37,7 @@
                             <div>
                                 <span class="form__text">Тип новости *</span>
                                 <label for="" class="form__label">
-                                    <multiselect v-model="type" :options="options" placeholder="Выберите тип новости" select-label="" :searchable="false" @update:modelValue="updateValueAction"></multiselect>
+                                    <multiselect v-model="type" :options="options" label="label" placeholder="Выберите тип новости" select-label="" :searchable="false" @update:modelValue="updateValueAction"></multiselect>
                                     <span v-show="this.errorType" class="error-icon"></span>
                                     <span v-show="this.errorType" class="form__error">Выберите тип новости</span>
                                 </label>
@@ -76,7 +76,6 @@
                                     <DropZone
                                         ref="dropzone"
                                         :maxFiles="1"
-                                        url="http://localhost:5000/item"
                                         :uploadOnDrop="true"
                                         :multipleUpload="true"
                                         :parallelUpload="3"
@@ -87,25 +86,26 @@
                                         :acceptedFiles =" ['jpg', 'jpeg', 'png', 'webp', 'svg'] "
                                     />
                                     <cropper
+                                        style="max-width: 560px"
                                         ref="cropperImage"
                                         :key="cropperKey"
                                         v-if="cropImage"
                                         class="cropper"
                                         :src="cropImage.thumbnail"
-                                        @change="change"
+                                        @change="validatefile"
                                     />
 
-                                    <div v-if="previewCropImage">
-                                        <h2>Превью изображения</h2>
-                                        <img :src="previewCropImage">
+                                    <div v-if="previewCropImage" class="previewCropImage">
+                                        <span class="form__text">Превью изображения</span>
+                                        <img :src="previewCropImage" size="300px">
                                     </div>
 
-                                    <div class="d-flex pb-4" v-if="cropImage">
-                                        <button class="modal_form_next" type="button" @click="uploadImage">Обрезать
+                                    <div class="d-flex previewCropImage_сut" v-if="cropImage && !previewCropImage">
+                                        <button class="modal_form_next" type="button" @click="uploadImage">
+                                            Обрезать
                                         </button>
                                     </div>
-
-                                    <span class="form__error" v-show="errorFile">Размер файла превышает 125MB</span>
+                                    <span class="form__error" v-show="errorFile">Изображение не загружено, попробуйте снова</span>
                                 </div>
                             </div>
 
@@ -175,7 +175,8 @@ import DropZone from 'dropzone-vue';
 import 'dropzone-vue/dist/dropzone-vue.common.css';
 import {Cropper} from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
- import Multiselect from 'vue-multiselect'
+import Multiselect from 'vue-multiselect'
+import axios from "axios";
 
 
 configure({
@@ -217,21 +218,20 @@ export default {
             errorShortDescr: false,
             errorFile: false,
             errorType: false,
-            dropzone: null,
             cropImage: null,
             cropperImage: null,
             cropperKey: 0,
             previewCropImage: '',
             dropzone: null,
             type: '',
-            options: ['Анонс', 'Новость', 'Мероприятие'],
+            options: [{label: 'Анонс',value:'activity'},{label: 'Новости',value: 'publication'} , {label: 'Мероприятие',value: 'event'}],
 
         }
     },
 
     computed: {
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true && this.validateShortDescr(this.shortDescr) == true && this.type.length > 0)
+            if (this.validateFio(this.fio) == true && this.validateTitle(this.title) == true && this.validateDescr(this.descr) == true && this.validateShortDescr(this.shortDescr) == true && this.type.value.length > 0 && this.validatefile(this.previewCropImage))
                 return true
 
         },
@@ -340,6 +340,15 @@ export default {
 
             return true;
         },
+        validatefile(value) {
+            if (!value) {
+                document.querySelector('.dropzone').classList.add('error-input');
+                this.errorFile = true
+                return 'Выберите изображение';
+            }
+            this.errorFile = false
+            return true;
+        },
 
 
         deleteNumber(e) {
@@ -372,6 +381,11 @@ export default {
                 this.errorType = true
             }
 
+            if (this.previewCropImage == '') {
+                document.querySelector('.dropzone').classList.add('error-input');
+                this.errorFile = true
+            }
+
         },
 
         onError() {
@@ -380,7 +394,6 @@ export default {
 
         onFileRemove() {
             setTimeout(() => {
-                console.log(document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable'))
                 const text = document.querySelector('.dropzone__message.dropzone__message--style.dropzone-clickable');
                 text.innerHTML =
                     `<div class="file">
@@ -390,26 +403,54 @@ export default {
                             <button class="btn-reset btn-outline file__btn">Выбрать файлы</button>
                         </div>`
             }, 5)
+            this.cropImage = null
+            this.previewCropImage = ''
+
 
         },
 
-        submitForm() {
-            if (this.validate = true && this.type.length > 0)
-            this.activeTab = 'Проверка'
+       async submitForm() {
+            if (this.validate == true && this.type.value && this.previewCropImage){
+                try {
+                    const newsData = {
+                        news_type: this.type.value,
+                        title: this.title,
+                        shortDescr: this.shortDescr,
+                        descr: this.descr,
+                        fio: this.fio
+                    };
+                    if(this.previewCropImage)newsData.img = this.previewCropImage
+                    const response = await axios.post('/api/addnews', newsData);
+                    console.log(response)
+                    this.activeTab = 'Проверка'
+                }catch (error){
+                    if (error.response) {
+                        console.error('Error response:', error.response.data);
+                    } else if (error.request) {
+                        console.error('Error request:', error.request);
+                    } else {
+                        console.error('Error:', error.message);
+                    }
+                }
+            }else {
+                console.log('submitForm false')
+            }
+
+
+
         },
         onFileAdd(e) {
             this.cropperKey += 1;
             this.cropImage = this.$refs.dropzone.all[Object.keys(this.$refs.dropzone.all)[0]];
 
         },
-        change({coordinates, canvas}) {
-            console.log(coordinates, canvas);
-        },
+
         uploadImage() {
             const {canvas} = this.$refs.cropperImage.getResult();
             if (canvas) {
                 this.previewCropImage = canvas.toDataURL(); // вывод превью
             }
+            this.cropImage = null
         },
     },
 
@@ -431,5 +472,13 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style>
+.previewCropImage{
+    margin-top: 20px;
+}
+.previewCropImage_сut{
+    margin-top: 20px;
+}
+</style>
 
 
