@@ -215,11 +215,11 @@
                                 <div class="order__block">
                                     <div class="between-block">
                                         <p class="order__title">Итого</p>
-                                        <p class="order__price order__price--bold">{{ totalPrice }} ₽</p>
+                                        <p class="order__price order__price--bold">{{ total }} ₽</p>
                                     </div>
                                     <div class="between-block">
                                         <p class="order__text">Товары, {{ productAmount }}  шт.</p>
-                                        <p class="order__price">{{ totalPrice }} ₽</p>
+                                        <p class="order__price">{{ total }} ₽</p>
                                     </div>
 
                                     <p class="order__text order__text--info">
@@ -520,7 +520,10 @@ export default {
         },
 
         total() {
-                return this.totalPrice =  this.bookItem.amount * this.bookItem.rub;
+            if (Object.keys(this.bookItem).length > 0) {
+                return this.bookItem.amount * this.bookItem.rub;
+            } else return 0
+
 
         },
         product() {
