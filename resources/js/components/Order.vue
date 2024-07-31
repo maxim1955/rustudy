@@ -448,7 +448,7 @@ export default {
                     country: this.country,
                     telephone: this.phone.replaceAll(' ', ''),
                     promocode: this.promocode,
-                    sum: this.totalPrice,
+                    sum: this.total,
                     address: this.getAddress,
                     pickup: this.deliveryValue,
                     payment: this.paymentValue,
