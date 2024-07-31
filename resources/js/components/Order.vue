@@ -165,14 +165,12 @@
                                     <p class="order__title">Способ оплаты</p>
                                     <div class="payment__block">
                                         <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="robokassa"
-                                                   @change="selectedPayment" checked/>
+                                            <input type="radio" class="visually-hidden" name="payment" value="robokassa" v-model="paymentValue" checked/>
                                             <span></span>
                                             <img src="img/payment-1.svg" alt="Robokassa">
                                         </label>
                                         <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="paypal"
-                                                   @change="selectedPayment"/>
+                                            <input type="radio" class="visually-hidden" name="payment" value="paypal" v-model="paymentValue"/>
                                             <span></span>
                                             <img src="img/payment-2.svg" alt="PayPal">
                                         </label>
@@ -300,8 +298,8 @@ export default {
             errorEmail: false,
             phoneValid: false,
             // selectedProducts: [],
-            deliveryValue: '',
-            paymentValue: '',
+            deliveryValue: 0,
+            paymentValue: 'robokassa',
             currencyValue: 'rub',
             delivery: '',
             showModalSubmit: false,
@@ -515,7 +513,7 @@ export default {
         },
 
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0)
+            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0 && this.bookItem.amount > 0)
                 return true
         },
 
