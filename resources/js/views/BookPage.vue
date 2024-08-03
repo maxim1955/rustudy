@@ -859,26 +859,30 @@ export default {
                 this.reviews = reviews.data;
 
                 console.log('Data from API:', this.reviews);
+
+                this.reviews.forEach(el => {
+                let getReviewDb = async () => {
+                try {
+                    let reviewsIDs = await getReview(el.id);
+                    console.log(reviewsIDs) // Надо проверить что приходит и опдставить правильные данные
+                    this.review.push(reviewsIDs.data);
+
+                    console.log('Data from API:', this.review);
+                } catch (error) {
+                    console.log(error)
+                }
+        }
+            getReviewDb();
+        })
             } catch (error) {
                 console.log(error)
             }
         }
         getReviewsDb();
 
-        this.reviews.map(el => {
-            let getReviewDb = async () => {
-            try {
-                let review = await getReview(el.id);
-                console.log(review) // Надо проверить что приходит и опдставить правильные данные
-                this.review.push(review.data);
+        console.log(this.reviews)
 
-                console.log('Data from API:', this.review);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getReviewDb();
-        })
+
 
 
 

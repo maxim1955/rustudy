@@ -909,6 +909,12 @@ audio::-moz-media-controls-panel {
 .review__image {
     width: 100%;
     height: 100%;
+
+}
+
+.modal__offer .review__image {
+    max-height: 580px;
+    max-width: 346px;
 }
 
 .review__info {
@@ -962,6 +968,7 @@ audio::-moz-media-controls-panel {
 
 .modal-slider .review__content {
     padding: 30px 40px;
+    width: 100%;
 }
 
 .modal-slider .swiper-slide .review__image {
@@ -1206,6 +1213,11 @@ audio::-moz-media-controls-panel {
 
     .swiper.authors-slider {
         overflow: visible !important;
+    }
+
+    .modal__offer .review__image {
+        max-width: 302px;
+        max-height: 464px;
     }
 
 

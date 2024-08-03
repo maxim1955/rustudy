@@ -11,15 +11,15 @@
             1025:{ slidesPerView:4 },
         }"
         >
-        <swiper-slide class="review" v-for="review in reviews" :key="review.id" @click.prevent="openModal(review.id)">
+        <swiper-slide class="review" v-for="review of reviews" :key="review.id" @click.prevent="openModal(review.id)">
             <div class="review__card">
-                <img class="review__image" :src="review.image" :alt="review.teachername">
+                <img class="review__image" :src="'storage/'+review.image" :alt="review.teachername">
                 <!-- <picture>
                     <source :srcset="review.tablet" media="(max-width:1024px)">
                     <img class="review__image" :src="review.image" :alt="review.name">
                 </picture> -->
                 <div class="review__block">
-                    <img class="" :src="review.image" alt="">
+                    <img class="" :src="'storage/'+review.image" alt="">
                     <p class="review__name">{{ review.teachername }}</p>
                     <p class="review__info">{{ review.title }}</p>
                 </div>
