@@ -145,7 +145,7 @@
                                                 <Field :class="{'error-input': errorEmail}" class="form__input"
                                                        name="email" v-model="email" type="text"
                                                        placeholder="Введите email" :rules="validateEmail"
-                                                       @input="inputChange" @keydown="deleteNumber"/>
+                                                       @input="inputChange"/>
                                                 <span v-show="errorEmail" class="error-icon"></span>
                                                 <ErrorMessage class="form__error" name="email"/>
                                             </label>
