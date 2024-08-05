@@ -37,3 +37,4 @@ class PaymentController extends RestController
         ]);
         return $this->sendResponse(200);
     }
+}
