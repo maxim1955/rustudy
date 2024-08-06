@@ -15,11 +15,25 @@ class PaymentController extends RestController
         $country = $req->country;
         $email = $req->email;
         $phone = $req->telephone;
+        $promocode = $req->promocode;
+        $sum = $req->sum;
+        $address = $req->address;
+        $pickup = $req->pickup;
+        $subscription = $req->subscription;
+        $version = $req->version;
+        $course_id = $req->course_id;
         Payment::insert([
             'name' => $name,
             'country' =>$country,
             'email' => $email,
-            'phone' => $phone
+            'phone' => $phone,
+            'promocode' => $promocode,
+            'sum' => $sum,
+            'address' => $address,
+            'pickup' => $pickup,
+            'subscription' => $subscription,
+            'version' => $version,
+            'course_id' => $course_id
         ]);
         return $this->sendResponse(200);
     }
