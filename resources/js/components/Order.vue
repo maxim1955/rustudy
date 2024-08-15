@@ -49,69 +49,97 @@
                                     <!-- <OrderItem @book-item="getBookItem" @amount="amount" v-for="book in books" :key="book.id" :book="book"
                                                :currencyValue="currencyValue"/> -->
 
-                             <label class="product" v-for="book in books" :key="book.id" :class="{active: bookItem.id == book.id}">
-                                <div class="order__product">
-                                   <input type="radio" class="visually-hidden product__input" name="product" v-model="bookItem" :value="book" @change="resetAmount">
-                                <span class="product__checkbox"></span>
-                                <img :src="book.image" alt="">
-                                <div class="product__name">
-                                    <p>{{ book.type }}</p>
-                                    <p>{{ book.name }} {{ book.level }}</p>
-                                </div>
-                                </div>
-
-                                <div v-if="!book.isOnline" class="product__count count">
-                                    <p class="count__text">Количество</p>
-                                    <div class="count__block">
-                                        <button @click.prevent="decrementProduct(book.amount)" class="btn-reset product__btn product__btn--decrement" :disabled="bookItem != book"></button>
-                                        <input v-if="bookItem.id == book.id" type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount">
-                                        <input v-else type="number" class="count__num" :name="'count['+ book.id +']'" value="0">
-                                        <button @click.prevent="incrementProduct(book.amount)" class="btn-reset product__btn product__btn--increment" :disabled="bookItem != book"></button>
-                                    </div>
-                                </div>
-
-                                <div v-else-if="book.isOnline" class="product__count sub">
-                                    <div class="sub__text">
-
-
-                                        <div class="tooltip">
-                                            Подписка
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                            <rect width="12" height="12" rx="6"/>
-                                            <path d="M6 9.5V9.505M6 7.5V2.5" stroke="#0A2B49" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-
-                                            <div class="tooltip__block">
-                                                <p class="tooltip__title">Подписка на 1 год</p>
-                                                <p class="tooltip__text">Имеется спорная точка зрения, гласящая примерно следующее: непосредственные участники технического прогресса представляют собой не что иное.</p>
-                                                <p class="tooltip__title">Подписка навсегда</p>
-                                                <p class="tooltip__text">Однозначно, некоторые особенности внутренней политики неоднозначны и будут заблокированы в рамках своих собственных рациональных ограничений.</p>
+                                    <label
+                                        class="product"
+                                        v-for="book in books"
+                                        :key="book.id"
+                                        :class="{active: bookItem.id == book.id}"
+                                    >
+                                        <div class="order__product">
+                                            <input
+                                                type="radio"
+                                                class="visually-hidden product__input"
+                                                name="product"
+                                                v-model="bookItem"
+                                                :value="book"
+                                                @change="resetAmount"
+                                            >
+                                            <span class="product__checkbox"></span>
+                                            <img :src="book.image" alt="">
+                                            <div class="product__name">
+                                                <p>{{ book.type }}</p>
+                                                <p>{{ book.name }} {{ book.level }}</p>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="flex sub__block">
-                                        <label class="sub__label">
-                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="year" :disabled="bookItem != book" :checked="bookItem == book">
-                                            <span></span>
-                                            1 год
-                                        </label>
-                                        <label class="sub__label">
-                                            <input type="radio" class="visually-hidden" :name="'sub['+ book.id +']'" value="always" :disabled="bookItem != book" :checked="bookItem == book">
-                                            <span></span>
-                                            Навсегда
-                                        </label>
+
+                                        <div v-if="!book.isOnline" class="product__count count">
+                                            <p class="count__text">Количество</p>
+                                            <div class="count__block">
+                                                <button @click.prevent="decrementProduct(book.amount)"
+                                                        class="btn-reset product__btn product__btn--decrement"
+                                                        :disabled="bookItem != book"></button>
+                                                <input v-if="bookItem.id == book.id" type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" v-model="amount">
+                                                <input v-else type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" value="0">
+                                                <button @click.prevent="incrementProduct(book.amount)"
+                                                        class="btn-reset product__btn product__btn--increment"
+                                                        :disabled="bookItem != book"></button>
+                                            </div>
+                                        </div>
+
+                                        <div v-else-if="book.isOnline" class="product__count sub">
+                                            <div class="sub__text">
 
 
-                                    </div>
-                                </div>
-                                <p class="product__price">{{ book.rub }} ₽</p>
-                                <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
-                                <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
-                                <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
-                            </label>
+                                                <div class="tooltip">
+                                                    Подписка
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                         viewBox="0 0 12 12" fill="none">
+                                                        <rect width="12" height="12" rx="6"/>
+                                                        <path d="M6 9.5V9.505M6 7.5V2.5" stroke="#0A2B49"
+                                                              stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+
+                                                    <div class="tooltip__block">
+                                                        <p class="tooltip__title">Подписка на 1 год</p>
+                                                        <p class="tooltip__text">Имеется спорная точка зрения, гласящая
+                                                            примерно следующее: непосредственные участники технического
+                                                            прогресса представляют собой не что иное.</p>
+                                                        <p class="tooltip__title">Подписка навсегда</p>
+                                                        <p class="tooltip__text">Однозначно, некоторые особенности
+                                                            внутренней политики неоднозначны и будут заблокированы
+                                                            в рамках своих собственных рациональных ограничений.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex sub__block">
+                                                <label class="sub__label">
+                                                    <input type="radio" class="visually-hidden"
+                                                           :name="'sub['+ book.id +']'" value="year"
+                                                           :disabled="bookItem != book" :checked="bookItem == book">
+                                                    <span></span>
+                                                    1 год
+                                                </label>
+                                                <label class="sub__label">
+                                                    <input type="radio" class="visually-hidden"
+                                                           :name="'sub['+ book.id +']'" value="always"
+                                                           :disabled="bookItem != book" :checked="bookItem == book">
+                                                    <span></span>
+                                                    Навсегда
+                                                </label>
 
 
                                             </div>
+                                        </div>
+                                        <p class="product__price">{{ book.rub }} ₽</p>
+                                        <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                        <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
+                                        <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
+                                    </label>
+
+
+                                </div>
                                 <div class="order__info info">
                                     <div>
                                         <span class="form__text">Ф.И.О *</span>
@@ -155,8 +183,11 @@
                                             <label for="" class="form__label">
                                                 <vue-tel-input v-model="phone" @country-changed="countryChanged"
                                                                @validate="customValidate"
-                                                               @keydown="deleteLetter"></vue-tel-input>
+                                                               @keydown="deleteLetter"
+                                                />
+                                                <span v-show="errorTel" class="error-icon"/>
                                             </label>
+
                                         </div>
                                     </div>
                                 </div>
@@ -165,12 +196,14 @@
                                     <p class="order__title">Способ оплаты</p>
                                     <div class="payment__block">
                                         <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="robokassa" v-model="paymentValue" checked/>
+                                            <input type="radio" class="visually-hidden" name="payment" value="robokassa"
+                                                   v-model="paymentValue" checked/>
                                             <span></span>
                                             <img src="img/payment-1.svg" alt="Robokassa">
                                         </label>
                                         <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="paypal" v-model="paymentValue"/>
+                                            <input type="radio" class="visually-hidden" name="payment" value="paypal"
+                                                   v-model="paymentValue"/>
                                             <span></span>
                                             <img src="img/payment-2.svg" alt="PayPal">
                                         </label>
@@ -230,9 +263,10 @@
                                         Мы свяжемся с вами, чтобы уточнить сроки и стоимость доставки.
                                     </p>
 
-                                    <input v-model="this.promocode" name="promocode" class="order__input" type="text" placeholder="Промокод">
+                                    <input v-model="this.promocode" name="promocode" class="order__input" type="text"
+                                           placeholder="Промокод">
 
-                                    <button :disabled="!validate" class="btn-reset order__submit" type="submit">
+                                    <button :disabled="!validate" class="btn-reset order__submit" type="submit" >
                                         Заказать
                                     </button>
 
@@ -240,7 +274,8 @@
                                         ознакомлены c <a href="docs/Согласие_на_обработку_ПДн_на_сайте_учебник.pdf"
                                                          target="_blank">Пользовательским соглашением</a> и <a
                                             href="docs/политика_обработки_ПДн_на_сайте_учебник.pdf" target="_blank">Политикой
-                                            о персональных данных</a></p>
+                                            о персональных данных</a>
+                                    </p>
 
                                 </div>
                                 <div class="order__block order__message">
@@ -255,15 +290,12 @@
                                             href="mailto:pressantonov2013@gmail.com">pressantonov2013@gmail.com</a></p>
                                 </div>
                             </div>
-
                         </div>
                     </Form>
-
                 </div>
             </div>
         </div>
-
-    <ModalAfterSubmit @close-submit="closeSubmit" v-if="showModalSubmit"></ModalAfterSubmit>
+        <ModalAfterSubmit @close-submit="closeSubmit" v-if="showModalSubmit"></ModalAfterSubmit>
     </div>
 </template>
 
@@ -274,6 +306,7 @@ import OrderItem from './OrderItem.vue';
 import Pochta from './Pochta.vue';
 import ModalAfterSubmit from './ModalAfterSubmit.vue';
 import axios from "axios";
+import {reactive, ref, toRaw} from 'vue';
 
 configure({
     validateOnBlur: false,
@@ -297,6 +330,7 @@ export default {
             errorFio: false,
             errorEmail: false,
             phoneValid: false,
+            errorTel: false,
             // selectedProducts: [],
             deliveryValue: 0,
             paymentValue: 'robokassa',
@@ -305,12 +339,13 @@ export default {
             showModalSubmit: false,
             totalPrice: 0,
             promocode: '',
-            address: null,
+            address: reactive(null),
             subscription: null,
             bookItem: {},
             amount: 0,
             courseID: null,
             pickupAddress: '',
+
         }
     },
 
@@ -332,6 +367,7 @@ export default {
 
 
         activeCity(newValue) {
+            console.log(newValue)
             this.address = newValue;
         },
 
@@ -413,9 +449,16 @@ export default {
         },
 
         customValidate(value) {
-            if (value.valid == true) {
-                this.phoneValid = true
-            } else this.phoneValid = false
+            console.log(value)
+            if (value.valid === true) {
+                this.phoneValid = true;
+                this.errorTel = false
+            }
+            else {
+                this.phoneValid = false
+                this.errorTel = true
+
+            }
         },
 
         deleteNumber(e) {
@@ -440,22 +483,19 @@ export default {
 
         async onSubmit(e) {
 
-              let  res = {
-                    fio: this.fio,
-                    email: this.email,
-                    country: this.country,
-                    telephone: this.phone.replaceAll(' ', ''),
-                    promocode: this.promocode,
-                    sum: this.total,
-                    address: this.getAddress,
-                    pickup: this.deliveryValue,
-                    payment: this.paymentValue,
-                    course_id: this.getCourseID,
-                    subscription: this.getSubscription
-                }
-
-            console.log(res)
-
+            let res = {
+                fio: this.fio,
+                email: this.email,
+                country: this.country,
+                telephone: this.phone.replaceAll(' ', ''),
+                promocode: this.promocode,
+                sum: this.total,
+                address: this.getAddress,
+                pickup: this.deliveryValue,
+                payment: this.paymentValue,
+                course_id: this.getCourseID,
+                subscription: this.getSubscription
+            }
             try {
                 const response = await axios.post('/api/payment', res,
                     {
@@ -463,8 +503,15 @@ export default {
                             'Content-Type': 'application/json'
                         }
                     })
-                this.showModalSubmit = true
-                return response.data;
+                    .then(response => {
+                        console.log('Успех:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+               // this.showModalSubmit = true
+                await this.sendBusiness()
+                return response;
             } catch (error) {
                 if (error.response) {
                     console.error('Ошибка:', error.response.data);
@@ -479,19 +526,85 @@ export default {
             }
         },
 
+        async sendBusiness() {
+            let res = {
+                fio: this.fio,
+                email: this.email,
+                country: this.country,
+                telephone: this.phone.replaceAll(' ', ''),
+                promocode: this.promocode,
+                sum: this.total,
+                address: this.getAddress,
+                pickup: this.deliveryValue,
+                payment: this.paymentValue,
+                course_id: this.getCourseID,
+                subscription: this.getSubscription
+            };
 
+            const rawBookItem = toRaw(this.bookItem);
 
-            closeSubmit() {
-                this.showModalSubmit = false;
-                this.$emit('close-order');
+            if (this.deliveryValue !== 0){
+                const rawAdress = toRaw(this.address);
+                res.address = `${rawAdress.postal_code} - ${rawAdress.address}`
+            }else {
+                res.address = 'Самовывоз'
             }
+            try {
+                // Создаем объект данных для отправки
+                const data = {
+                    iform: true,
+                    referer: "",
+                    action: "send_iform",
+                    hash: 'ff804a64a4f4e37497b839670b0420dd',
+                    task_id: '3200216',
+                    formdata: {
+                        C88E9A7446509E29: 2, // id
+                        ACA1ACA80E1880D0: rawBookItem.amount,
+                        AB32F2C44CC81CDE: `${rawBookItem.type}, - ${rawBookItem.level}`, // Учебник
+                        B74697A44A7E8175: res.fio, // ФИО
+                        ACBC68945482CB64: res.email, // Email
+                        A1BF0514548AEE7E: res.country, // Страна
+                        A6B381C45245B655: res.telephone, // Телефон
+                        AFF0CED46217CFC8: res.address, // Способ получения
+                        A51D2114642ED1B5: res.payment, // Способ оплаты
+                        AA0672546C46A6B6: res.promocode, // Промокод
+                        AD537D872511ED20: rawBookItem.rub,
+                    }
+                };
+
+                // Отправляем POST-запрос
+                const response = await axios.post('https://agent.prostoy.ru/api/ultraform.php', data);
+                console.log('Простой бизнес ====', response.data);
+                this.showModalSubmit = true;
+            } catch (error) {
+                if (error.response) {
+                    console.log('Ошибка Простой бизнес:', error.response.data);
+                    console.log('Статус ошибки Простой бизнес:', error.response.status);
+                    console.log('Заголовки Простой бизнес:', error.response.headers);
+                } else if (error.request) {
+                    console.log('Ошибка при ожидании ответа от сервера Простой бизнес:', error.request);
+                } else {
+                    console.log('Ошибка Простой бизнес:', error.message);
+                }
+                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
+            }
+        },
+        closeSubmit() {
+            this.showModalSubmit = false;
+            this.$emit('close-order');
+        }
 
     },
 
     computed: {
         getAddress() {
-            if (this.deliveryValue == 0) return this.pickupAddress = 'г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора, слева от 5-го подъезда'
-            else return `${this.address.postal_code}, ${this.address.address}`
+
+            if (this.deliveryValue == 0) {
+                return this.pickupAddress = 'г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора, слева от 5-го подъезда'
+            }
+            else{
+                return this.pickupAddress = `${this.address.address}`
+            }
         },
 
         getCourseID() {
@@ -515,6 +628,9 @@ export default {
         validate() {
             if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0 && this.bookItem.amount > 0)
                 return true
+            else {
+                return false
+            }
         },
 
         total() {
@@ -536,6 +652,10 @@ export default {
 <style>
 .order {
     font-size: 14px;
+}
+.order__submit:disabled {
+    cursor: not-allowed!important;
+    pointer-events: all !important;
 }
 </style>
 
