@@ -550,7 +550,6 @@ export default {
                 res.address = 'Самовывоз'
             }
             try {
-                // Создаем объект данных для отправки
                 const data = {
                     iform: true,
                     referer: "",
@@ -568,7 +567,7 @@ export default {
                         AFF0CED46217CFC8: res.address, // Способ получения
                         A51D2114642ED1B5: res.payment, // Способ оплаты
                         AA0672546C46A6B6: res.promocode, // Промокод
-                        AD537D872511ED20: rawBookItem.rub,
+                        AD537D872511ED20: res.sum,
                     }
                 };
 
