@@ -301,7 +301,7 @@ export default {
 
             postcodeArray.forEach(postcode => {
                 postcode.forEach(item => {
-                    if (item.unrestricted_value.toLowerCase().includes(this.city)) {
+                    if (item.unrestricted_value.toLowerCase().includes(this.city.toLowerCase())) {
                         this.listAddress.push({
                             lat: item.data.geo_lat,
                             lon: item.data.geo_lon,

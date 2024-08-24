@@ -46,23 +46,22 @@
 
                             <div class="order__left">
                                 <div class="products">
-                                    <!-- <OrderItem @book-item="getBookItem" @amount="amount" v-for="book in books" :key="book.id" :book="book"
+                                    <!-- <OrderItem @addProduct="addProduct(book)" @book-item="getBookItem" @amount="amount" v-for="book in books" :key="book.id" :book="book"
                                                :currencyValue="currencyValue"/> -->
 
                                     <label
                                         class="product"
                                         v-for="book in books"
                                         :key="book.id"
-                                        :class="{active: bookItem.id == book.id}"
+                                        :class="{active: selectedProducts.includes(book)}"
                                     >
                                         <div class="order__product">
                                             <input
-                                                type="radio"
+                                                type="checkbox"
                                                 class="visually-hidden product__input"
                                                 name="product"
-                                                v-model="bookItem"
                                                 :value="book"
-                                                @change="resetAmount"
+                                                @change="addProduct(book)"
                                             >
                                             <span class="product__checkbox"></span>
                                             <img :src="book.image" alt="">
@@ -75,23 +74,19 @@
                                         <div v-if="!book.isOnline" class="product__count count">
                                             <p class="count__text">Количество</p>
                                             <div class="count__block">
-                                                <button @click.prevent="decrementProduct(book.amount)"
+                                                <button @click.prevent="decrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--decrement"
-                                                        :disabled="bookItem != book"></button>
-                                                <input v-if="bookItem.id == book.id" type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" v-model="amount">
-                                                <input v-else type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" value="0">
-                                                <button @click.prevent="incrementProduct(book.amount)"
+                                                        :disabled="!selectedProducts.includes(book)"></button>
+                                                <input v-if="book.course_id == 8" type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount1">
+                                                <input v-else type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount2">
+                                                <button @click.prevent="incrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--increment"
-                                                        :disabled="bookItem != book"></button>
+                                                        :disabled="!selectedProducts.includes(book)"></button>
                                             </div>
                                         </div>
 
                                         <div v-else-if="book.isOnline" class="product__count sub">
                                             <div class="sub__text">
-
-
                                                 <div class="tooltip">
                                                     Подписка
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
@@ -117,14 +112,14 @@
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
                                                            :name="'sub['+ book.id +']'" value="year"
-                                                           :disabled="bookItem != book" :checked="bookItem == book">
+                                                           :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book)">
                                                     <span></span>
                                                     1 год
                                                 </label>
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
                                                            :name="'sub['+ book.id +']'" value="always"
-                                                           :disabled="bookItem != book" :checked="bookItem == book">
+                                                           :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book)">
                                                     <span></span>
                                                     Навсегда
                                                 </label>
@@ -133,11 +128,10 @@
                                             </div>
                                         </div>
                                         <p class="product__price">{{ book.rub }} ₽</p>
-                                        <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                         <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
                                         <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
                                         <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
                                     </label>
-
 
                                 </div>
                                 <div class="order__info info">
@@ -266,7 +260,11 @@
                                     <input v-model="this.promocode" name="promocode" class="order__input" type="text"
                                            placeholder="Промокод">
 
-                                    <button :disabled="!validate" class="btn-reset order__submit" type="submit" >
+                                    <button class="btn-reset order__promocode" type="button" @click="applyPromocode()">
+                                        Применить
+                                    </button>
+
+                                           <button :disabled="!validate" class="btn-reset order__submit" type="submit" >
                                         Заказать
                                     </button>
 
@@ -331,7 +329,7 @@ export default {
             errorEmail: false,
             phoneValid: false,
             errorTel: false,
-            // selectedProducts: [],
+            selectedProducts: [],
             deliveryValue: 0,
             paymentValue: 'robokassa',
             currencyValue: 'rub',
@@ -341,27 +339,33 @@ export default {
             promocode: '',
             address: reactive(null),
             subscription: null,
-            bookItem: {},
-            amount: 0,
+            // bookItem: {},
             courseID: null,
             pickupAddress: '',
+            courseIds: [],
+            amount1: 0,
+            amount2: 0,
 
         }
     },
 
     methods: {
-
-        resetAmount() {
-            this.amount = 0
+        incrementProduct(book) {
+            if (book.course_id == 8) {
+                this.amount1 += 1;
+            }
+            else this.amount2 += 1;
+            book.amount += 1;
         },
 
-        incrementProduct() {
-            this.bookItem.amount += 1
-        },
-
-        decrementProduct() {
-            if (this.bookItem.amount > 1) {
-                this.bookItem.amount -= 1
+        decrementProduct(book) {
+            if (book.course_id == 8 && book.amount > 1) {
+                this.amount1 -= 1;
+                book.amount -= 1;
+            }
+            if (book.course_id == 9 && book.amount > 1) {
+                this.amount2 -= 1;
+                book.amount -= 1;
             }
         },
 
@@ -481,6 +485,33 @@ export default {
             this.currencyValue = e.target.value
         },
 
+        async applyPromocode() {
+            try {
+                const response = await axios.get('', {
+                    params: {
+                        promocode: this.promocode
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(error => {
+                    console.log(error)
+                } )
+            } catch (error) {
+                if (error.response) {
+                    console.error('Ошибка:', error.response.data);
+                    console.error('Статус ошибки:', error.response.status);
+                    console.error('Заголовки:', error.response.headers);
+                } else if (error.request) {
+                    console.error('Ошибка при ожидании ответа от сервера:', error.request);
+                } else {
+                    console.error('Ошибка:', error.message);
+                }
+                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
+            }
+        },
+
         async onSubmit(e) {
 
             let res = {
@@ -525,6 +556,8 @@ export default {
                 throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
             }
         },
+
+
 
         async sendBusiness() {
             let res = {
@@ -591,7 +624,38 @@ export default {
         closeSubmit() {
             this.showModalSubmit = false;
             this.$emit('close-order');
-        }
+        },
+
+
+        addProduct(product) {
+                if (!this.selectedProducts.includes(product)) {
+                    // this.incrementProduct(product);
+                    if (product.course_id == 8 && product.isOnline == false) this.amount1 = 1;
+                    if (product.course_id == 9 && product.isOnline == false) this.amount2 = 1;
+                    this.selectedProducts.push(product);
+                    product.amount = 1;
+
+                    if (product.isOnline == true) {
+                        this.subscription = 1
+                    } else this.subscription = 0
+
+                } else {
+                   const index = this.selectedProducts.indexOf(product);
+                   if (product.course_id == 8 && product.isOnline == false) this.amount1 = 0;
+                    if (product.course_id == 9 && product.isOnline == false) this.amount2 = 0;
+                   this.selectedProducts.splice(index, 1);
+                   product.amount = 0;
+                }
+
+                const resultSub = this.selectedProducts.some(el => {
+                    return el.isOnline == true
+                })
+
+
+                if (resultSub) this.subscription = 1
+                else this.subscription = 0
+
+            },
 
     },
 
@@ -607,22 +671,18 @@ export default {
         },
 
         getCourseID() {
-            return this.bookItem.course_id;
+            return this.selectedProducts.map(el => el.course_id)
         },
 
-        getSubscription() {
-            if (this.bookItem.isOnline == true) return this.subscription = 1
-            else return this.subscription = 0
-        },
-        amount: {
-            get() {
-                return this.bookItem.amount
+        amount1: {
+                get() {
+                    return this.amount1
+                },
+
+                set(value) {
+                    this.amount1 = value
+                }
             },
-
-            set(value) {
-                this.bookItem.amount = value
-            }
-        },
 
         validate() {
             if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0 && this.bookItem.amount > 0)
@@ -632,16 +692,27 @@ export default {
             }
         },
 
+        // total() {
+        //     if (Object.keys(this.bookItem).length > 0) {
+        //         return this.bookItem.amount * this.bookItem.rub;
+        //     } else return 0
+
+
+        // },
         total() {
-            if (Object.keys(this.bookItem).length > 0) {
-                return this.bookItem.amount * this.bookItem.rub;
-            } else return 0
-
-
+            return this.selectedProducts.reduce((total, book) => {
+                return total + (book.amount * book.rub);
+            }, 0)
         },
-        product() {
-            return this.bookItem
+
+        productAmount() {
+            return this.selectedProducts.reduce((total, book) => {
+                return total + book.amount;
+            }, 0)
         }
+        // product() {
+        //     return this.bookItem
+        // }
 
     }
 
