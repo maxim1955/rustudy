@@ -62,5 +62,5 @@ Route::get('/teachersfeedbacks/{teachersfeedback}', [TeachersfeedbackController:
 
 Route::post('/addnews',  [AddNewsController::class, 'submit']);
 
-Route::get('/promocode', [ApiPromocodeController::class, 'index']);
+Route::get('/promocode', [PromocodeController::class, 'index']);
 
