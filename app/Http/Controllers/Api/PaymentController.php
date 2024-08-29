@@ -21,7 +21,7 @@ class PaymentController extends RestController
         $pickup = $req->pickup;
         $subscription = $req->subscription;
         $version = $req->version;
-        $course_id = $req->course_id;
+        $courses = $req->courses;
         Payment::insert([
             'name' => $name,
             'country' =>$country,
@@ -33,7 +33,7 @@ class PaymentController extends RestController
             'pickup' => $pickup,
             'subscription' => $subscription,
             'version' => $version,
-            'course_id' => $course_id
+            'courses' => $courses
         ]);
         return $this->sendResponse(200);
     }
