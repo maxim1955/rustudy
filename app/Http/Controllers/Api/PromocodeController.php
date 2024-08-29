@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
 use App\Models\Promocode;
 use Illuminate\Http\Request;
-
-class PromocodeController extends Controller
+use App\Http\Controllers\Api\RestController;
+class PromocodeController extends RestController
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class PromocodeController extends Controller
     public function index(Request $request)
     {
         $getcode = $request->promocode;
-        $promocode = Promocode::all()
-            ->where('code',  $getcode);
+        $promocode = Promocode::where ('code', $getcode)->first();
+
         if ($promocode)
         {
             if ($promocode->end >= date('Y-m-d')){
@@ -24,37 +24,5 @@ class PromocodeController extends Controller
             return response()->json($promocode);
         }
         else return response()->json("no such promocode");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
