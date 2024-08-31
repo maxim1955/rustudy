@@ -260,7 +260,9 @@
                                     <input v-model="this.promocode" name="promocode" class="order__input" type="text"
                                            placeholder="Промокод">
 
-                                    <button class="btn-reset order__promocode" type="button" @click="applyPromocode()">
+                                    <span v-if="this.promocodeActive" class="form__error">{{ this.promocodeMessage }}</span>
+
+                                           <button class="btn-reset order__promocode" type="button" @click="applyPromocode()">
                                         Применить
                                     </button>
 
@@ -345,6 +347,8 @@ export default {
             courseIds: [],
             amount1: 0,
             amount2: 0,
+            promocodeMessage: '',
+            promocodeActive: 0
 
         }
     },
@@ -487,17 +491,39 @@ export default {
 
         async applyPromocode() {
             try {
-                const response = await axios.get('', {
+                const response = await axios.get('/api/promocode', {
                     params: {
                         promocode: this.promocode
                     }
                 })
                 .then(response => {
                     console.log(response)
+                    const data = response.data;
+                    if (data == 'no such promocode') {
+                        this.promocodeActive = 1;
+                        this.promocodeMessage = 'Данного промокода не существует';
+                    }
+                    else {
+                        if (data.active == 0) {
+                            this.promocodeActive = 1;
+                            this.promocodeMessage = 'Срок действия промокода истек';
+                        } else {
+                            if (data.stock_type == 'руб') {
+                                this.promocodeActive = 0;
+                                this.total = this.total - data.stock;
+                            }
+                            if (data.stock_type == '%') {
+                                this.total = this.total - (this.total * data.stock);
+                            }
+                        }
+                    }
+
+                    console.log(this.total)
                 })
                 .catch(error => {
                     console.log(error)
-                } )
+                })
+                return response;
             } catch (error) {
                 if (error.response) {
                     console.error('Ошибка:', error.response.data);
@@ -524,9 +550,12 @@ export default {
                 address: this.getAddress,
                 pickup: this.deliveryValue,
                 payment: this.paymentValue,
-                course_id: this.getCourseID,
-                subscription: this.getSubscription
+                courses: this.getCourseID,
+                subscription: this.subscription
             }
+
+            console.log(res)
+
             try {
                 const response = await axios.post('/api/payment', res,
                     {
@@ -570,9 +599,9 @@ export default {
                 address: this.getAddress,
                 pickup: this.deliveryValue,
                 payment: this.paymentValue,
-                course_id: this.getCourseID,
-                subscription: this.getSubscription
-            };
+                courses: this.getCourseID,
+                subscription: this.subscription
+            }
 
             const rawBookItem = toRaw(this.bookItem);
 
@@ -621,6 +650,7 @@ export default {
                 throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
             }
         },
+
         closeSubmit() {
             this.showModalSubmit = false;
             this.$emit('close-order');
@@ -674,6 +704,7 @@ export default {
             return this.selectedProducts.map(el => el.course_id)
         },
 
+
         amount1: {
                 get() {
                     return this.amount1
@@ -684,8 +715,18 @@ export default {
                 }
             },
 
+        amount2: {
+            get() {
+                return this.amount2
+            },
+
+            set(value) {
+                this.amount2 = value
+            }
+        },
+
         validate() {
-            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && Object.keys(this.bookItem).length > 0 && this.bookItem.amount > 0)
+            if (this.validateFio(this.fio) == true && this.validateEmail(this.email) == true && this.phoneValid == true && this.selectedProducts.length > 0)
                 return true
             else {
                 return false
