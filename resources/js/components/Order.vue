@@ -257,12 +257,12 @@
                                         Мы свяжемся с вами, чтобы уточнить сроки и стоимость доставки.
                                     </p>
 
-                                    <input v-model="this.promocode" name="promocode" class="order__input" type="text"
+                                    <input v-model="this.promocode" name="promocode" class="form__input" type="text"
                                            placeholder="Промокод">
 
                                     <span v-if="this.promocodeActive" class="form__error">{{ this.promocodeMessage }}</span>
 
-                                           <button class="btn-reset order__promocode" type="button" @click="applyPromocode()">
+                                           <button :disabled="!validate" class="btn-reset order__promocode" type="button" @click="applyPromocode()">
                                         Применить
                                     </button>
 
@@ -490,6 +490,10 @@ export default {
         },
 
         async applyPromocode() {
+            if (this.promocode == '') {
+                this.promocodeActive = 1;
+                this.promocodeMessage = 'Введите промокод';
+            }
             try {
                 const response = await axios.get('/api/promocode', {
                     params: {
@@ -509,10 +513,11 @@ export default {
                             this.promocodeMessage = 'Срок действия промокода истек';
                         } else {
                             if (data.stock_type == 'руб') {
-                                this.promocodeActive = 0;
+                                this.promocodeMessage = 'Промокод успешно применен';
                                 this.total = this.total - data.stock;
                             }
                             if (data.stock_type == '%') {
+                                this.promocodeMessage = 'Промокод успешно применен';
                                 this.total = this.total - (this.total * data.stock);
                             }
                         }

@@ -4,6 +4,7 @@
     width: 100%;
 }
 
+
 .order__form .form__error {
     bottom: 0;
 }
@@ -401,6 +402,13 @@ input:focus {
 .order__submit:disabled {
     background-color: #87A1C3;
     cursor: auto;
+}
+
+.order__promocode:disabled {
+    color: #87A1C3;
+    border-color: #87A1C3;
+    cursor: not-allowed !important;
+    pointer-events: all !important;
 }
 
 .order__agreement a {
@@ -835,6 +843,14 @@ input:focus {
     font-weight: 400;
     line-height: 120%;
     text-align: center;
+}
+
+.order__input[name="promocode"] .form__error {
+    position: initial;
+}
+
+.order__input[name="promocode"] {
+    width: 100%;
 }
 
 @media (max-width: 1400px) {
