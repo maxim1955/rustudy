@@ -77,8 +77,10 @@
                                                 <button @click.prevent="decrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--decrement"
                                                         :disabled="!selectedProducts.includes(book)"></button>
-                                                <input v-if="book.course_id == 8" type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount1">
-                                                <input v-else type="number" class="count__num" :name="'count['+ book.id +']'" v-model="amount2">
+                                                <input v-if="book.course_id == 8" type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" v-model="amount1">
+                                                <input v-else type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" v-model="amount2">
                                                 <button @click.prevent="incrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--increment"
                                                         :disabled="!selectedProducts.includes(book)"></button>
@@ -112,14 +114,16 @@
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
                                                            :name="'sub['+ book.id +']'" value="year"
-                                                           :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book)">
+                                                           :disabled="!selectedProducts.includes(book)"
+                                                           :checked="selectedProducts.includes(book)">
                                                     <span></span>
                                                     1 год
                                                 </label>
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
                                                            :name="'sub['+ book.id +']'" value="always"
-                                                           :disabled="!selectedProducts.includes(book)" :checked="selectedProducts.includes(book)">
+                                                           :disabled="!selectedProducts.includes(book)"
+                                                           :checked="selectedProducts.includes(book)">
                                                     <span></span>
                                                     Навсегда
                                                 </label>
@@ -128,9 +132,9 @@
                                             </div>
                                         </div>
                                         <p class="product__price">{{ book.rub }} ₽</p>
-                                         <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
-                                        <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
-                                        <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
+                                        <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                       <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
+                                       <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
                                     </label>
 
                                 </div>
@@ -260,13 +264,16 @@
                                     <input v-model="this.promocode" name="promocode" class="form__input" type="text"
                                            placeholder="Промокод">
 
-                                    <span v-if="this.promocodeActive" class="form__error">{{ this.promocodeMessage }}</span>
+                                    <span v-if="this.promocodeActive" class="form__error">{{
+                                            this.promocodeMessage
+                                        }}</span>
 
-                                           <button :disabled="!validate" class="btn-reset order__promocode" type="button" @click="applyPromocode()">
+                                    <button :disabled="!validate" class="btn-reset order__promocode" type="button"
+                                            @click="applyPromocode()">
                                         Применить
                                     </button>
 
-                                           <button :disabled="!validate" class="btn-reset order__submit" type="submit" >
+                                    <button :disabled="!validate" class="btn-reset order__submit" type="submit">
                                         Заказать
                                     </button>
 
@@ -357,8 +364,7 @@ export default {
         incrementProduct(book) {
             if (book.course_id == 8) {
                 this.amount1 += 1;
-            }
-            else this.amount2 += 1;
+            } else this.amount2 += 1;
             book.amount += 1;
         },
 
@@ -461,8 +467,7 @@ export default {
             if (value.valid === true) {
                 this.phoneValid = true;
                 this.errorTel = false
-            }
-            else {
+            } else {
                 this.phoneValid = false
                 this.errorTel = true
 
@@ -500,34 +505,33 @@ export default {
                         promocode: this.promocode
                     }
                 })
-                .then(response => {
-                    console.log(response)
-                    const data = response.data;
-                    if (data == 'no such promocode') {
-                        this.promocodeActive = 1;
-                        this.promocodeMessage = 'Данного промокода не существует';
-                    }
-                    else {
-                        if (data.active == 0) {
+                    .then(response => {
+                        console.log(response)
+                        const data = response.data;
+                        if (data == 'no such promocode') {
                             this.promocodeActive = 1;
-                            this.promocodeMessage = 'Срок действия промокода истек';
+                            this.promocodeMessage = 'Данного промокода не существует';
                         } else {
-                            if (data.stock_type == 'руб') {
-                                this.promocodeMessage = 'Промокод успешно применен';
-                                this.total = this.total - data.stock;
-                            }
-                            if (data.stock_type == '%') {
-                                this.promocodeMessage = 'Промокод успешно применен';
-                                this.total = this.total - (this.total * data.stock);
+                            if (data.active == 0) {
+                                this.promocodeActive = 1;
+                                this.promocodeMessage = 'Срок действия промокода истек';
+                            } else {
+                                if (data.stock_type == 'руб') {
+                                    this.promocodeMessage = 'Промокод успешно применен';
+                                    this.total = this.total - data.stock;
+                                }
+                                if (data.stock_type == '%') {
+                                    this.promocodeMessage = 'Промокод успешно применен';
+                                    this.total = this.total - (this.total * data.stock);
+                                }
                             }
                         }
-                    }
 
-                    console.log(this.total)
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+                        console.log(this.total)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
                 return response;
             } catch (error) {
                 if (error.response) {
@@ -559,7 +563,6 @@ export default {
                 subscription: this.subscription
             }
 
-            console.log(res)
 
             try {
                 const response = await axios.post('/api/payment', res,
@@ -574,7 +577,6 @@ export default {
                     .catch(error => {
                         console.error('Ошибка:', error);
                     });
-               // this.showModalSubmit = true
                 await this.sendBusiness()
                 return response;
             } catch (error) {
@@ -587,10 +589,9 @@ export default {
                 } else {
                     console.error('Ошибка:', error.message);
                 }
-                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
+                throw error;
             }
         },
-
 
 
         async sendBusiness() {
@@ -672,34 +673,34 @@ export default {
 
 
         addProduct(product) {
-                if (!this.selectedProducts.includes(product)) {
-                    // this.incrementProduct(product);
-                    if (product.course_id == 8 && product.isOnline == false) this.amount1 = 1;
-                    if (product.course_id == 9 && product.isOnline == false) this.amount2 = 1;
-                    this.selectedProducts.push(product);
-                    product.amount = 1;
+            if (!this.selectedProducts.includes(product)) {
+                // this.incrementProduct(product);
+                if (product.course_id == 8 && product.isOnline == false) this.amount1 = 1;
+                if (product.course_id == 9 && product.isOnline == false) this.amount2 = 1;
+                this.selectedProducts.push(product);
+                product.amount = 1;
 
-                    if (product.isOnline == true) {
-                        this.subscription = 1
-                    } else this.subscription = 0
+                if (product.isOnline == true) {
+                    this.subscription = 1
+                } else this.subscription = 0
 
-                } else {
-                   const index = this.selectedProducts.indexOf(product);
-                   if (product.course_id == 8 && product.isOnline == false) this.amount1 = 0;
-                    if (product.course_id == 9 && product.isOnline == false) this.amount2 = 0;
-                   this.selectedProducts.splice(index, 1);
-                   product.amount = 0;
-                }
+            } else {
+                const index = this.selectedProducts.indexOf(product);
+                if (product.course_id == 8 && product.isOnline == false) this.amount1 = 0;
+                if (product.course_id == 9 && product.isOnline == false) this.amount2 = 0;
+                this.selectedProducts.splice(index, 1);
+                product.amount = 0;
+            }
 
-                const resultSub = this.selectedProducts.some(el => {
-                    return el.isOnline == true
-                })
+            const resultSub = this.selectedProducts.some(el => {
+                return el.isOnline == true
+            })
 
 
-                if (resultSub) this.subscription = 1
-                else this.subscription = 0
+            if (resultSub) this.subscription = 1
+            else this.subscription = 0
 
-            },
+        },
 
     },
 
@@ -708,8 +709,7 @@ export default {
 
             if (this.deliveryValue == 0) {
                 return this.pickupAddress = 'г. Москва, ул. Ростовская набережная, д. 5, вход с внутреннего двора, слева от 5-го подъезда'
-            }
-            else{
+            } else {
                 return this.pickupAddress = `${this.address.address}`
             }
         },
@@ -720,14 +720,14 @@ export default {
 
 
         amount1: {
-                get() {
-                    return this.amount1
-                },
-
-                set(value) {
-                    this.amount1 = value
-                }
+            get() {
+                return this.amount1
             },
+
+            set(value) {
+                this.amount1 = value
+            }
+        },
 
         amount2: {
             get() {
@@ -778,8 +778,9 @@ export default {
 .order {
     font-size: 14px;
 }
+
 .order__submit:disabled {
-    cursor: not-allowed!important;
+    cursor: not-allowed !important;
     pointer-events: all !important;
 }
 </style>
