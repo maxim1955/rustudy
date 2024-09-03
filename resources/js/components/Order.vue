@@ -605,15 +605,23 @@ export default {
                 pickup: this.deliveryValue,
                 payment: this.paymentValue,
                 courses: this.getCourseID,
-                subscription: this.subscription
+                subscription: this.subscription,
+                amountBooks: 0,
             }
 
-            const rawBookItem = toRaw(this.bookItem);
+            const rawBookItem = toRaw(this.selectedProducts);
+            let rawBook = ''
 
-            if (this.deliveryValue !== 0){
+            rawBookItem.forEach((elem) => {
+                rawBook += ` ${elem.type} - ${elem.level} - ${elem.amount}; `
+                res.amountBooks += elem.amount
+            })
+            console.log(rawBook)
+
+            if (this.deliveryValue !== 0) {
                 const rawAdress = toRaw(this.address);
                 res.address = `${rawAdress.postal_code} - ${rawAdress.address}`
-            }else {
+            } else {
                 res.address = 'Самовывоз'
             }
             try {
@@ -625,8 +633,8 @@ export default {
                     task_id: '3200216',
                     formdata: {
                         C88E9A7446509E29: 2, // id
-                        ACA1ACA80E1880D0: rawBookItem.amount,
-                        AB32F2C44CC81CDE: `${rawBookItem.type}, - ${rawBookItem.level}`, // Учебник
+                        ACA1ACA80E1880D0: res.amountBooks,
+                        AB32F2C44CC81CDE: rawBook,
                         B74697A44A7E8175: res.fio, // ФИО
                         ACBC68945482CB64: res.email, // Email
                         A1BF0514548AEE7E: res.country, // Страна
@@ -652,9 +660,10 @@ export default {
                 } else {
                     console.log('Ошибка Простой бизнес:', error.message);
                 }
-                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
+                throw error;
             }
         },
+
 
         closeSubmit() {
             this.showModalSubmit = false;
