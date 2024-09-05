@@ -845,11 +845,11 @@ input:focus {
     text-align: center;
 }
 
-.order__input[name="promocode"] .form__error {
+.form__input[name="promocode"] + .form__error {
     position: initial;
 }
 
-.order__input[name="promocode"] {
+.form__input[name="promocode"] {
     width: 100%;
 }
 
