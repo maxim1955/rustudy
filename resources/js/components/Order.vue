@@ -355,7 +355,8 @@ export default {
             amount1: 0,
             amount2: 0,
             promocodeMessage: '',
-            promocodeActive: 0
+            promocodeActive: 0,
+            stockType: ''
 
         }
     },
@@ -495,7 +496,7 @@ export default {
         },
 
         async applyPromocode() {
-            if (this.promocode == '') {
+            if (this.promocode === '') {
                 this.promocodeActive = 1;
                 this.promocodeMessage = 'Введите промокод';
             }
@@ -516,13 +517,14 @@ export default {
                                 this.promocodeActive = 1;
                                 this.promocodeMessage = 'Срок действия промокода истек';
                             } else {
+                                this.stockType = data.stock_type;
                                 if (data.stock_type == 'руб') {
                                     this.promocodeMessage = 'Промокод успешно применен';
-                                    this.total = this.total - data.stock;
+                                    // this.total = this.total - data.stock;
                                 }
                                 if (data.stock_type == '%') {
                                     this.promocodeMessage = 'Промокод успешно применен';
-                                    this.total = this.total - (this.total * data.stock);
+                                    // this.total = this.total - (this.total * data.stock);
                                 }
                             }
                         }
@@ -755,9 +757,21 @@ export default {
 
         // },
         total() {
-            return this.selectedProducts.reduce((total, book) => {
+            let totalPrice = this.selectedProducts.reduce((total, book) => {
                 return total + (book.amount * book.rub);
             }, 0)
+
+            if (this.promocode !== '') {
+                if (this.stockType == 'руб') {
+                    totalPrice = totalPrice - data.stock;
+                }
+                if (this.stockType == '%') {
+                    totalPrice = totalPrice - (totalPrice * data.stock);
+                }
+            }
+
+            return totalPrice;
+
         },
 
         productAmount() {
