@@ -356,7 +356,8 @@ export default {
             amount2: 0,
             promocodeMessage: '',
             promocodeActive: 0,
-            stockType: ''
+            stockType: '',
+            stock: 0
 
         }
     },
@@ -520,10 +521,12 @@ export default {
                                 this.stockType = data.stock_type;
                                 if (data.stock_type == 'руб') {
                                     this.promocodeMessage = 'Промокод успешно применен';
+                                    this.stock = data.stock;
                                     // this.total = this.total - data.stock;
                                 }
                                 if (data.stock_type == '%') {
                                     this.promocodeMessage = 'Промокод успешно применен';
+                                    this.stock = data.stock;
                                     // this.total = this.total - (this.total * data.stock);
                                 }
                             }
@@ -761,12 +764,12 @@ export default {
                 return total + (book.amount * book.rub);
             }, 0)
 
-            if (this.promocode !== '') {
+            if (this.promocode != '') {
                 if (this.stockType == 'руб') {
-                    totalPrice = totalPrice - data.stock;
+                    totalPrice = totalPrice - this.stock;
                 }
                 if (this.stockType == '%') {
-                    totalPrice = totalPrice - (totalPrice * data.stock);
+                    totalPrice = totalPrice - (totalPrice * this.stock);
                 }
             }
 
