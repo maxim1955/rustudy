@@ -165,7 +165,7 @@ input:focus {
     margin-bottom: 7px;
 }
 
-.error-input {
+.error-input.form__input {
     outline: 1px solid #FF1E1E;
 }
 
@@ -766,6 +766,14 @@ input:focus {
     position: relative;
     width: 100%;
     max-width: 382px;
+}
+
+.pochta__box {
+    position: relative;
+}
+
+.pochta__box .form__error {
+    position: initial;
 }
 
 .search__block {

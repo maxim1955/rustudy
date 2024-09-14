@@ -660,10 +660,12 @@ export default {
                     level: 'А1',
                     image: 'img/book-1.webp',
                     isOnline: false,
-                    rub: 1500,
-                    eur: 20,
-                    usd: 15,
-                    amount: 0,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
+                    amount: 1,
                     url: '/error401'
                 },
                 {
@@ -674,9 +676,19 @@ export default {
                     level: 'А1',
                     image: 'img/book-1.webp',
                     isOnline: true,
-                    rub: 900,
-                    eur: 20,
-                    usd: 15,
+                    price: {
+                        year: {
+                            rub: 1100,
+                            eur: 13,
+                            usd: 16,
+                        },
+                        always: {
+                            rub: 3900,
+                            eur: 42,
+                            usd: 45,
+                        }
+                    },
+
                     amount: 1,
                     url: '/error402'
                 },
@@ -688,10 +700,12 @@ export default {
                     level: 'А2',
                     image: 'img/book-2.webp',
                     isOnline: false,
-                    rub: 1500,
-                    eur: 20,
-                    usd: 15,
-                    amount: 0,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
+                    amount: 1,
                     url: '/error403'
                 },
                 {
@@ -702,9 +716,18 @@ export default {
                     level: 'А2',
                     image: 'img/book-2.webp',
                     isOnline: true,
-                    rub: 900,
-                    eur: 20,
-                    usd: 15,
+                    price: {
+                        year: {
+                            rub: 1100,
+                            eur: 13,
+                            usd: 16,
+                        },
+                        always: {
+                            rub: 3900,
+                            eur: 42,
+                            usd: 45,
+                        }
+                    },
                     amount: 1,
                     url: '/error404'
                 },
