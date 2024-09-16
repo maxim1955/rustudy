@@ -665,8 +665,8 @@ export default {
                         eur: 20,
                         usd: 22,
                     },
-                    amount: 1,
-                    url: '/error401'
+                    amount: 0,
+                    url: '/error401',
                 },
                 {
                     id: 2,
@@ -689,7 +689,7 @@ export default {
                         }
                     },
 
-                    amount: 1,
+                    amount: 0,
                     url: '/error402'
                 },
                 {
@@ -705,7 +705,7 @@ export default {
                         eur: 20,
                         usd: 22,
                     },
-                    amount: 1,
+                    amount: 0,
                     url: '/error403'
                 },
                 {
@@ -728,7 +728,7 @@ export default {
                             usd: 45,
                         }
                     },
-                    amount: 1,
+                    amount: 0,
                     url: '/error404'
                 },
             ],

@@ -51,7 +51,7 @@
 
                                     <label
                                         class="product"
-                                        v-for="book in books"
+                                        v-for="book in booksArray"
                                         :key="book.id"
                                         :class="{active: this.selectedProducts.some(product => product.id === book.id)}"
                                     >
@@ -77,10 +77,8 @@
                                                 <button @click.prevent="decrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--decrement"
                                                         :disabled="!this.selectedProducts.some(product => product.id === book.id)"></button>
-                                                <input v-if="book.course_id == 8" type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" v-model="amount1">
-                                                <input v-else type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" v-model="amount2">
+                                                <input type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" v-model="book.amount">
                                                 <button @click.prevent="incrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--increment"
                                                         :disabled="!this.selectedProducts.some(product => product.id === book.id)"></button>
@@ -151,7 +149,8 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <p v-if="!book.isOnline" class="product__price">{{ book.price[currencyValue] * book.amount }} ₽</p>
+                                        <p v-if="!book.isOnline && book.amount == 0" class="product__price">{{ book.price[currencyValue] }} ₽</p>
+                                        <p v-else-if="!book.isOnline && book.amount > 0" class="product__price">{{ book.price[currencyValue] * book.amount }} ₽</p>
                                         <p v-else-if="book.course_id == 8" class="product__price">{{ termOnlineBook1 }} ₽</p>
                                         <p v-else-if="book.course_id == 9" class="product__price">{{ termOnlineBook2 }} ₽</p>
 
@@ -383,6 +382,7 @@ export default {
             addressError: null,
             termOnlineBook1: null,
             termOnlineBook2: null,
+            booksArray: JSON.parse(JSON.stringify(this.books))
 
         }
     },
@@ -780,7 +780,7 @@ export default {
                 if (product.course_id == 8 && product.isOnline == false) this.amount1 = 0;
                 if (product.course_id == 9 && product.isOnline == false) this.amount2 = 0;
                 this.selectedProducts.splice(index, 1);
-                // product.amount = 0;
+                product.amount = 0;
             }
 
             const resultSub = this.selectedProducts.some(el => {
@@ -829,26 +829,6 @@ export default {
             return this.selectedProducts.map(el => el.course_id)
         },
 
-
-        amount1: {
-            get() {
-                return this.amount1
-            },
-
-            set(value) {
-                this.amount1 = value
-            }
-        },
-
-        amount2: {
-            get() {
-                return this.amount2
-            },
-
-            set(value) {
-                this.amount2 = value
-            }
-        },
 
         getTermOnlineBook1: {
             get() {
@@ -918,6 +898,21 @@ export default {
         this.termOnlineBook1 = this.books.find(el => el.course_id === 8 && el.isOnline)?.price.always.rub;
         this.termOnlineBook2 = this.books.find(el => el.course_id === 9 && el.isOnline)?.price.always.rub;
     },
+
+    watch: {
+    booksArray: {
+      handler(newProducts) {
+        // Обновление cartItems при изменении products
+        this.selectedProducts.forEach(product => {
+          const productItem = newProducts.find(p => p.id === product.id);
+          if (productItem) {
+            product.amount = productItem.amount;
+          }
+        });
+      },
+      deep: true, // Следим за глубокими изменениями в products
+    },
+  },
 
 
 
