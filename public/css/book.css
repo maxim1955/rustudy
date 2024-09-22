@@ -915,6 +915,8 @@ audio::-moz-media-controls-panel {
 .modal__offer .review__image {
     max-height: 580px;
     max-width: 346px;
+    aspect-ratio: 1/1.2;
+    object-fit: cover;
 }
 
 .review__info {
@@ -955,7 +957,13 @@ audio::-moz-media-controls-panel {
 }
 
 
+.reviews-slider {
+    align-items: stretch;
+}
 
+.reviews-slider .swiper-slide {
+    height: auto;
+}
 
 .modal-slider .review__card {
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.20) 100%), linear-gradient(288deg, rgba(83, 213, 225, 0.20) 0%, rgba(5, 107, 240, 0.20) 100%);

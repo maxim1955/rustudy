@@ -19,7 +19,10 @@
        >
         <swiper-slide class="review" v-for="item in review" :key="item.id">
             <div class="review__card flex">
-                <img class="review__image" :src="'storage/'+item.image" :alt="item.teachername">
+                <video class="review__video" v-if="item.video" controls>
+                    <source :src="'storage/'+item.video">
+                </video>
+                <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername">
                 <!-- <picture>
                     <source srcset="">
                     <img class="review__image" :src="review.image" :alt="review.name">
@@ -28,7 +31,6 @@
                 <div class="review__block">
                     <img class="" :src="'storage/'+item.image" :alt="item.teachername">
                     <p class="review__name">{{ item.teachername }}</p>
-
                 </div>
                 <p class="review__desc" v-html="item.text"></p>
                 </div>
