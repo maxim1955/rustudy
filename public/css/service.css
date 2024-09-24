@@ -127,7 +127,7 @@ h3 {
 .app_promo_box{
     top: 30%;
 }
-.game_wrapper p{
+.game_wrapper p,.game_wrapper p{
     color: #0A2B49;
     font-size: 40px;
     max-width: 456px;
@@ -144,7 +144,7 @@ h3 {
     padding-bottom: 20px;
 }
 
-.game_wrapper span{
+.game_wrapper span:not(.no-break){
     display: block;
     color: #0A2B49;
     font-size: 24px;
@@ -200,10 +200,10 @@ h3 {
     .game_wrapper {
         background-position: initial;
     }
-    .game_wrapper p{
+    .game_wrapper p, .no-break{
         font-size: 24px;
     }
-    .game_wrapper span{
+    .game_wrapper span:not(.no-break){
         font-size: 16px;
         padding-bottom: 7px;
     }

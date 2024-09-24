@@ -2,14 +2,13 @@
     <div class="game_wrapper" v-if="!gameStart">
         <div class="game_wrapper_box">
             <div class="">
-                <p>Играй и изучай русский язык вместе с нами</p>
+                <p>Играй и изучай русский язык вместе <span class="no-break">с нами</span></p>
                 <span>
-          Игра для уровня A1
-        </span>
+                  Игра для уровня A1
+                </span>
             </div>
             <div class="">
                 <button @click="startGame()">Играть бесплатно</button>
-
             </div>
         </div>
     </div>
@@ -141,6 +140,8 @@ onMounted(() => {
 
 </script>
 <style scoped>
-
+.no-break {
+    white-space: nowrap;
+}
 
 </style>
