@@ -220,12 +220,7 @@
                                             <span></span>
                                             <img src="img/payment-1.svg" alt="Robokassa">
                                         </label>
-                                        <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="paypal"
-                                                   v-model="paymentValue"/>
-                                            <span></span>
-                                            <img src="img/payment-2.svg" alt="PayPal">
-                                        </label>
+
                                     </div>
 
                                 </div>
@@ -251,8 +246,7 @@
                                                 <span></span>
                                                 Доставка почтой России
                                             </label>
-                                            <p>Книга отправляется вам почтовым переводом, по адресу, который вы укажите,
-                                                срок доставки зависит от Почты России, стоимость за счёт покупателя</p>
+                                            <p>Стоимость пересылки осуществляется за счет покупателя по тарифам Почты России.</p>
                                         </div>
 
                                     </div>

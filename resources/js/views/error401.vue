@@ -22,17 +22,16 @@
                                     <p class="error__text error__text_401">Данная страница доступна для авторизованных
                                         пользователей. Для продолжения работы необходимо зарегистрироваться и&nbsp;войти под
                                         своей учетной записью.</p>
-                                    <router-link :to="{ name: 'home' }"
-                                        class="btn-reset error__btn error__btn_registration">Авторизоваться</router-link>
+                                    <a target="_blank" href="https://rus.study/login "
+                                        class="btn-reset error__btn error__btn_registration">Авторизоваться</a>
                                 </div>
 
                                 <div class="error__support error__support_401">
                                     <p class="error__text error__text_401">Уже зарегистрированы, но&nbsp;все равно
                                         не&nbsp;можете войти? Проверьте правильность ввода логина и&nbsp;пароля или
                                         обратитесь в&nbsp;техническую поддержку</p>
-                                    <router-link :to="{ name: 'home' }"
-                                        class="btn-reset error__btn error__btn_support">Написать в
-                                        поддержку</router-link>
+                                    <button @click="openFeedback()" class="btn-reset error__btn error__btn_support">Написать в
+                                        поддержку</button>
                                 </div>
                             </div>
 
@@ -87,6 +86,7 @@
             </section>
         </main>
         <Footer></Footer>
+        <FeedbackModal @close-feedback="closeFeedback" v-if="showFeedback"></FeedbackModal>
     </div>
 </template>
 
@@ -94,9 +94,24 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import {useHead} from "unhead";
+import FeedbackModal from '../components/FeedbackModal.vue';
 export default {
     name: 'error401',
-    components: { Header, Footer },
+    components: { Header, Footer, FeedbackModal },
+    data() {
+        return {
+            showFeedback: false,
+        }
+    },
+
+    methods: {
+        openFeedback() {
+            this.showFeedback = true
+        },
+        closeFeedback() {
+            this.showFeedback = false
+        },
+    },
     mounted() {
         useHead({
             title: '401',

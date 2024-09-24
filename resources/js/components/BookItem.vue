@@ -1,6 +1,6 @@
 <template>
     <li class="about__item">
-        <router-link :to="{name: 'error401'}" class="about__link book">
+        <a target="_blank" :href="book.url" class="about__link book">
             <img :src="book.image" :alt="book.type">
             <div class="about__content">
             <p class="book__title">{{ book.type }}</p>
@@ -9,7 +9,7 @@
             <path d="M10 10L31.6667 31.6667M31.6667 31.6667V10.8667M31.6667 31.6667H10.8667" stroke="#0A2B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             </div>
-        </router-link>
+        </a>
 
     </li>
 </template>

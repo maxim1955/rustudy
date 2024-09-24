@@ -19,7 +19,7 @@
        >
         <swiper-slide class="review" v-for="item in review" :key="item.id">
             <div class="review__card flex">
-                <video class="review__video" v-if="item.video" controls>
+                <video class="review__video" v-if="item.video[0].download_link" controls>
                     <source :src="'storage/'+item.video">
                 </video>
                 <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername">
