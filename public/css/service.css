@@ -193,6 +193,7 @@ h3 {
     }
 
     .game_wrapper {
+        min-height: 904px;
         position: relative;
         width: 100%;
         height: 100vh;
