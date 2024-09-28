@@ -563,12 +563,10 @@ export default {
                                 if (data.stock_type === 'руб') {
                                     this.promocodeMessage = 'Промокод успешно применен';
                                     this.stock = data.stock;
-                                    this.total = this.total - this.stock;
                                 }
                                 if (data.stock_type === '%') {
                                     this.promocodeMessage = 'Промокод успешно применен';
                                     this.stock = data.stock;
-                                    this.total = this.total - ((this.total * this.stock)/100);
                                 }
                             }
                         }
@@ -892,11 +890,11 @@ export default {
             }, 0)
 
             if (this.promocode != '') {
-                if (this.stockType == 'руб') {
+                if (this.stockType === 'руб') {
                     totalPrice = totalPrice - this.stock;
                 }
-                if (this.stockType == '%') {
-                    totalPrice = totalPrice - (totalPrice * this.stock);
+                if (this.stockType === '%') {
+                    totalPrice = totalPrice - ((totalPrice * this.stock)/100);
                 }
             }
 
