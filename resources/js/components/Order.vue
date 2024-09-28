@@ -720,12 +720,11 @@ export default {
                 out_sum: this.total
             }
             try {
-                const response = await axios.post('/api/payment', res,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
+                const response = await axios.get('/api/payment', {
+                    params: {
+                        out_sum: this.total
+                    }
+                })
                     .then(response => {
                         console.log('Успех:', response.data);
                     })
