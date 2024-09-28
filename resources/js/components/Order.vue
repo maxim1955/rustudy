@@ -616,7 +616,7 @@ export default {
 
 
             try {
-                const response = await axios.post('/api/payment', res,
+                const response = await axios.post('/api/order', res,
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -628,7 +628,8 @@ export default {
                     .catch(error => {
                         console.error('Ошибка:', error);
                     });
-                await this.sendBusiness()
+                await this.sendBusiness();
+                await this.sendRobokassa();
                 return response;
             } catch (error) {
                 if (error.response) {
@@ -711,6 +712,38 @@ export default {
                     console.log('Ошибка при ожидании ответа от сервера Простой бизнес:', error.request);
                 } else {
                     console.log('Ошибка Простой бизнес:', error.message);
+                }
+                throw error;
+            }
+        },
+
+        async sendRobokassa() {
+            let res = {
+                out_sum: this.total
+            }
+            try {
+                const response = await axios.post('/api/payment', res,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        console.log('Успех:', response.data);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+                return response;
+            } catch (error) {
+                if (error.response) {
+                    console.error('Ошибка:', error.response.data);
+                    console.error('Статус ошибки:', error.response.status);
+                    console.error('Заголовки:', error.response.headers);
+                } else if (error.request) {
+                    console.error('Ошибка при ожидании ответа от сервера:', error.request);
+                } else {
+                    console.error('Ошибка:', error.message);
                 }
                 throw error;
             }
