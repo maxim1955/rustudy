@@ -560,15 +560,15 @@ export default {
                                 this.promocodeMessage = 'Срок действия промокода истек';
                             } else {
                                 this.stockType = data.stock_type;
-                                if (data.stock_type == 'руб') {
+                                if (data.stock_type === 'руб') {
                                     this.promocodeMessage = 'Промокод успешно применен';
                                     this.stock = data.stock;
-                                    // this.total = this.total - data.stock;
+                                    this.total = this.total - this.stock;
                                 }
-                                if (data.stock_type == '%') {
+                                if (data.stock_type === '%') {
                                     this.promocodeMessage = 'Промокод успешно применен';
                                     this.stock = data.stock;
-                                    // this.total = this.total - (this.total * data.stock);
+                                    this.total = this.total - ((this.total * this.stock)/100);
                                 }
                             }
                         }
@@ -702,7 +702,7 @@ export default {
                 // Отправляем POST-запрос
                 const response = await axios.post('https://agent.prostoy.ru/api/ultraform.php', data);
                 console.log('Простой бизнес ====', response.data);
-                this.showModalSubmit = true;
+                // this.showModalSubmit = true;
             } catch (error) {
                 if (error.response) {
                     console.log('Ошибка Простой бизнес:', error.response.data);
