@@ -6,8 +6,8 @@ if (!empty($_POST["out_sum"])) {
 
 // your registration data
     $mrh_login = "Uchebnik_RKI-Privet_Rossiya_po_RKI"; 
-    $mrh_pass1 = "W1bQBYhHxmE0qLH151lQ";
-
+    // $mrh_pass1 = "W1bQBYhHxmE0qLH151lQ";
+    $mrh_pass1 = "AZKqf07v5oJAZaV0nD1X"; //тестовый
 // order number. "" for random value
     $inv_id = "";
 

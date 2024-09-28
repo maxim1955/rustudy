@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\TeachersfeedbackController;
 use App\Http\Controllers\Api\AddNewsController;
 use App\Http\Controllers\Api\PromocodeController;
+use App\Http\Controllers\Api\RobocassaController;
 use Illuminate\Support\Facades\Route;
 use TCG\Voyager\Models\Role;
 
@@ -53,7 +54,7 @@ Route::get('/news', [NewsController::class, 'index']);
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
-Route::post('/payment',  [PaymentController::class, 'submit']);
+Route::post('/order',  [PaymentController::class, 'submit']);
 
 Route::get('/afishas', [AfishaController::class, 'index']);
 
@@ -64,3 +65,7 @@ Route::post('/addnews',  [AddNewsController::class, 'submit']);
 
 Route::get('/promocode', [PromocodeController::class, 'index']);
 
+Route::post('/payment',  [RobocassaController::class, 'index']);
+Route::post('/payment/success',  [RobocassaController::class, 'success']);
+Route::post('/payment/fail',  [RobocassaController::class, 'fail']);
+Route::post('/payment/result',  [RobocassaController::class, 'result']);
