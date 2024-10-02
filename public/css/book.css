@@ -966,6 +966,7 @@ audio::-moz-media-controls-panel {
 
 .modal__review video {
     max-height: 464px;
+    border-radius: 32px;
 }
 
 

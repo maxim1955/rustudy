@@ -213,7 +213,6 @@ const useNewsStore = defineStore('NewsStore', {
             // console.log(response.data.data.data)
 
             for (const el of this.events) {
-                console.log(el)
                 // Проверяем, есть ли уже новость с таким идентификатором в массиве new
                 const exists = this.event.some(item => item.id === el.id);
                 // Если такой новости еще нет, делаем запрос
@@ -221,6 +220,8 @@ const useNewsStore = defineStore('NewsStore', {
                     const response = await axios.get(`/api/events/${el.id}`);
                     const data = response.data.data;
                     this.event.push(data);
+
+                    console.log(data)
                 }
             }
         },
