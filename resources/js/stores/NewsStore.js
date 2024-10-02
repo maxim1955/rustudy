@@ -23,37 +23,6 @@ const useNewsStore = defineStore('NewsStore', {
 
         async fetchAllNews() {
             try {
-                //  axios.all([
-                //     axios.get(`/api/publications`),
-                //     axios.get(`/api/activities`),
-                //     axios.get(`/api/events`),
-                // ]).then(axios.spread((newsData, activitiesData, eventsData) => {
-                //     console.log(newsData.data.data.data)
-                //     this.publications = newsData.data.data.data;
-                //     this.activities = activitiesData.data.data.data;
-                //     this.events = eventsData.data.data.data;
-
-                //     this.allNews = [...this.publications, ...this.activities, ...this.events];
-
-                //     // console.log(this.allNews)
-
-                //     for (const el of this.publications) {
-                //         // Проверяем, есть ли уже новость с таким идентификатором в массиве new
-                //         const exists = this.publication.some(item => item.id === el.id);
-                //         // Если такой новости еще нет, делаем запрос
-                //         if (!exists) {
-                //             // console.log('new push');
-                //             axios.get(`/api/publications/${el.id}`)
-                //             .then((response) => {
-                //                 this.publication.push(response.data.data);
-                //             })
-
-
-                //         }
-                //     }
-                // }))
-
-
                 const response = await axios.get(`/api/news`);
                 this.totalPage = response.data.data.meta.pagination.total_pages;
                 this.currentPage = response.data.data.meta.pagination.current_page;
@@ -239,10 +208,12 @@ const useNewsStore = defineStore('NewsStore', {
             this.currentPage = response.data.data.meta.pagination.current_page;
             const data = response.data.data.data;
             this.events = data;
+            console.log(this.events)
 
             // console.log(response.data.data.data)
 
             for (const el of this.events) {
+                console.log(el)
                 // Проверяем, есть ли уже новость с таким идентификатором в массиве new
                 const exists = this.event.some(item => item.id === el.id);
                 // Если такой новости еще нет, делаем запрос
