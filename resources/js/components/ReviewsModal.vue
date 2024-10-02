@@ -1,5 +1,5 @@
 <template>
-    <div id="review" class="modal__offer">
+    <div id="review" class="modal__review">
         <button class="modal__close btn-reset" @click="$emit('close-modal')">
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
 <path d="M37.5 2.5L2.5 37.5" stroke="#0A2B49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

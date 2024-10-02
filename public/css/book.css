@@ -900,6 +900,7 @@ audio::-moz-media-controls-panel {
     border-radius: 32px;
     background-color: var(--cyan);
     cursor: pointer;
+    overflow: hidden;
 }
 
 .review__name {
@@ -934,7 +935,8 @@ audio::-moz-media-controls-panel {
     background-color: var(--cyan);
 }
 
-.modal__offer {
+.modal__offer,
+.modal__review {
     position: fixed;
     padding: 40px;
     top: 0;
@@ -956,6 +958,14 @@ audio::-moz-media-controls-panel {
     max-width: 1180px;
     left: calc(50% - 590px);
     transform: translateY(35%);
+}
+
+.modal__review .modal__window {
+    transform: none;
+}
+
+.modal__review video {
+    max-height: 464px;
 }
 
 
