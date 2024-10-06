@@ -700,7 +700,7 @@ export default {
                 // Отправляем POST-запрос
                 const response = await axios.post('https://agent.prostoy.ru/api/ultraform.php', data);
                 console.log('Простой бизнес ====', response.data);
-                // this.showModalSubmit = true;
+
             } catch (error) {
                 if (error.response) {
                     console.log('Ошибка Простой бизнес:', error.response.data);
@@ -727,6 +727,8 @@ export default {
                 })
                     .then(response => {
                         console.log('Успех:', response.data);
+                         this.showModalSubmit = true;
+                        window.open(response.data, '_blank')
                     })
                     .catch(error => {
                         console.error('Ошибка:', error);
