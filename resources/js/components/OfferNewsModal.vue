@@ -435,9 +435,6 @@ export default {
             }else {
                 console.log('submitForm false')
             }
-
-
-
         },
         onFileAdd(e) {
             this.cropperKey += 1;

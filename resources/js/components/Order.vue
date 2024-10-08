@@ -527,7 +527,6 @@ export default {
                             }
                         }
 
-                        console.log(this.total)
                     })
                     .catch(error => {
                         console.log(error)
@@ -543,7 +542,7 @@ export default {
                 } else {
                     console.error('Ошибка:', error.message);
                 }
-                throw error; // Если вы хотите передать ошибку дальше для обработки в вызывающем коде
+                throw error;
             }
         },
 
