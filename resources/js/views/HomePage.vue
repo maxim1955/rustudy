@@ -137,8 +137,6 @@
         </main>
         <Footer/>
     </div>
-    <iframe id="iform_interface_container"
-            src="https://agent.prostoy.ru/api/ultraform.php?hash=&task_id=2810127&fields=A04F2FD59E6A49F0.B97524D6442173B0.A641A6D668696090.A73E7E060342F450"></iframe>
 </template>
 <script>
 
