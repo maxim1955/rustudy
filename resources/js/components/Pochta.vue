@@ -1,28 +1,33 @@
 <template>
     <div>
         <div class="order__block pochta" v-show="!afterChoice">
-            <form class="form pochta__form">
-                <div class="form__search search">
-                    <input v-model="city" class="form__input" id="search-city" type="text" @input="onInput()"
-                           placeholder="Найти">
-                    <div class="search__block" v-show="showList">
-                        <ul v-if="listAddress.length > 0" class="pochta__list list-reset search__list">
-                            <li v-for="(address, index) in listAddress" :key="index" class="pochta__item item"
-                                @click="setActiveCity(address)">
-                                <p class="item__address">{{ address.address }}</p>
-                            </li>
-                        </ul>
-                        <p v-else>Ничего не найдено</p>
+            <div class="pochta__box">
+                <form class="form pochta__form">
+                    <div class="form__search search">
+                        <input v-model="city" class="form__input" id="search-city" type="text" @input="onInput()"
+                            placeholder="Найти">
+
+                        <div class="search__block" v-show="showList">
+                            <ul v-if="listAddress.length > 0" class="pochta__list list-reset search__list">
+                                <li v-for="(address, index) in listAddress" :key="index" class="pochta__item item"
+                                    @click="setActiveCity(address)">
+                                    <p class="item__address">{{ address.address }}</p>
+                                </li>
+                            </ul>
+                            <p v-else>Ничего не найдено</p>
+                        </div>
+
                     </div>
 
-                </div>
+                    <div class="form__btns">
+                        <a :class="{active: activeTab == tab.id}" class="btn-reset pochta__btn" v-for="tab in tabs"
+                        :key="tab.id" @click="changeTab(tab)">{{ tab.name }}</a>
+                    </div>
 
-                <div class="form__btns">
-                    <a :class="{active: activeTab == tab.id}" class="btn-reset pochta__btn" v-for="tab in tabs"
-                       :key="tab.id" @click="changeTab(tab)">{{ tab.name }}</a>
-                </div>
+                </form>
+                <span class="form__error">{{ this.addressError }}</span>
+            </div>
 
-            </form>
 
             <div style="position: relative;">
 
@@ -86,7 +91,7 @@ import usePostcodeStore from '@/stores/PostcodeStore.js'
 
 export default {
     components: {mapAfter},
-
+    props: ['addressError'],
 
     data() {
         return {

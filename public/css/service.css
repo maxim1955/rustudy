@@ -20,14 +20,16 @@ h2,
 h3 {
     margin: 0;
 }
-.serv{
+
+.serv {
     padding-bottom: 120px;
 }
+
 .active_tab {
     color: #0A2B49;
-    background: #d1e1f7!important;
-    text-decoration: none!important;
-    border-radius: 20px!important;
+    background: #d1e1f7 !important;
+    text-decoration: none !important;
+    border-radius: 20px !important;
 
 }
 
@@ -93,6 +95,7 @@ h3 {
     background: #E7F0FF;
     position: relative;
 }
+
 .game_wrapper {
     position: relative;
     width: 100%;
@@ -105,7 +108,8 @@ h3 {
     background-repeat: no-repeat;
 
 }
-.app_promo{
+
+.app_promo {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -118,16 +122,18 @@ h3 {
 }
 
 
-.game_wrapper_box{
+.game_wrapper_box {
     position: absolute;
     top: 40%;
     height: fit-content;
     padding-left: 40px;
 }
-.app_promo_box{
+
+.app_promo_box {
     top: 30%;
 }
-.game_wrapper p{
+
+.game_wrapper p, .game_wrapper p {
     color: #0A2B49;
     font-size: 40px;
     max-width: 456px;
@@ -135,7 +141,8 @@ h3 {
     line-height: 28.8px;
     padding-bottom: 20px;
 }
-.app_promo p{
+
+.app_promo p {
     color: #0A2B49;
     font-size: 48px;
     max-width: 666px;
@@ -144,7 +151,7 @@ h3 {
     padding-bottom: 20px;
 }
 
-.game_wrapper span{
+.game_wrapper span:not(.no-break) {
     display: block;
     color: #0A2B49;
     font-size: 24px;
@@ -153,7 +160,8 @@ h3 {
     line-height: 28.8px;
     padding-bottom: 60px;
 }
-.app_promo_box span{
+
+.app_promo_box span {
     display: block;
     color: #0A2B49;
     font-size: 24px;
@@ -162,7 +170,8 @@ h3 {
     line-height: 28.8px;
     padding-bottom: 60px;
 }
-.game_wrapper button{
+
+.game_wrapper button {
     color: white;
     padding: 20px 40px;
     font-family: "Manrope";
@@ -170,8 +179,9 @@ h3 {
     border-radius: 16px;
     background: linear-gradient(92.22deg, #056BF0 1.05%, #D547BA 100%);;
 }
+
 @media (max-width: 1700px) {
-    .game_wrapper_box{
+    .game_wrapper_box {
         position: absolute;
         top: 5%;
         left: 0;
@@ -181,7 +191,9 @@ h3 {
         width: fit-content;
         margin: 0 auto;
     }
+
     .game_wrapper {
+        min-height: 904px;
         position: relative;
         width: 100%;
         height: 100vh;
@@ -196,24 +208,31 @@ h3 {
     }
 
 }
+
 @media (max-width: 1440px) {
     .game_wrapper {
-        background-position: initial;
+        background-position-x: center;
+        background-position-y: top;
     }
-    .game_wrapper p{
-        font-size: 24px;
+
+    .game_wrapper p, .no-break {
+        font-size: 22px;
     }
-    .game_wrapper span{
+
+    .game_wrapper span:not(.no-break) {
         font-size: 16px;
         padding-bottom: 7px;
     }
-    .game_wrapper button{
+
+    .game_wrapper button {
         font-size: 20px;
     }
+
     .game_wrapper button {
         padding: 10px 15px;
     }
 }
+
 @media (max-width: 700px) {
     .game_wrapper {
         position: relative;
@@ -228,13 +247,16 @@ h3 {
         background-position: center;
         margin: 0 auto;
     }
-    .service_wrap_second{
+
+    .service_wrap_second {
         padding-left: 0;
     }
-    .game_wrapper p{
+
+    .game_wrapper p {
         padding-bottom: 0;
     }
 }
+
 @media (max-width: 400px) {
     .game_wrapper {
         position: relative;

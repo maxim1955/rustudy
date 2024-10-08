@@ -21,17 +21,15 @@
                                     <p class="error__text error__text_402">Для доступа к&nbsp;этому разделу необходимо
                                         произвести оплату
                                         на&nbsp;сайте</p>
-                                    <router-link :to="{ name: 'home' }" class="btn-reset error__btn">На
-                                        главную</router-link>
+                                        <router-link :to="{ name: 'home' }" class="btn-reset error__btn">На главную</router-link>
                                 </div>
 
                                 <div class="error__support">
                                     <p class="error__text error__text_402">Вы&nbsp;уже оплатили, но&nbsp;все равно
                                         не&nbsp;можете войти?
                                         Обратитесь в&nbsp;техническую поддержку</p>
-                                    <router-link :to="{ name: 'home' }"
-                                        class="btn-reset error__btn error__btn_support">Написать в
-                                        поддержку</router-link>
+                                        <button @click="openFeedback()" class="btn-reset error__btn error__btn_support">Написать в
+                                            поддержку</button>
                                 </div>
                             </div>
 
@@ -86,6 +84,7 @@
             </section>
         </main>
         <Footer></Footer>
+        <FeedbackModal @close-feedback="closeFeedback" v-if="showFeedback"></FeedbackModal>
     </div>
 </template>
 
@@ -93,14 +92,28 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import {useHead} from "unhead";
+import FeedbackModal from '../components/FeedbackModal.vue';
 export default {
     name: 'error402',
-    components: { Header, Footer },
+    components: { Header, Footer, FeedbackModal },
+    data() {
+        return {
+            showFeedback: false,
+        }
+    },
     mounted() {
         useHead({
             title: '402',
         })
-    }
+    },
+    methods: {
+        openFeedback() {
+            this.showFeedback = true
+        },
+        closeFeedback() {
+            this.showFeedback = false
+        },
+    },
 }
 </script>
 

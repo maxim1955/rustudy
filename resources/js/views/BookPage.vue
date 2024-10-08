@@ -458,7 +458,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         В
-                                                        <input class="imageText" @input="isWater" v-model="valueWater"
+                                                        <input class="imageText" @keydown="deleteNumber" @input="isWater" v-model="valueWater"
                                                                id="img1" maxlength="2"
                                                                type="text">
                                                         А
@@ -481,7 +481,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         В
-                                                        <input @input="isVase" v-model="valueVase" class="imageText"
+                                                        <input @keydown="deleteNumber" @input="isVase" v-model="valueVase" class="imageText"
                                                                id="img2" maxlength="2"
                                                                type="text">
                                                         А
@@ -507,7 +507,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         З
-                                                        <input @input="isUmbrella" v-model="valueUmbrella"
+                                                        <input @keydown="deleteNumber" @input="isUmbrella" v-model="valueUmbrella"
                                                                class="imageText" id="img4" maxlength="2"
                                                                type="text">
                                                         Т
@@ -530,7 +530,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         М
-                                                        <input @input="isFrost" v-model="valueFrost" class="imageText"
+                                                        <input @keydown="deleteNumber" @input="isFrost" v-model="valueFrost" class="imageText"
                                                                id="img5" maxlength="3"
                                                                type="text">
                                                         З</p>
@@ -660,11 +660,13 @@ export default {
                     level: 'А1',
                     image: 'img/book-1.webp',
                     isOnline: false,
-                    rub: 1500,
-                    eur: 20,
-                    usd: 15,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
                     amount: 0,
-                    url: '/error401'
+                    url: 'https://rus.study/storage/RKI_2020.pdf',
                 },
                 {
                     id: 2,
@@ -674,11 +676,21 @@ export default {
                     level: 'А1',
                     image: 'img/book-1.webp',
                     isOnline: true,
-                    rub: 900,
-                    eur: 20,
-                    usd: 15,
-                    amount: 1,
-                    url: '/error402'
+                    price: {
+                        year: {
+                            rub: 1100,
+                            eur: 13,
+                            usd: 16,
+                        },
+                        always: {
+                            rub: 3900,
+                            eur: 42,
+                            usd: 45,
+                        }
+                    },
+
+                    amount: 0,
+                    url: 'https://rus.study/preview/courses/8/modules/32/themes/67?select=17'
                 },
                 {
                     id: 3,
@@ -688,11 +700,13 @@ export default {
                     level: 'А2',
                     image: 'img/book-2.webp',
                     isOnline: false,
-                    rub: 1500,
-                    eur: 20,
-                    usd: 15,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
                     amount: 0,
-                    url: '/error403'
+                    url: 'https://rus.study/storage/RKI_2021-A2.pdf '
                 },
                 {
                     id: 4,
@@ -702,11 +716,20 @@ export default {
                     level: 'А2',
                     image: 'img/book-2.webp',
                     isOnline: true,
-                    rub: 900,
-                    eur: 20,
-                    usd: 15,
-                    amount: 1,
-                    url: '/error404'
+                    price: {
+                        year: {
+                            rub: 1100,
+                            eur: 13,
+                            usd: 16,
+                        },
+                        always: {
+                            rub: 3900,
+                            eur: 42,
+                            usd: 45,
+                        }
+                    },
+                    amount: 0,
+                    url: 'https://rus.study/preview/courses/9/modules/42/themes/130?select=293 '
                 },
             ],
             authors: [
@@ -803,6 +826,10 @@ export default {
     },
 
     methods: {
+        deleteNumber(e) {
+            if (e.key.match(/[0-9]/)) return e.preventDefault();
+        },
+
         openFeedback() {
             this.showFeedback = true
         },

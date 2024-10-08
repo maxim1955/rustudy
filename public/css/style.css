@@ -272,11 +272,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 68.5%;
+  gap: 20px;
+  width: 85%;
 }
 
 .menu-btn {
   display: none;
+}
+
+.header__nav {
+    margin: 0 auto;
 }
 
 .nav__link {

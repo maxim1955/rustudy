@@ -9,7 +9,7 @@
   }
 }
 
-@media (max-width: 1700px) {
+@media (max-width: 1400px) {
   .menu-btn {
     display: block;
     width: 40px;
@@ -75,6 +75,7 @@
   }
 
   .header__nav {
+    margin: 0;
     margin-bottom: 80px;
     padding-right: 25px;
     padding-top: 9vh;

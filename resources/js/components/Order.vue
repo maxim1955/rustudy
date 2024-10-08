@@ -51,9 +51,9 @@
 
                                     <label
                                         class="product"
-                                        v-for="book in books"
+                                        v-for="book in booksArray"
                                         :key="book.id"
-                                        :class="{active: selectedProducts.includes(book)}"
+                                        :class="{active: this.selectedProducts.some(product => product.id === book.id)}"
                                     >
                                         <div class="order__product">
                                             <input
@@ -76,14 +76,12 @@
                                             <div class="count__block">
                                                 <button @click.prevent="decrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--decrement"
-                                                        :disabled="!selectedProducts.includes(book)"></button>
-                                                <input v-if="book.course_id == 8" type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" v-model="amount1">
-                                                <input v-else type="number" class="count__num"
-                                                       :name="'count['+ book.id +']'" v-model="amount2">
+                                                        :disabled="!this.selectedProducts.some(product => product.id === book.id)"></button>
+                                                <input type="number" class="count__num"
+                                                       :name="'count['+ book.id +']'" v-model="book.amount">
                                                 <button @click.prevent="incrementProduct(book)"
                                                         class="btn-reset product__btn product__btn--increment"
-                                                        :disabled="!selectedProducts.includes(book)"></button>
+                                                        :disabled="!this.selectedProducts.some(product => product.id === book.id)"></button>
                                             </div>
                                         </div>
 
@@ -100,39 +98,63 @@
 
                                                     <div class="tooltip__block">
                                                         <p class="tooltip__title">Подписка на 1 год</p>
-                                                        <p class="tooltip__text">Имеется спорная точка зрения, гласящая
-                                                            примерно следующее: непосредственные участники технического
-                                                            прогресса представляют собой не что иное.</p>
+                                                        <p class="tooltip__text">Приобретая интерактивный учебник на год, вы получаете доступ к самым актуальным материалам в течение всего учебного года. </p>
                                                         <p class="tooltip__title">Подписка навсегда</p>
-                                                        <p class="tooltip__text">Однозначно, некоторые особенности
-                                                            внутренней политики неоднозначны и будут заблокированы
-                                                            в рамках своих собственных рациональных ограничений.</p>
+                                                        <p class="tooltip__text">Выбирая покупку интерактивного учебника навсегда, вы инвестируете в свое образование на долгие годы.</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="flex sub__block">
+                                            <div v-if="book.course_id == 8" class="flex sub__block">
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
-                                                           :name="'sub['+ book.id +']'" value="year"
-                                                           :disabled="!selectedProducts.includes(book)"
-                                                           :checked="selectedProducts.includes(book)">
+                                                           :name="'sub['+ book.id +']'" :value="book.price.year[this.currencyValue]"
+                                                           :disabled="!this.selectedProducts.some(product => product.id === book.id)"
+                                                           :checked="this.selectedProducts.some(product => product.id === book.id)"
+                                                           v-model="termOnlineBook1"
+                                                           @change="changeTermBook($event, book.id)">
                                                     <span></span>
                                                     1 год
                                                 </label>
                                                 <label class="sub__label">
                                                     <input type="radio" class="visually-hidden"
-                                                           :name="'sub['+ book.id +']'" value="always"
-                                                           :disabled="!selectedProducts.includes(book)"
-                                                           :checked="selectedProducts.includes(book)">
+                                                           :name="'sub['+ book.id +']'" :value="book.price.always[this.currencyValue]"
+                                                           :disabled="!(this.selectedProducts.some(product => product.id === book.id))"
+                                                           :checked="this.selectedProducts.some(product => product.id === book.id)"
+                                                           v-model="termOnlineBook1"
+                                                           @change="changeTermBook($event, book.id)">
                                                     <span></span>
                                                     Навсегда
                                                 </label>
-
-
+                                            </div>
+                                            <div v-if="book.course_id == 9" class="flex sub__block">
+                                                <label class="sub__label">
+                                                    <input type="radio" class="visually-hidden"
+                                                           :name="'sub['+ book.id +']'" :value="book.price.year[this.currencyValue]"
+                                                           :disabled="!(this.selectedProducts.some(product => product.id === book.id))"
+                                                           :checked="this.selectedProducts.some(product => product.id === book.id)"
+                                                           v-model="termOnlineBook2"
+                                                           @change="changeTermBook($event, book.id)">
+                                                    <span></span>
+                                                    1 год
+                                                </label>
+                                                <label class="sub__label">
+                                                    <input type="radio" class="visually-hidden"
+                                                           :name="'sub['+ book.id +']'" :value="book.price.always[this.currencyValue]"
+                                                           :disabled="!(this.selectedProducts.some(product => product.id === book.id))"
+                                                           :checked="this.selectedProducts.some(product => product.id === book.id)"
+                                                           v-model="termOnlineBook2"
+                                                           @change="changeTermBook($event, book.id)">
+                                                    <span></span>
+                                                    Навсегда
+                                                </label>
                                             </div>
                                         </div>
-                                        <p class="product__price">{{ book.rub }} ₽</p>
-                                        <!-- <p v-show="currencyValue == 'rub'" class="product__price">{{ book.rub }} ₽</p>
+                                        <p v-if="!book.isOnline && book.amount == 0" class="product__price">{{ book.price[currencyValue] }} ₽</p>
+                                        <p v-else-if="!book.isOnline && book.amount > 0" class="product__price">{{ book.price[currencyValue] * book.amount }} ₽</p>
+                                        <p v-else-if="book.course_id == 8" class="product__price">{{ termOnlineBook1 }} ₽</p>
+                                        <p v-else-if="book.course_id == 9" class="product__price">{{ termOnlineBook2 }} ₽</p>
+
+                                        <!--
                                        <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
                                        <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
                                     </label>
@@ -179,10 +201,9 @@
                                         <div class="w-100">
                                             <span class="form__text">Телефон *</span>
                                             <label for="" class="form__label">
-                                                <vue-tel-input v-model="phone" @country-changed="countryChanged"
+                                                <vue-tel-input class="form__input" :class="{'error-input': errorTel}" v-model="phone" @country-changed="countryChanged"
                                                                @validate="customValidate"
-                                                               @keydown="deleteLetter"
-                                                />
+                                                               @keydown="deleteLetter"/>
                                                 <span v-show="errorTel" class="error-icon"/>
                                             </label>
 
@@ -199,17 +220,12 @@
                                             <span></span>
                                             <img src="img/payment-1.svg" alt="Robokassa">
                                         </label>
-                                        <label class="payment__label">
-                                            <input type="radio" class="visually-hidden" name="payment" value="paypal"
-                                                   v-model="paymentValue"/>
-                                            <span></span>
-                                            <img src="img/payment-2.svg" alt="PayPal">
-                                        </label>
+
                                     </div>
 
                                 </div>
 
-                                <div class="order__block delivery">
+                                <div class="order__block delivery" v-show="this.haveOfflineBook">
                                     <p class="order__title">Способ получения</p>
                                     <div class="delivery__block">
                                         <div>
@@ -230,14 +246,13 @@
                                                 <span></span>
                                                 Доставка почтой России
                                             </label>
-                                            <p>Книга отправляется вам почтовым переводом, по адресу, который вы укажите,
-                                                срок доставки зависит от Почты России, стоимость за счёт покупателя</p>
+                                            <p>Стоимость пересылки осуществляется за счет покупателя по тарифам Почты России.</p>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <Pochta @address="activeCity" v-show="deliveryValue == 1"/>
+                                <Pochta :addressError="this.addressError" @address="activeCity" v-show="deliveryValue == 1"/>
 
                             </div>
                             <div class="order__right">
@@ -348,35 +363,55 @@ export default {
             promocode: '',
             address: reactive(null),
             subscription: null,
-            // bookItem: {},
             courseID: null,
             pickupAddress: '',
             courseIds: [],
             amount1: 0,
             amount2: 0,
             promocodeMessage: '',
-            promocodeActive: 0
+            promocodeActive: 0,
+            stockType: '',
+            stock: 0,
+            haveOfflineBook: 0,
+            addressError: null,
+            termOnlineBook1: null,
+            termOnlineBook2: null,
+            booksArray: JSON.parse(JSON.stringify(this.books))
 
         }
     },
 
     methods: {
         incrementProduct(book) {
-            if (book.course_id == 8) {
-                this.amount1 += 1;
-            } else this.amount2 += 1;
-            book.amount += 1;
+            this.selectedProducts.forEach(el => {
+                if (el.id == book.id) {
+                    if (el.course_id == 8) {
+                        this.amount1 += 1;
+                    } else this.amount2 += 1;
+                    el.amount += 1;
+                    book.amount += 1;
+
+                }
+            })
+
         },
 
         decrementProduct(book) {
-            if (book.course_id == 8 && book.amount > 1) {
-                this.amount1 -= 1;
-                book.amount -= 1;
-            }
-            if (book.course_id == 9 && book.amount > 1) {
-                this.amount2 -= 1;
-                book.amount -= 1;
-            }
+            this.selectedProducts.forEach(el => {
+                if (el.id == book.id) {
+                    if (el.course_id == 8 && el.amount > 1) {
+                        this.amount1 -= 1;
+                        el.amount -= 1;
+                        book.amount -= 1;
+                    }
+                    if (el.course_id == 9 && el.amount > 1) {
+                        this.amount2 -= 1;
+                        el.amount -= 1;
+                        book.amount -= 1;
+                    }
+                }
+            })
+
         },
 
 
@@ -402,6 +437,10 @@ export default {
             if (e.errors.email) {
                 this.errorEmail = true
             }
+
+            // if (e.errors.phone) {
+            //     this.errorPhone = true
+            // }
         },
 
         validateFio(value) {
@@ -455,6 +494,7 @@ export default {
                 this.errorEmail = false
             }
 
+
             if (e.target.value != '') {
                 btn.classList.remove('hidden')
 
@@ -464,7 +504,8 @@ export default {
 
         customValidate(value) {
             console.log(value)
-            if (value.valid === true) {
+            if (value.valid != undefined) {
+                if (value.valid === true) {
                 this.phoneValid = true;
                 this.errorTel = false
             } else {
@@ -472,6 +513,8 @@ export default {
                 this.errorTel = true
 
             }
+            }
+
         },
 
         deleteNumber(e) {
@@ -495,7 +538,7 @@ export default {
         },
 
         async applyPromocode() {
-            if (this.promocode == '') {
+            if (this.promocode === '') {
                 this.promocodeActive = 1;
                 this.promocodeMessage = 'Введите промокод';
             }
@@ -516,13 +559,14 @@ export default {
                                 this.promocodeActive = 1;
                                 this.promocodeMessage = 'Срок действия промокода истек';
                             } else {
-                                if (data.stock_type == 'руб') {
+                                this.stockType = data.stock_type;
+                                if (data.stock_type === 'руб') {
                                     this.promocodeMessage = 'Промокод успешно применен';
-                                    this.total = this.total - data.stock;
+                                    this.stock = data.stock;
                                 }
-                                if (data.stock_type == '%') {
+                                if (data.stock_type === '%') {
                                     this.promocodeMessage = 'Промокод успешно применен';
-                                    this.total = this.total - (this.total * data.stock);
+                                    this.stock = data.stock;
                                 }
                             }
                         }
@@ -548,6 +592,11 @@ export default {
 
         async onSubmit(e) {
 
+            if (this.address == null) {
+                this.addressError = 'Введите адрес доставки';
+            } else this.addressError = null
+
+
             let res = {
                 fio: this.fio,
                 email: this.email,
@@ -564,7 +613,7 @@ export default {
 
 
             try {
-                const response = await axios.post('/api/payment', res,
+                const response = await axios.post('/api/order', res,
                     {
                         headers: {
                             'Content-Type': 'application/json'
@@ -576,7 +625,8 @@ export default {
                     .catch(error => {
                         console.error('Ошибка:', error);
                     });
-                await this.sendBusiness()
+                await this.sendBusiness();
+                await this.sendRobokassa();
                 return response;
             } catch (error) {
                 if (error.response) {
@@ -618,7 +668,7 @@ export default {
             })
             console.log(rawBook)
 
-            if (this.deliveryValue !== 0) {
+            if (this.deliveryValue != 0) {
                 const rawAdress = toRaw(this.address);
                 res.address = `${rawAdress.postal_code} - ${rawAdress.address}`
             } else {
@@ -649,7 +699,7 @@ export default {
                 // Отправляем POST-запрос
                 const response = await axios.post('https://agent.prostoy.ru/api/ultraform.php', data);
                 console.log('Простой бизнес ====', response.data);
-                this.showModalSubmit = true;
+
             } catch (error) {
                 if (error.response) {
                     console.log('Ошибка Простой бизнес:', error.response.data);
@@ -664,6 +714,39 @@ export default {
             }
         },
 
+        async sendRobokassa() {
+            let res = {
+                out_sum: this.total
+            }
+            try {
+                const response = await axios.get('/api/payment', {
+                    params: {
+                        out_sum: this.total
+                    }
+                })
+                    .then(response => {
+                        console.log('Успех:', response.data);
+                         this.showModalSubmit = true;
+                        window.open(response.data, '_blank')
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+                return response;
+            } catch (error) {
+                if (error.response) {
+                    console.error('Ошибка:', error.response.data);
+                    console.error('Статус ошибки:', error.response.status);
+                    console.error('Заголовки:', error.response.headers);
+                } else if (error.request) {
+                    console.error('Ошибка при ожидании ответа от сервера:', error.request);
+                } else {
+                    console.error('Ошибка:', error.message);
+                }
+                throw error;
+            }
+        },
+
 
         closeSubmit() {
             this.showModalSubmit = false;
@@ -672,19 +755,53 @@ export default {
 
 
         addProduct(product) {
-            if (!this.selectedProducts.includes(product)) {
+            const haveProduct = this.selectedProducts.some(el => el.id === product.id);
+            product.amount = 1;
+            let obj;
+            if (!haveProduct) {
                 // this.incrementProduct(product);
                 if (product.course_id == 8 && product.isOnline == false) this.amount1 = 1;
                 if (product.course_id == 9 && product.isOnline == false) this.amount2 = 1;
-                this.selectedProducts.push(product);
-                product.amount = 1;
+
+
+                if (product.isOnline) {
+                    obj = {
+                                id: product.id,
+                                course_id: product.course_id,
+                                name: product.name,
+                                type: product.type,
+                                level: product.level,
+                                isOnline: product.isOnline,
+                                price: product.price.always[this.currencyValue],
+                                amount: product.amount
+                            }
+                } else {
+                    obj =  {
+                                id: product.id,
+                                course_id: product.course_id,
+                                name: product.name,
+                                type: product.type,
+                                level: product.level,
+                                isOnline: product.isOnline,
+                                price: product.price[this.currencyValue],
+                                amount: product.amount
+                            }
+                }
+
+                this.selectedProducts.push(obj);
+
 
                 if (product.isOnline == true) {
                     this.subscription = 1
                 } else this.subscription = 0
 
             } else {
-                const index = this.selectedProducts.indexOf(product);
+                const id = product.id;
+                let objNew;
+                this.selectedProducts.forEach(el => {
+                    if (el.id == id) objNew = el
+                })
+                const index = this.selectedProducts.indexOf(objNew);
                 if (product.course_id == 8 && product.isOnline == false) this.amount1 = 0;
                 if (product.course_id == 9 && product.isOnline == false) this.amount2 = 0;
                 this.selectedProducts.splice(index, 1);
@@ -699,11 +816,31 @@ export default {
             if (resultSub) this.subscription = 1
             else this.subscription = 0
 
+
+            const resultOffline = this.selectedProducts.some(el => {
+                return el.isOnline == false
+            })
+
+
+            if (resultOffline) this.haveOfflineBook = 1
+            else this.haveOfflineBook = 0
+
         },
+
+        changeTermBook(event, id) {
+            this.selectedProducts.forEach(product => {
+                if (product.id == id) {
+                    product.price = event.target.value;
+                }
+
+
+            } )
+        }
 
     },
 
     computed: {
+
         getAddress() {
 
             if (this.deliveryValue == 0) {
@@ -718,23 +855,23 @@ export default {
         },
 
 
-        amount1: {
+        getTermOnlineBook1: {
             get() {
-                return this.amount1
+                return this.getTermOnlineBook1
             },
 
             set(value) {
-                this.amount1 = value
+                this.getTermOnlineBook1 = value
             }
         },
 
-        amount2: {
+        getTermOnlineBook2: {
             get() {
-                return this.amount2
+                return this.getTermOnlineBook2
             },
 
             set(value) {
-                this.amount2 = value
+                this.getTermOnlineBook2 = value
             }
         },
 
@@ -746,29 +883,63 @@ export default {
             }
         },
 
-        // total() {
-        //     if (Object.keys(this.bookItem).length > 0) {
-        //         return this.bookItem.amount * this.bookItem.rub;
-        //     } else return 0
-
-
-        // },
         total() {
-            return this.selectedProducts.reduce((total, book) => {
-                return total + (book.amount * book.rub);
+
+            let totalPrice = this.selectedProducts.reduce((total, book) => {
+                return total + (book.amount * book.price);
             }, 0)
+
+            if (this.promocode != '') {
+                if (this.stockType === 'руб') {
+                    totalPrice = totalPrice - this.stock;
+                }
+                if (this.stockType === '%') {
+                    totalPrice = totalPrice - ((totalPrice * this.stock)/100);
+                }
+            }
+
+            return totalPrice;
+
         },
 
         productAmount() {
             return this.selectedProducts.reduce((total, book) => {
                 return total + book.amount;
             }, 0)
-        }
-        // product() {
-        //     return this.bookItem
-        // }
+        },
 
-    }
+        getTermOnlineBook1() {
+            this.books.forEach(el => {
+                                    if (el.course_id == 8 && el.isOnline == true) {
+                                        return el.price.always.rub
+                                    }
+                                })
+        }
+
+
+    },
+
+    created() {
+        this.termOnlineBook1 = this.books.find(el => el.course_id === 8 && el.isOnline)?.price.always.rub;
+        this.termOnlineBook2 = this.books.find(el => el.course_id === 9 && el.isOnline)?.price.always.rub;
+    },
+
+    watch: {
+    booksArray: {
+      handler(newProducts) {
+        // Обновление cartItems при изменении products
+        this.selectedProducts.forEach(product => {
+          const productItem = newProducts.find(p => p.id === product.id);
+          if (productItem) {
+            product.amount = productItem.amount;
+          }
+        });
+      },
+      deep: true, // Следим за глубокими изменениями в products
+    },
+  },
+
+
 
 }
 </script>
