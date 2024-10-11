@@ -458,7 +458,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         В
-                                                        <input class="imageText" @keydown="deleteNumber" @input="isWater" v-model="valueWater"
+                                                        <input class="imageText" @keydown="enterLetters" @input="isWater" v-model="valueWater"
                                                                id="img1" maxlength="2"
                                                                type="text">
                                                         А
@@ -481,7 +481,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         В
-                                                        <input @keydown="deleteNumber" @input="isVase" v-model="valueVase" class="imageText"
+                                                        <input @keydown="enterLetters" @input="isVase" v-model="valueVase" class="imageText"
                                                                id="img2" maxlength="2"
                                                                type="text">
                                                         А
@@ -507,7 +507,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         З
-                                                        <input @keydown="deleteNumber" @input="isUmbrella" v-model="valueUmbrella"
+                                                        <input @keydown="enterLetters" @input="isUmbrella" v-model="valueUmbrella"
                                                                class="imageText" id="img4" maxlength="2"
                                                                type="text">
                                                         Т
@@ -530,7 +530,7 @@
                                                 <div class="game__words">
                                                     <p class="">
                                                         М
-                                                        <input @keydown="deleteNumber" @input="isFrost" v-model="valueFrost" class="imageText"
+                                                        <input @keydown="enterLetters" @input="isFrost" v-model="valueFrost" class="imageText"
                                                                id="img5" maxlength="3"
                                                                type="text">
                                                         З</p>
@@ -830,6 +830,10 @@ export default {
             if (e.key.match(/[0-9]/)) return e.preventDefault();
         },
 
+        enterLetters(e) {
+            if (!e.key.match(/[A-Za-zА-Яа-я\\]/)) return e.preventDefault();
+        },
+
         openFeedback() {
             this.showFeedback = true
         },
@@ -838,12 +842,9 @@ export default {
         },
         openOrder() {
             this.showOrder = true;
-            // document.body.style.overflow = 'hidden';
         },
         closeOrder() {
-            console.log('asda')
             this.showOrder = false;
-            // document.body.style.overflow = 'auto'
         },
 
         isWater(e) {
