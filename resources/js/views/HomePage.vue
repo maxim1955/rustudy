@@ -8,72 +8,74 @@
             <section class="container">
                 <div class="promo">
                     <div class="promo-left flex">
-                    <div class="promo-top">
-                        <div class="card-content">
-                            <h2 class="card-title">Привет, Россия!</h2>
-                            <p class="card-text">Обучение русскому языку как&nbsp;иностранному</p>
-                            <p class="card-info">печатные и онлайн учебники</p>
+                        <div class="promo-top">
+                            <div class="card-content">
+                                <h2 class="card-title">Привет, Россия!</h2>
+                                <p class="card-text">Обучение русскому языку как&nbsp;иностранному</p>
+                                <p class="card-info">печатные и онлайн учебники</p>
 
-                            <picture>
-                                <source srcset="img/books_tablet.png" media="(max-width: 1415px)">
-                                <img class="card-img_desktop" src="img/books_desktop.png"
-                                     alt='Учебники "Привет, Россия!"'>
-                            </picture>
+                                <picture>
+                                    <source srcset="img/books_tablet.png" media="(max-width: 1415px)">
+                                    <img class="card-img_desktop" src="img/books_desktop.png"
+                                         alt='Учебники "Привет, Россия!"'>
+                                </picture>
+                            </div>
+                            <router-link :to="{ name: 'book' }" class="promo__btn btn btn-reset">Подробнее</router-link>
                         </div>
-                        <router-link :to="{ name: 'book' }" class="promo__btn btn btn-reset">Подробнее</router-link>
+                        <a target="_blank" href="https://kurs.rus.study/" class="promo-bottom">
+                            <div class="bottom_content card-content">
+                                <h2 class="card-title">Курсы для педагогов</h2>
+                                <p class="card-text card-width">Повышение квалификации РКИ</p>
+                            </div>
+                            <svg class="bottom__arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667"
+                                      stroke="white"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+
                     </div>
-                    <a target="_blank" href="https://kurs.rus.study/" class="promo-bottom">
-                        <div class="bottom_content card-content">
-                            <h2 class="card-title">Курсы для педагогов</h2>
-                            <p class="card-text card-width">Повышение квалификации РКИ</p>
+
+                    <router-link to="/service" class="promo-center">
+                        <div class="card-content center_content">
+                            <h2 class="card-title">Сервисы РКИ</h2>
+                            <ul class="card-list list-reset">
+                                <li class="card-text card-item">учебно-методические материалы</li>
+                                <li class="card-text card-item">игры, тесты, карточки</li>
+                                <li class="card-text card-item">видеоуроки</li>
+                            </ul>
                         </div>
-                        <svg class="bottom__arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        <svg class="center_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667"
                                   stroke="white"
-                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </a>
+                    </router-link>
 
-                </div>
+                    <div class="promo-right">
+                        <h2 class="card-title card-name">Афиша</h2>
 
-                <router-link to="/service" class="promo-center">
-                    <div class="card-content center_content">
-                        <h2 class="card-title">Сервисы РКИ</h2>
-                        <ul class="card-list list-reset">
-                            <li class="card-text card-item">учебно-методические материалы</li>
-                            <li class="card-text card-item">игры, тесты, карточки</li>
-                            <li class="card-text card-item">видеоуроки</li>
-                        </ul>
+                        <!-- Слайдер -->
+
+                        <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
+                            <swiper-slide v-for="item of affiche" :key="item.id">
+                                <img class="affiche-img" :src="'storage/'+item.image" alt="">
+                            </swiper-slide>
+                        </Swiper>
+
+                        <a class="card-link flex" href="/news">
+                            Все новости
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667"
+                                      stroke="white"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                     </div>
-                    <svg class="center_arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667" stroke="white"
-                              stroke-width="2"
-                              stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </router-link>
-
-                <div class="promo-right">
-                    <h2 class="card-title card-name">Афиша</h2>
-
-                    <!-- Слайдер -->
-
-                    <Swiper navigation :pagination="{ clickable: true }" :modules="modules">
-                        <swiper-slide v-for="item of affiche" :key="item.id">
-                            <img class="affiche-img" :src="'storage/'+item.image" alt="">
-                        </swiper-slide>
-                    </Swiper>
-
-                    <a class="card-link flex" href="/news">
-                        Все новости
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 1L22.6667 22.6667M22.6667 22.6667V1.86667M22.6667 22.6667H1.86667"
-                                  stroke="white"
-                                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
                 </div>
 
             </section>
@@ -84,7 +86,8 @@
                         и&nbsp;обновлений? Подпишитесь на&nbsp;рассылку
                         и&nbsp;станьте частью нашего образовательного сообщества.</h3>
 
-                    <Form @InvalidSubmit="onInvalidSubmit" id="form" class="form flex">
+                    <Form @InvalidSubmit="onInvalidSubmit" id="form" class="form flex"
+                          @submit="sendSubscription(email)">
                         <div>
                             <span class="form_name form__text">E-mail</span>
                             <label class="form_item flex">
@@ -94,13 +97,12 @@
                                        @input="inputChange" v-model="email" :rules="validateEmail"/>
                                 <span v-show="errorEmail" class="error-icon"></span>
                                 <ErrorMessage class="form__error" name="email"/>
-
-
                             </label>
                         </div>
 
                         <button class="btn-reset btn form-btn" type="submit">Подписаться</button>
-                        <p class="form_agree">Нажимая на&nbsp;кнопку &laquo;Подписаться&raquo;, я&nbsp;даю своё согласие на&nbsp;обработку
+                        <p class="form_agree">Нажимая на&nbsp;кнопку &laquo;Подписаться&raquo;, я&nbsp;даю своё согласие
+                            на&nbsp;обработку
                             <a class="form_link"
                                href="docs/политика_обработки_ПДн_на_сайте_учебник.pdf"
                                target="_blank">персональных данных
@@ -147,10 +149,17 @@ import {Form, Field, ErrorMessage} from 'vee-validate';
 import {getPartners} from "../dbquery/getPartners";
 import {getAffiche} from "../dbquery/getAffiche";
 import {useHead} from "unhead";
+import {email} from "@vuelidate/validators";
+import axios from "axios";
 
 
 export default {
     name: 'HomePage',
+    computed: {
+        email() {
+            return email
+        }
+    },
     components: {Header, Footer, Swiper, SwiperSlide, Form, Field, ErrorMessage},
 
     data() {
@@ -208,6 +217,57 @@ export default {
 
             return true;
         },
+        async sendSubscription(email) {
+            try {
+                // Получение внешнего IP-адреса
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const userIp = ipData.ip;
+
+                // Получение текущей даты в формате "день месяц год"
+                const today = new Date();
+                const day = String(today.getDate()).padStart(2, '0'); // Добавляем ведущий ноль
+                const month = String(today.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
+                const year = today.getFullYear();
+                const formattedDate = `${day}.${month}.${year}`;
+
+                const data = {
+                    iform: true,
+                    referer: "",
+                    action: "send_iform",
+                    hash: '6fbfc6110144d75e0220d1d9efbe1274',
+                    task_id: '2810127',
+                    formdata: {
+                        A04F2FD59E6A49F0: '', // Дополнительные данные
+                        B97524D6442173B0: userIp, // IP пользователя
+                        A641A6D668696090: email, // Email пользователя
+                        A73E7E060342F450: `${formattedDate} - Подписка на рассылку `, // Дата
+                    }
+                };
+
+                const response = await axios.post('https://agent.prostoy.ru/api/ultraform.php', data);
+
+                if (response.data) {
+                    window.location.reload(); // Перезагрузка страницы при успешной отправке
+                }
+
+                console.log('Простой бизнес ====', response.data);
+
+            } catch (error) {
+                if (error.response) {
+                    console.log('Ошибка Простой бизнес:', error.response.data);
+                    console.log('Статус ошибки Простой бизнес:', error.response.status);
+                    console.log('Заголовки Простой бизнес:', error.response.headers);
+                } else if (error.request) {
+                    console.log('Ошибка при ожидании ответа от сервера Простой бизнес:', error.request);
+                } else {
+                    console.log('Ошибка Простой бизнес:', error.message);
+                }
+                throw error;
+            }
+
+            console.log(email); // Логирование email для отладки
+        }
 
     },
     mounted() {
@@ -236,7 +296,6 @@ export default {
             }
         }
         getAfficheDb();
-
 
 
         useHead({
