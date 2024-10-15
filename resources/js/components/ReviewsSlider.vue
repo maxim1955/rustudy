@@ -36,6 +36,7 @@
 import ReviewsModal from './ReviewsModal.vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
+import useNewsStore from '../stores/NewsStore.js'
 import 'swiper/css';
     export default {
         props: ['reviews', 'review'],
@@ -59,7 +60,9 @@ import 'swiper/css';
             this.currentActiveSlide = id;
             this.showModal = true;
             document.body.style.overflow = 'hidden';
-            localStorage.setItem('activeSlide', id);
+            console.log(id)
+            const NewsStore = useNewsStore();
+            NewsStore.currentActiveSlide = index
         },
 
         closeModal() {

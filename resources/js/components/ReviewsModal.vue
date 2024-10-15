@@ -47,7 +47,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
-
+import useNewsStore from '../stores/NewsStore.js'
 
     export default {
         props: ['reviews', 'currentActiveSlide'],
@@ -55,8 +55,9 @@ import 'swiper/css';
 
         setup() {
             const onSwiper = (swiper) => {
-                const index = localStorage.getItem('activeSlide');
-                swiper.activeIndex = index;
+                const NewsStore = useNewsStore();
+                swiper.activeIndex = NewsStore.currentActiveSlide
+                console.log(swiper.activeIndex)
             };
 
             return {
