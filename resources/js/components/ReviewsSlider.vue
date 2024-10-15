@@ -11,7 +11,7 @@
             1025:{ slidesPerView:4 },
         }"
         >
-        <swiper-slide class="review" v-for="review of reviews" :key="review.id" @click.prevent="openModal(review.id)">
+        <swiper-slide class="review" v-for="(review, index) of reviews" :key="review.id" @click.prevent="openModal(review.id, index)">
             <div class="review__card">
                 <img class="review__image" :src="'storage/'+review.image" :alt="review.teachername">
                 <!-- <picture>
@@ -56,7 +56,7 @@ import 'swiper/css';
     },
 
     methods: {
-        openModal(id) {
+        openModal(id, index) {
             this.currentActiveSlide = id;
             this.showModal = true;
             document.body.style.overflow = 'hidden';
