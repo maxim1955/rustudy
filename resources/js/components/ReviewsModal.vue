@@ -17,7 +17,7 @@
         @swiper="onSwiper"
 
        >
-        <swiper-slide class="review" v-for="item in review" :key="item.id">
+        <swiper-slide class="review" v-for="item in reviews" :key="item.id">
             <div class="review__card flex">
                 <video class="review__video" v-if="item.video[0].download_link" controls>
                     <source :src="'storage/'+item.video[0].download_link">
@@ -44,23 +44,19 @@
 
 
 <script>
-
-import { watch } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 
 
     export default {
-        props: ['review', 'currentActiveSlide'],
+        props: ['reviews', 'currentActiveSlide'],
         components: {Swiper, SwiperSlide },
 
-        setup(props) {
+        setup() {
             const onSwiper = (swiper) => {
-
-                watch(() => [props.currentActiveSlide], (newValues, oldValues) => {
-                    swiper.slideTo(newValues - 1)
-                });
+                const index = localStorage.getItem('activeSlide');
+                swiper.activeIndex = index;
             };
 
             return {

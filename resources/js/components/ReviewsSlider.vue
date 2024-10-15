@@ -27,7 +27,7 @@
         </swiper-slide>
         </swiper>
 
-        <ReviewsModal :class="{active: showModal}" :review="review" :currentActiveSlide="currentActiveSlide" v-show="showModal" @close-modal="closeModal"></ReviewsModal>
+        <ReviewsModal :class="{active: showModal}" :reviews="reviews" :currentActiveSlide="currentActiveSlide" v-show="showModal" @close-modal="closeModal"></ReviewsModal>
     </div>
 </template>
 
@@ -59,6 +59,7 @@ import 'swiper/css';
             this.currentActiveSlide = id;
             this.showModal = true;
             document.body.style.overflow = 'hidden';
+            localStorage.setItem('activeSlide', id);
         },
 
         closeModal() {
