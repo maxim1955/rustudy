@@ -11,7 +11,7 @@
             1025:{ slidesPerView:4 },
         }"
         >
-        <swiper-slide class="review" v-for="(review, index) of reviews" :key="review.id" @click.prevent="openModal(review.id, index)">
+        <swiper-slide class="review" v-for="(review, index) of reviews" :key="index" @click.prevent="openModal(review.id, index)">
             <div class="review__card">
                 <img class="review__image" :src="'storage/'+review.image" :alt="review.teachername">
                 <!-- <picture>
