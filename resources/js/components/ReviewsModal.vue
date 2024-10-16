@@ -19,10 +19,10 @@
        >
         <swiper-slide class="review" v-for="(item, index) in review" :key="index">
             <div class="review__card flex">
-                <!-- <video class="review__video" v-if="item.video[0].download_link" controls>
+                <video class="review__video" v-if="item.video[0].download_link" controls>
                     <source :src="'storage/'+item.video[0].download_link">
                 </video>
-                <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername"> -->
+                <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername">
                 <!-- <picture>
                     <source srcset="">
                     <img class="review__image" :src="review.image" :alt="review.name">
@@ -56,8 +56,8 @@ import useNewsStore from '../stores/NewsStore.js'
         setup() {
             const onSwiper = (swiper) => {
                 const NewsStore = useNewsStore();
-                console.log(swiper.activeIndex)
-                swiper.activeIndex = NewsStore.currentActiveSlide
+                // NewsStore.currentActiveSlide
+                swiper.activeIndex = NewsStore.activeReview
                 console.log(swiper.activeIndex)
             };
 
@@ -67,6 +67,13 @@ import useNewsStore from '../stores/NewsStore.js'
             };
 
         },
+
+        computed: {
+            activeReview() {
+                const NewsStore = useNewsStore();
+                return NewsStore.activeReview;
+            }
+        }
     }
 </script>
 

@@ -60,9 +60,9 @@ import 'swiper/css';
             this.currentActiveSlide = id;
             this.showModal = true;
             document.body.style.overflow = 'hidden';
-            console.log(id)
+            console.log(index)
             const NewsStore = useNewsStore();
-            NewsStore.currentActiveSlide = index
+            NewsStore.activeReview = index
         },
 
         closeModal() {
@@ -70,6 +70,13 @@ import 'swiper/css';
             document.body.style.overflow = 'auto'
         },
 
+    },
+
+    computed: {
+        activeReview() {
+            const NewsStore = useNewsStore()
+            return NewsStore.activeReview
+        },
     },
 
     watch: {
