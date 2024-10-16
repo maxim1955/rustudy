@@ -27,7 +27,7 @@
         </swiper-slide>
         </swiper>
 
-        <ReviewsModal :class="{active: showModal}" :reviews="reviews" :currentActiveSlide="currentActiveSlide" v-show="showModal" @close-modal="closeModal"></ReviewsModal>
+        <ReviewsModal :class="{active: showModal}" :review="review" :currentActiveSlide="currentActiveSlide" v-if="showModal" @close-modal="closeModal"></ReviewsModal>
     </div>
 </template>
 

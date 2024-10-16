@@ -17,7 +17,7 @@
         @swiper="onSwiper"
 
        >
-        <swiper-slide class="review" v-for="item in reviews" :key="item.id">
+        <swiper-slide class="review" v-for="item in review" :key="item.id">
             <div class="review__card flex">
                 <video class="review__video" v-if="item.video[0].download_link" controls>
                     <source :src="'storage/'+item.video[0].download_link">
@@ -50,12 +50,13 @@ import 'swiper/css';
 import useNewsStore from '../stores/NewsStore.js'
 
     export default {
-        props: ['reviews', 'currentActiveSlide'],
+        props: ['reviews', 'review'],
         components: {Swiper, SwiperSlide },
 
         setup() {
             const onSwiper = (swiper) => {
                 const NewsStore = useNewsStore();
+                console.log(swiper.activeIndex)
                 swiper.activeIndex = NewsStore.currentActiveSlide
                 console.log(swiper.activeIndex)
             };
