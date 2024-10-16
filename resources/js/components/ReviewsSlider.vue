@@ -61,8 +61,6 @@ import 'swiper/css';
             this.showModal = true;
             document.body.style.overflow = 'hidden';
             console.log(index)
-            const NewsStore = useNewsStore();
-            NewsStore.activeReview = index
         },
 
         closeModal() {

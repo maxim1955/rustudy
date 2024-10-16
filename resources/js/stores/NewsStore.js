@@ -16,8 +16,6 @@ const useNewsStore = defineStore('NewsStore', {
             activity: [],
             event: [],
             currentPage: Number,
-            activeReview: 0
-
         }
     },
     actions: {

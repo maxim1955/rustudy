@@ -17,12 +17,12 @@
         @swiper="onSwiper"
 
        >
-        <swiper-slide class="review" v-for="(item, index) in review" :key="index">
+        <swiper-slide class="review" v-for="(item, index) in review" :key="index" :id="item.id">
             <div class="review__card flex">
-                <video class="review__video" v-if="item.video[0].download_link" controls>
+                <!-- <video class="review__video" v-if="item.video[0].download_link" controls>
                     <source :src="'storage/'+item.video[0].download_link">
                 </video>
-                <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername">
+                <img v-else class="review__image" :src="'storage/'+item.image" :alt="item.teachername"> -->
                 <!-- <picture>
                     <source srcset="">
                     <img class="review__image" :src="review.image" :alt="review.name">
@@ -50,15 +50,26 @@ import 'swiper/css';
 import useNewsStore from '../stores/NewsStore.js'
 
     export default {
-        props: ['reviews', 'review'],
+        props: ['reviews', 'review', 'currentActiveSlide'],
         components: {Swiper, SwiperSlide },
 
-        setup() {
+        setup(props) {
             const onSwiper = (swiper) => {
-                const NewsStore = useNewsStore();
-                // NewsStore.currentActiveSlide
-                swiper.activeIndex = NewsStore.activeReview
-                console.log(swiper.activeIndex)
+                const activeSlide = document.getElementById(props.currentActiveSlide);
+                if (activeSlide) {
+
+                const slideIndex = Array.from(swiper.slides).findIndex(slide => Number(slide.id) === props.currentActiveSlide);
+                console.log(Array.from(swiper.slides))
+                if (slideIndex !== -1) {
+                    swiper.slideTo(slideIndex); // Переходим к нужному слайду
+                    console.log("Переход к слайду:", props.currentActiveSlide, "индекс:", slideIndex);
+                } else {
+                    console.error("Слайд с ID", props.currentActiveSlide, "не найден!");
+                }
+                } else {
+                console.error("Элемент с ID", props.currentActiveSlide, "не найден на странице!");
+                }
+
             };
 
             return {
