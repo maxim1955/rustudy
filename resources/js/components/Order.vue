@@ -1133,7 +1133,7 @@ export default {
             //     } else {
             //         console.log('Ошибка Простой бизнес:', error.message);
             //     }
-            //     throw error;
+            //     throw error
             // }
         },
 
