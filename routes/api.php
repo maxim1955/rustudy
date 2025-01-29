@@ -65,6 +65,7 @@ Route::post('/addnews',  [AddNewsController::class, 'submit']);
 
 Route::get('/promocode', [PromocodeController::class, 'index']);
 
+
 Route::post('/payment',  [RobocassaController::class, 'index']);
 Route::post('/payment/success',  [RobocassaController::class, 'success']);
 Route::post('/payment/fail',  [RobocassaController::class, 'fail']);
