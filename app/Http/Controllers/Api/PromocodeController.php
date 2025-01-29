@@ -27,13 +27,4 @@ class PromocodeController extends RestController
             return response()->json("no such promocode");
         }
     }
-
-    /**
-     * Get all promocodes.
-     */
-    public function getAllPromocodes()
-    {
-        $promocodes = Promocode::all(); // Получение всех промокодов
-        return response()->json($promocodes);
-    }
 }
