@@ -6,7 +6,7 @@
             </router-link>
             <div class="flex">
                 <small class="footer_small small_data">&copy;&nbsp;{{date.getFullYear()}}</small>
-                <small class="footer_small">Обрсоюз«Союз участников отношений в сфере образования»</small>
+                <small class="footer_small">Обрсоюз «Союз участников отношений в сфере образования»</small>
             </div>
         </div>
 

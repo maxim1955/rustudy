@@ -806,7 +806,9 @@ export default {
             appliedBookId: null,
         };
     },
-
+    mounted() {
+        this.fetchPromocodes();
+    },
     methods: {
         incrementProduct(book) {
             this.selectedProducts.forEach((el) => {
@@ -818,6 +820,16 @@ export default {
                     book.amount += 1;
                 }
             });
+        },
+
+        async fetchPromocodes() {
+            try {
+                const response = await axios.get("/api/promocode");
+                this.promocodes = response.data;
+                console.log(this.promocodes);
+            } catch (error) {
+                console.error("Ошибка при загрузке промокодов:", error);
+            }
         },
 
         decrementProduct(book) {
@@ -969,6 +981,8 @@ export default {
                 return;
             }
 
+            this.resetPromocodeState();
+
             try {
                 const response = await axios.get("/api/promocode", {
                     params: { promocode: this.promocode },
@@ -979,9 +993,28 @@ export default {
                 const selectedBook = this.booksArray.find(
                     (book) => book.id === this.selectedBookId
                 );
-                const selectedBookTypes = selectedBook
-                    ? selectedBook.paperType
-                    : [];
+
+                if (!selectedBook) {
+                    this.promocodeActive = 1;
+                    this.promocodeMessage = "Выбранная книга не найдена";
+                    return;
+                }
+
+                let selectedBookTypes = [...selectedBook.paperType];
+
+                if (selectedBook.isOnline) {
+                    if (
+                        this.termOnlineBook1 ===
+                        selectedBook.price.year?.[this.currencyValue]
+                    ) {
+                        selectedBookTypes = ["online year"];
+                    } else if (
+                        this.termOnlineBook1 ===
+                        selectedBook.price.always?.[this.currencyValue]
+                    ) {
+                        selectedBookTypes = ["online forever"];
+                    }
+                }
 
                 if (data === "no such promocode") {
                     this.promocodeActive = 1;
@@ -1001,7 +1034,7 @@ export default {
                         this.appliedStockType = data.stock_type;
                         this.promocodeActive = 0;
                         this.promocodeMessage = "Промокод успешно применен";
-                        this.appliedBookId = this.selectedBookId; 
+                        this.appliedBookId = this.selectedBookId;
                     } else {
                         this.promocodeActive = 1;
                         this.promocodeMessage =
@@ -1012,6 +1045,14 @@ export default {
                 console.error("Ошибка:", error);
                 throw error;
             }
+        },
+
+        resetPromocodeState() {
+            this.promocodeActive = 1;
+            this.promocodeMessage = "";
+            this.appliedStock = null;
+            this.appliedStockType = null;
+            this.appliedBookId = null;
         },
 
         async onSubmit(e) {
@@ -1153,24 +1194,25 @@ export default {
                 //     amountBooks: 0,
             };
             try {
-                const response = await axios.get('/api/payment', {
-                    params: {
-                        out_sum: this.total,
-                        fio: this.fio,
-                        country: this.country,
-                        telephone: this.phone.replaceAll(' ', ''),
-                        promocode: this.promocode,
-                        address: this.getAddress,
-                        pickup: this.deliveryValue,
-                        subscription: this.subscription,
-                        courses: this.getCourseID,
-                        email: this.email,
-                    }
-                })
-                    .then(response => {
-                        console.log('Успех:', response.data);
-                         this.showModalSubmit = true;
-                        window.open(response.data, '_blank')
+                const response = await axios
+                    .get("/api/payment", {
+                        params: {
+                            out_sum: this.total,
+                            fio: this.fio,
+                            country: this.country,
+                            telephone: this.phone.replaceAll(" ", ""),
+                            promocode: this.promocode,
+                            address: this.getAddress,
+                            pickup: this.deliveryValue,
+                            subscription: this.subscription,
+                            courses: this.getCourseID,
+                            email: this.email,
+                        },
+                    })
+                    .then((response) => {
+                        console.log("Успех:", response.data);
+                        this.showModalSubmit = true;
+                        window.open(response.data, "_blank");
                     })
                     .catch((error) => {
                         console.error("Ошибка:", error);
@@ -1273,6 +1315,7 @@ export default {
         },
 
         changeTermBook(event, id) {
+            this.resetPromocodeState();
             this.selectedProducts.forEach((product) => {
                 if (product.id == id) {
                     product.price = event.target.value;
@@ -1334,7 +1377,7 @@ export default {
 
                 // Применяем скидку только к книге, на которую действует промокод
                 if (book.id === this.appliedBookId) {
-                    console.log('total:bookID',)
+                    console.log("total:bookID");
                     if (
                         this.appliedStockType === "руб" &&
                         this.appliedStock > 0
