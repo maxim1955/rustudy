@@ -60,7 +60,7 @@ h3 {
 }
 
 .service_title {
-    font-family: Perun;
+    font-family: "Repo";
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
@@ -72,7 +72,7 @@ h3 {
 
 .service_nav_title {
     color: #0A2B49;
-    font-family: Perun;
+    font-family: "Repo";
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
