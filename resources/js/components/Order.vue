@@ -741,6 +741,7 @@ export default {
                         pickup: this.deliveryValue,
                         subscription: this.subscription,
                         courses: this.getCourseID,
+                        email: this.email,
                     }
                 })
                     .then(response => {
