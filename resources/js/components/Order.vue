@@ -1153,24 +1153,24 @@ export default {
                 //     amountBooks: 0,
             };
             try {
-                const response = await axios
-                    .get("/api/payment", {
-                        params: {
-                            out_sum: this.total,
-                            fio: this.fio,
-                            country: this.country,
-                            telephone: this.phone.replaceAll(" ", ""),
-                            promocode: this.promocode,
-                            address: this.getAddress,
-                            pickup: this.deliveryValue,
-                            subscription: this.subscription,
-                            courses: this.getCourseID,
-                        },
-                    })
-                    .then((response) => {
-                        console.log("Успех:", response.data);
-                        this.showModalSubmit = true;
-                        window.open(response.data, "_blank");
+                const response = await axios.get('/api/payment', {
+                    params: {
+                        out_sum: this.total,
+                        fio: this.fio,
+                        country: this.country,
+                        telephone: this.phone.replaceAll(' ', ''),
+                        promocode: this.promocode,
+                        address: this.getAddress,
+                        pickup: this.deliveryValue,
+                        subscription: this.subscription,
+                        courses: this.getCourseID,
+                        email: this.email,
+                    }
+                })
+                    .then(response => {
+                        console.log('Успех:', response.data);
+                         this.showModalSubmit = true;
+                        window.open(response.data, '_blank')
                     })
                     .catch((error) => {
                         console.error("Ошибка:", error);
