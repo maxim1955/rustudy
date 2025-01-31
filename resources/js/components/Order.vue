@@ -1003,16 +1003,22 @@ export default {
                 let selectedBookTypes = [...selectedBook.paperType];
 
                 if (selectedBook.isOnline) {
+                    const level = selectedBook.level.toLowerCase(); // Приводим уровень к нижнему регистру
+
                     if (
                         this.termOnlineBook1 ===
-                        selectedBook.price.year?.[this.currencyValue]
+                            selectedBook.price.year?.[this.currencyValue] &&
+                        selectedBook.level
                     ) {
-                        selectedBookTypes = ["online year"];
+                        this.promocodeActive = 0;
+                        selectedBookTypes = [`online year ${level}`];
                     } else if (
-                        this.termOnlineBook1 ===
-                        selectedBook.price.always?.[this.currencyValue]
+                        this.termOnlineBook2 ===
+                            selectedBook.price.always?.[this.currencyValue] &&
+                        selectedBook.level
                     ) {
-                        selectedBookTypes = ["online forever"];
+                        selectedBookTypes = [`online forever ${level}`];
+                        this.promocodeActive = 0;
                     }
                 }
 
@@ -1375,7 +1381,6 @@ export default {
             let totalPrice = this.selectedProducts.reduce((total, book) => {
                 let bookPrice = book.amount * book.price;
 
-                // Применяем скидку только к книге, на которую действует промокод
                 if (book.id === this.appliedBookId) {
                     console.log("total:bookID");
                     if (
