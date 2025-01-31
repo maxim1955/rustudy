@@ -1087,7 +1087,7 @@ export default {
                     type: "Электронный учебник (год)",
                     level: "А1",
                     image: "img/book-1.webp",
-                    isOnline: false,
+                    isOnline: true,
                     price: {
                         rub: 1100,
                         eur: 13,
@@ -1104,7 +1104,7 @@ export default {
                     type: "Электронный учебник (навсегда)",
                     level: "А1",
                     image: "img/book-1.webp",
-                    isOnline: false,
+                    isOnline: true,
                     price: {
                         rub: 3900,
                         eur: 42,
@@ -1138,7 +1138,7 @@ export default {
                     type: "Электронный учебник (год)",
                     level: "А2",
                     image: "img/book-2.webp",
-                    isOnline: false,
+                    isOnline: true,
                     price: {
                         rub: 1100,
                         eur: 13,
@@ -1155,7 +1155,7 @@ export default {
                     type: "Электронный учебник (навсегда)",
                     level: "А2",
                     image: "img/book-2.webp",
-                    isOnline: false,
+                    isOnline: true,
                     price: {
                         rub: 3900,
                         eur: 42,

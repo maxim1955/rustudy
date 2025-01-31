@@ -52,9 +52,6 @@
                         <div class="order__container">
                             <div class="order__left">
                                 <div class="products">
-                                    <!-- <OrderItem @addProduct="addProduct(book)" @book-item="getBookItem" @amount="amount" v-for="book in books" :key="book.id" :book="book"
-                                               :currencyValue="currencyValue"/> -->
-
                                     <label
                                         class="product"
                                         v-for="book in booksArray"
@@ -87,6 +84,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- Блок для бумажных учебников -->
                                         <div
                                             v-if="!book.isOnline"
                                             class="product__count count"
@@ -132,6 +130,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- Блок для онлайн-учебников -->
                                         <div
                                             v-else-if="book.isOnline"
                                             class="product__count sub"
@@ -163,7 +162,7 @@
                                                         <p
                                                             class="tooltip__title"
                                                         >
-                                                            Подписка на 1 год
+                                                            Подписка на 1 год
                                                         </p>
                                                         <p
                                                             class="tooltip__text"
@@ -194,185 +193,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div
-                                                v-if="book.course_id == 8"
-                                                class="flex sub__block"
-                                            >
-                                                <label class="sub__label">
-                                                    <input
-                                                        type="radio"
-                                                        class="visually-hidden"
-                                                        :name="
-                                                            'sub[' +
-                                                            book.id +
-                                                            ']'
-                                                        "
-                                                        :value="
-                                                            book.price.year[
-                                                                this
-                                                                    .currencyValue
-                                                            ]
-                                                        "
-                                                        :disabled="
-                                                            !this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        :checked="
-                                                            this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        v-model="
-                                                            termOnlineBook1
-                                                        "
-                                                        @change="
-                                                            changeTermBook(
-                                                                $event,
-                                                                book.id
-                                                            )
-                                                        "
-                                                    />
-                                                    <span></span>
-                                                    1 год
-                                                </label>
-                                                <label class="sub__label">
-                                                    <input
-                                                        type="radio"
-                                                        class="visually-hidden"
-                                                        :name="
-                                                            'sub[' +
-                                                            book.id +
-                                                            ']'
-                                                        "
-                                                        :value="
-                                                            book.price.always[
-                                                                this
-                                                                    .currencyValue
-                                                            ]
-                                                        "
-                                                        :disabled="
-                                                            !this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        :checked="
-                                                            this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        v-model="
-                                                            termOnlineBook1
-                                                        "
-                                                        @change="
-                                                            changeTermBook(
-                                                                $event,
-                                                                book.id
-                                                            )
-                                                        "
-                                                    />
-                                                    <span></span>
-                                                    Навсегда
-                                                </label>
-                                            </div>
-                                            <div
-                                                v-if="book.course_id == 9"
-                                                class="flex sub__block"
-                                            >
-                                                <label class="sub__label">
-                                                    <input
-                                                        type="radio"
-                                                        class="visually-hidden"
-                                                        :name="
-                                                            'sub[' +
-                                                            book.id +
-                                                            ']'
-                                                        "
-                                                        :value="
-                                                            book.price.year[
-                                                                this
-                                                                    .currencyValue
-                                                            ]
-                                                        "
-                                                        :disabled="
-                                                            !this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        :checked="
-                                                            this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        v-model="
-                                                            termOnlineBook2
-                                                        "
-                                                        @change="
-                                                            changeTermBook(
-                                                                $event,
-                                                                book.id
-                                                            )
-                                                        "
-                                                    />
-                                                    <span></span>
-                                                    1 год
-                                                </label>
-                                                <label class="sub__label">
-                                                    <input
-                                                        type="radio"
-                                                        class="visually-hidden"
-                                                        :name="
-                                                            'sub[' +
-                                                            book.id +
-                                                            ']'
-                                                        "
-                                                        :value="
-                                                            book.price.always[
-                                                                this
-                                                                    .currencyValue
-                                                            ]
-                                                        "
-                                                        :disabled="
-                                                            !this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        :checked="
-                                                            this.selectedProducts.some(
-                                                                (product) =>
-                                                                    product.id ===
-                                                                    book.id
-                                                            )
-                                                        "
-                                                        v-model="
-                                                            termOnlineBook2
-                                                        "
-                                                        @change="
-                                                            changeTermBook(
-                                                                $event,
-                                                                book.id
-                                                            )
-                                                        "
-                                                    />
-                                                    <span></span>
-                                                    Навсегда
-                                                </label>
-                                            </div>
                                         </div>
+
+                                        <!-- Отображение цены -->
                                         <p
                                             v-if="
                                                 !book.isOnline &&
@@ -380,7 +203,7 @@
                                             "
                                             class="product__price"
                                         >
-                                            {{ book.price[currencyValue] }} ₽
+                                            {{ book.price[currencyValue] }} ₽
                                         </p>
                                         <p
                                             v-else-if="
@@ -392,24 +215,15 @@
                                             {{
                                                 book.price[currencyValue] *
                                                 book.amount
-                                            }} ₽
+                                            }}
+                                            ₽
                                         </p>
                                         <p
-                                            v-else-if="book.course_id == 8"
+                                            v-else-if="book.isOnline"
                                             class="product__price"
                                         >
-                                            {{ termOnlineBook1 }} ₽
+                                            {{ book.price[currencyValue] }} ₽
                                         </p>
-                                        <p
-                                            v-else-if="book.course_id == 9"
-                                            class="product__price"
-                                        >
-                                            {{ termOnlineBook2 }} ₽
-                                        </p>
-
-                                        <!--
-                                       <p v-show="currencyValue == 'usd'" class="product__price">{{ book.usd }} $</p>
-                                       <p v-show="currencyValue == 'eur'" class="product__price">{{ book.eur }} €</p> -->
                                     </label>
                                 </div>
                                 <div class="order__info info">
@@ -968,90 +782,110 @@ export default {
         },
 
         async applyPromocode() {
-            if (!this.selectedBookId) {
-                this.promocodeActive = 1;
-                this.promocodeMessage =
-                    "Выберите книгу, чтобы применить промокод";
-                return;
-            }
+    if (!this.selectedBookId) {
+        this.promocodeActive = 1;
+        this.promocodeMessage = "Выберите книгу, чтобы применить промокод";
+        return;
+    }
 
-            if (this.promocode === "") {
-                this.promocodeActive = 1;
-                this.promocodeMessage = "Введите промокод";
-                return;
-            }
+    if (this.promocode === "") {
+        this.promocodeActive = 1;
+        this.promocodeMessage = "Введите промокод";
+        return;
+    }
 
-            this.resetPromocodeState();
+    this.resetPromocodeState();
 
+    try {
+        const response = await axios.get("/api/promocode", {
+            params: { promocode: this.promocode },
+        });
+
+        const data = response.data;
+        const selectedBook = this.booksArray.find(
+            (book) => book.id === this.selectedBookId
+        );
+
+        if (!selectedBook) {
+            this.promocodeActive = 1;
+            this.promocodeMessage = "Выбранная книга не найдена";
+            return;
+        }
+
+        
+
+        let selectedBookTypes = [...selectedBook.paperType]
+
+        // if (selectedBook.isOnline) {
+        //     const level = selectedBook.level.toLowerCase();
+
+        //     if (
+        //         this.termOnlineBook1 === selectedBook.price[this.currencyValue] &&
+        //         selectedBook.level
+        //     ) {
+        //         selectedBookTypes = [`online year ${level}`];
+        //     } else if (
+        //         this.termOnlineBook2 === selectedBook.price[this.currencyValue] &&
+        //         selectedBook.level
+        //     ) {
+        //         selectedBookTypes = [`online forever ${level}`];
+        //     }
+        // }
+
+        let promocodeTypes = data.type;
+
+        if (typeof promocodeTypes === "string") {
             try {
-                const response = await axios.get("/api/promocode", {
-                    params: { promocode: this.promocode },
-                });
-
-                const data = response.data;
-
-                const selectedBook = this.booksArray.find(
-                    (book) => book.id === this.selectedBookId
-                );
-
-                if (!selectedBook) {
-                    this.promocodeActive = 1;
-                    this.promocodeMessage = "Выбранная книга не найдена";
-                    return;
-                }
-
-                let selectedBookTypes = [...selectedBook.paperType];
-
-                if (selectedBook.isOnline) {
-                    const level = selectedBook.level.toLowerCase(); // Приводим уровень к нижнему регистру
-
-                    if (
-                        this.termOnlineBook1 ===
-                            selectedBook.price.year?.[this.currencyValue] &&
-                        selectedBook.level
-                    ) {
-                        this.promocodeActive = 0;
-                        selectedBookTypes = [`online year ${level}`];
-                    } else if (
-                        this.termOnlineBook2 ===
-                            selectedBook.price.always?.[this.currencyValue] &&
-                        selectedBook.level
-                    ) {
-                        selectedBookTypes = [`online forever ${level}`];
-                        this.promocodeActive = 0;
-                    }
-                }
-
-                if (data === "no such promocode") {
-                    this.promocodeActive = 1;
-                    this.promocodeMessage = "Данного промокода не существует";
-                } else if (data.active === 0) {
-                    this.promocodeActive = 1;
-                    this.promocodeMessage = "Срок действия промокода истек";
-                } else {
-                    const isValidPromocode = selectedBookTypes.some((type) =>
-                        data.type.includes(type)
-                    );
-
-                    if (isValidPromocode) {
-                        this.stockType = data.stock_type;
-                        this.stock = data.stock;
-                        this.appliedStock = data.stock;
-                        this.appliedStockType = data.stock_type;
-                        this.promocodeActive = 0;
-                        this.promocodeMessage = "Промокод успешно применен";
-                        this.appliedBookId = this.selectedBookId;
-                    } else {
-                        this.promocodeActive = 1;
-                        this.promocodeMessage =
-                            "Этот промокод не подходит для выбранных товаров";
-                    }
-                }
+                promocodeTypes = JSON.parse(promocodeTypes);
             } catch (error) {
-                console.error("Ошибка:", error);
-                throw error;
+                console.error("Ошибка парсинга промокода:", error);
+                promocodeTypes = [];
             }
-        },
+        }
+
+        if (!Array.isArray(promocodeTypes)) {
+            promocodeTypes = [promocodeTypes];
+        }
+
+        promocodeTypes = promocodeTypes.map(type =>
+            type.trim().toLowerCase().normalize("NFKD").replace(/\s+/g, " ")
+        );
+
+        console.log("Форматированные типы из API:", promocodeTypes);
+        console.log("Длина типа из API:", promocodeTypes[0].length);
+
+        // Альтернативная проверка совпадения
+        const isValidPromocode = promocodeTypes.some(type =>
+            selectedBookTypes.some(bookType => bookType === type)
+        );
+
+        if (data === "no such promocode") {
+            this.promocodeActive = 1;
+            this.promocodeMessage = "Данного промокода не существует";
+        } else if (data.active === 0) {
+            this.promocodeActive = 1;
+            this.promocodeMessage = "Срок действия промокода истек";
+        } else if (isValidPromocode) {
+            this.stockType = data.stock_type;
+            this.stock = data.stock;
+            this.appliedStock = data.stock;
+            this.appliedStockType = data.stock_type;
+            this.promocodeActive = 0;
+            this.promocodeMessage = "Промокод успешно применен";
+            this.appliedBookId = this.selectedBookId;
+        } else if(!isValidPromocode){
+            this.promocodeActive = 1;
+            this.promocodeMessage =
+                "Этот промокод не подходит для выбранных товаров";
+        }
+    } catch (error) {
+        console.error("Ошибка:", error);
+        this.promocodeActive = 1;
+        this.promocodeMessage = "Ошибка при проверке промокода";
+        throw error;
+    }
+},
+
 
         resetPromocodeState() {
             this.promocodeActive = 1;
@@ -1269,7 +1103,7 @@ export default {
                         type: product.type,
                         level: product.level,
                         isOnline: product.isOnline,
-                        price: product.price.always[this.currencyValue],
+                        price: product.price[this.currencyValue],
                         amount: product.amount,
                     };
                 } else {
@@ -1381,6 +1215,7 @@ export default {
             let totalPrice = this.selectedProducts.reduce((total, book) => {
                 let bookPrice = book.amount * book.price;
 
+                // Применяем скидку только к книге, на которую действует промокод
                 if (book.id === this.appliedBookId) {
                     console.log("total:bookID");
                     if (
@@ -1419,7 +1254,7 @@ export default {
         getTermOnlineBook1() {
             this.books.forEach((el) => {
                 if (el.course_id == 8 && el.isOnline == true) {
-                    return el.price.always.rub;
+                    return el.price.rub;
                 }
             });
         },
@@ -1428,10 +1263,10 @@ export default {
     created() {
         this.termOnlineBook1 = this.books.find(
             (el) => el.course_id === 8 && el.isOnline
-        )?.price.always.rub;
+        )?.price.rub;
         this.termOnlineBook2 = this.books.find(
             (el) => el.course_id === 9 && el.isOnline
-        )?.price.always.rub;
+        )?.price.rub;
     },
 
     watch: {

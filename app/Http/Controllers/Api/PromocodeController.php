@@ -13,36 +13,18 @@ class PromocodeController extends RestController
      */
     public function index(Request $request)
     {
-        // Если передан параметр promocode, ищем конкретный промокод
-        if ($request->has('promocode')) {
-            $getcode = $request->promocode;
-            $promocode = Promocode::where('code', $getcode)->first();
+        $getcode = $request->promocode;
+        $promocode = Promocode::where('code', $getcode)->first();
 
-            if ($promocode) {
-                // Проверяем, активен ли промокод
-                if ($promocode->end >= date('Y-m-d')) {
-                    $promocode->active = 1;
-                } else {
-                    $promocode->active = 0;
-                }
-                return response()->json($promocode);
+        if ($promocode) {
+            if ($promocode->end >= date('Y-m-d')) {
+                $promocode->active = 1;
             } else {
-                return response()->json("no such promocode");
+                $promocode->active = 0;
             }
+            return response()->json($promocode);
         } else {
-            // Если параметр promocode не передан, возвращаем все промокоды
-            $promocodes = Promocode::all();
-
-            // Добавляем поле active для каждого промокода
-            foreach ($promocodes as $promocode) {
-                if ($promocode->end >= date('Y-m-d')) {
-                    $promocode->active = 1;
-                } else {
-                    $promocode->active = 0;
-                }
-            }
-
-            return response()->json($promocodes);
+            return response()->json("no such promocode");
         }
     }
 }
