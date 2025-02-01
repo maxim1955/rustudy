@@ -782,110 +782,112 @@ export default {
         },
 
         async applyPromocode() {
-    if (!this.selectedBookId) {
-        this.promocodeActive = 1;
-        this.promocodeMessage = "Выберите книгу, чтобы применить промокод";
-        return;
-    }
-
-    if (this.promocode === "") {
-        this.promocodeActive = 1;
-        this.promocodeMessage = "Введите промокод";
-        return;
-    }
-
-    this.resetPromocodeState();
-
-    try {
-        const response = await axios.get("/api/promocode", {
-            params: { promocode: this.promocode },
-        });
-
-        const data = response.data;
-        const selectedBook = this.booksArray.find(
-            (book) => book.id === this.selectedBookId
-        );
-
-        if (!selectedBook) {
-            this.promocodeActive = 1;
-            this.promocodeMessage = "Выбранная книга не найдена";
-            return;
-        }
-
-        
-
-        let selectedBookTypes = [...selectedBook.paperType]
-
-        // if (selectedBook.isOnline) {
-        //     const level = selectedBook.level.toLowerCase();
-
-        //     if (
-        //         this.termOnlineBook1 === selectedBook.price[this.currencyValue] &&
-        //         selectedBook.level
-        //     ) {
-        //         selectedBookTypes = [`online year ${level}`];
-        //     } else if (
-        //         this.termOnlineBook2 === selectedBook.price[this.currencyValue] &&
-        //         selectedBook.level
-        //     ) {
-        //         selectedBookTypes = [`online forever ${level}`];
-        //     }
-        // }
-
-        let promocodeTypes = data.type;
-
-        if (typeof promocodeTypes === "string") {
-            try {
-                promocodeTypes = JSON.parse(promocodeTypes);
-            } catch (error) {
-                console.error("Ошибка парсинга промокода:", error);
-                promocodeTypes = [];
+            if (!this.selectedBookId) {
+                this.promocodeActive = 1;
+                this.promocodeMessage =
+                    "Выберите книгу, чтобы применить промокод";
+                return;
             }
-        }
 
-        if (!Array.isArray(promocodeTypes)) {
-            promocodeTypes = [promocodeTypes];
-        }
+            if (this.promocode === "") {
+                this.promocodeActive = 1;
+                this.promocodeMessage = "Введите промокод";
+                return;
+            }
 
-        promocodeTypes = promocodeTypes.map(type =>
-            type.trim().toLowerCase().normalize("NFKD").replace(/\s+/g, " ")
-        );
+            this.resetPromocodeState();
 
-        console.log("Форматированные типы из API:", promocodeTypes);
-        console.log("Длина типа из API:", promocodeTypes[0].length);
+            try {
+                const response = await axios.get("/api/promocode", {
+                    params: { promocode: this.promocode },
+                });
 
-        // Альтернативная проверка совпадения
-        const isValidPromocode = promocodeTypes.some(type =>
-            selectedBookTypes.some(bookType => bookType === type)
-        );
+                const data = response.data;
+                const selectedBook = this.booksArray.find(
+                    (book) => book.id === this.selectedBookId
+                );
 
-        if (data === "no such promocode") {
-            this.promocodeActive = 1;
-            this.promocodeMessage = "Данного промокода не существует";
-        } else if (data.active === 0) {
-            this.promocodeActive = 1;
-            this.promocodeMessage = "Срок действия промокода истек";
-        } else if (isValidPromocode) {
-            this.stockType = data.stock_type;
-            this.stock = data.stock;
-            this.appliedStock = data.stock;
-            this.appliedStockType = data.stock_type;
-            this.promocodeActive = 0;
-            this.promocodeMessage = "Промокод успешно применен";
-            this.appliedBookId = this.selectedBookId;
-        } else if(!isValidPromocode){
-            this.promocodeActive = 1;
-            this.promocodeMessage =
-                "Этот промокод не подходит для выбранных товаров";
-        }
-    } catch (error) {
-        console.error("Ошибка:", error);
-        this.promocodeActive = 1;
-        this.promocodeMessage = "Ошибка при проверке промокода";
-        throw error;
-    }
-},
+                if (!selectedBook) {
+                    this.promocodeActive = 1;
+                    this.promocodeMessage = "Выбранная книга не найдена";
+                    return;
+                }
 
+                let selectedBookTypes = [...selectedBook.paperType];
+
+                // if (selectedBook.isOnline) {
+                //     const level = selectedBook.level.toLowerCase();
+
+                //     if (
+                //         this.termOnlineBook1 === selectedBook.price[this.currencyValue] &&
+                //         selectedBook.level
+                //     ) {
+                //         selectedBookTypes = [`online year ${level}`];
+                //     } else if (
+                //         this.termOnlineBook2 === selectedBook.price[this.currencyValue] &&
+                //         selectedBook.level
+                //     ) {
+                //         selectedBookTypes = [`online forever ${level}`];
+                //     }
+                // }
+
+                let promocodeTypes = data.type;
+
+                if (typeof promocodeTypes === "string") {
+                    try {
+                        promocodeTypes = JSON.parse(promocodeTypes);
+                    } catch (error) {
+                        console.error("Ошибка парсинга промокода:", error);
+                        promocodeTypes = [];
+                    }
+                }
+
+                if (!Array.isArray(promocodeTypes)) {
+                    promocodeTypes = [promocodeTypes];
+                }
+
+                promocodeTypes = promocodeTypes.map((type) =>
+                    type
+                        .trim()
+                        .toLowerCase()
+                        .normalize("NFKD")
+                        .replace(/\s+/g, " ")
+                );
+
+                console.log("Форматированные типы из API:", promocodeTypes);
+                console.log("Длина типа из API:", promocodeTypes[0].length);
+
+                // Альтернативная проверка совпадения
+                const isValidPromocode = promocodeTypes.some((type) =>
+                    selectedBookTypes.some((bookType) => bookType === type)
+                );
+
+                if (data === "no such promocode") {
+                    this.promocodeActive = 1;
+                    this.promocodeMessage = "Данного промокода не существует";
+                } else if (data.active === 0) {
+                    this.promocodeActive = 1;
+                    this.promocodeMessage = "Срок действия промокода истек";
+                } else if (isValidPromocode) {
+                    this.stockType = data.stock_type;
+                    this.stock = data.stock;
+                    this.appliedStock = data.stock;
+                    this.appliedStockType = data.stock_type;
+                    this.promocodeActive = 0;
+                    this.promocodeMessage = "Промокод успешно применен";
+                    this.appliedBookId = this.selectedBookId;
+                } else if (!isValidPromocode) {
+                    this.promocodeActive = 1;
+                    this.promocodeMessage =
+                        "Этот промокод не подходит для выбранных товаров";
+                }
+            } catch (error) {
+                console.error("Ошибка:", error);
+                this.promocodeActive = 1;
+                this.promocodeMessage = "Ошибка при проверке промокода";
+                throw error;
+            }
+        },
 
         resetPromocodeState() {
             this.promocodeActive = 1;
@@ -1019,59 +1021,32 @@ export default {
         },
 
         async sendRobokassa() {
-            let res = {
-                //     fio: this.fio,
-                //     email: this.email,
-                //     country: this.country,
-                //     telephone: this.phone.replaceAll(' ', ''),
-                //     promocode: this.promocode,
-                //     sum: this.total,
-                //     address: this.getAddress,
-                //     pickup: this.deliveryValue,
-                //     payment: this.paymentValue,
-                //     courses: this.getCourseID,
-                //     subscription: this.subscription,
-                //     amountBooks: 0,
-            };
             try {
-                const response = await axios
-                    .get("/api/payment", {
-                        params: {
-                            out_sum: this.total,
-                            fio: this.fio,
-                            country: this.country,
-                            telephone: this.phone.replaceAll(" ", ""),
-                            promocode: this.promocode,
-                            address: this.getAddress,
-                            pickup: this.deliveryValue,
-                            subscription: this.subscription,
-                            courses: this.getCourseID,
-                            email: this.email,
-                        },
-                    })
-                    .then((response) => {
-                        console.log("Успех:", response.data);
-                        this.showModalSubmit = true;
-                        window.open(response.data, "_blank");
-                    })
-                    .catch((error) => {
-                        console.error("Ошибка:", error);
-                    });
-                return response;
+                
+                const paymentWindow = window.open("", "_blank");
+
+                const response = await axios.get("/api/payment", {
+                    params: {
+                        out_sum: this.total,
+                        fio: this.fio,
+                        country: this.country,
+                        telephone: this.phone.replaceAll(" ", ""),
+                        promocode: this.promocode,
+                        address: this.getAddress,
+                        pickup: this.deliveryValue,
+                        subscription: this.subscription,
+                        courses: this.getCourseID,
+                        email: this.email,
+                    },
+                });
+
+                console.log("Успех:", response.data);
+                this.showModalSubmit = true;
+
+              
+                paymentWindow.location.href = response.data;
             } catch (error) {
-                if (error.response) {
-                    console.error("Ошибка:", error.response.data);
-                    console.error("Статус ошибки:", error.response.status);
-                    console.error("Заголовки:", error.response.headers);
-                } else if (error.request) {
-                    console.error(
-                        "Ошибка при ожидании ответа от сервера:",
-                        error.request
-                    );
-                } else {
-                    console.error("Ошибка:", error.message);
-                }
-                throw error;
+                console.error("Ошибка:", error);
             }
         },
 
