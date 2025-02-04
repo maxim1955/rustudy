@@ -337,7 +337,7 @@
                                             ва́с зову́т?
                                         </p>
                                         <div class="game__audio">
-                                            <audio controls id="myAudio">
+                                            <audio controls class="audio-teg">
                                                 <source
                                                     src="audio/1.mp3"
                                                     type="audio/mpeg"
@@ -380,7 +380,10 @@
                                             - О́чень прия́тно.
                                         </p>
                                         <div class="game__audio">
-                                            <audio controls="">
+                                            <audio
+                                                controls=""
+                                                class="audio-teg"
+                                            >
                                                 <source
                                                     src="audio/2.mp3"
                                                     type="audio/mpeg"
@@ -421,7 +424,7 @@
                                     </div>
 
                                     <div class="game__audio">
-                                        <audio controls="">
+                                        <audio controls="" class="audio-teg">
                                             <source
                                                 src="audio/3.mp3"
                                                 type="audio/mpeg"
@@ -742,7 +745,10 @@
                                                         А
                                                     </p>
                                                     <div class="game__audio">
-                                                        <audio controls="">
+                                                        <audio
+                                                            controls=""
+                                                            class="audio-teg"
+                                                        >
                                                             <source
                                                                 src="audio/4.mpga"
                                                                 type="audio/mpeg"
@@ -791,7 +797,10 @@
                                                         А
                                                     </p>
                                                     <div class="game__audio">
-                                                        <audio controls="">
+                                                        <audio
+                                                            controls=""
+                                                            class="audio-teg"
+                                                        >
                                                             <source
                                                                 src="audio/5.mpga"
                                                                 type="audio/mpeg"
@@ -845,7 +854,10 @@
                                                         Т
                                                     </p>
                                                     <div class="game__audio">
-                                                        <audio controls="">
+                                                        <audio
+                                                            controls=""
+                                                            class="audio-teg"
+                                                        >
                                                             <source
                                                                 src="audio/6.mpga"
                                                                 type="audio/mpeg"
@@ -894,7 +906,10 @@
                                                         З
                                                     </p>
                                                     <div class="game__audio">
-                                                        <audio controls="">
+                                                        <audio
+                                                            controls=""
+                                                            class="audio-teg"
+                                                        >
                                                             <source
                                                                 src="audio/7.mpga"
                                                                 type="audio/mpeg"
@@ -1264,7 +1279,7 @@ export default {
                         usd: 16,
                     },
                     amount: 0,
-                    url: "https://rus.study/storage/RKI_2020.pdf",
+                    url: "https://rus.study/preview/courses/8/modules/32/themes/67?select=17",
                     paperType: ["online year a1"],
                 },
 
@@ -1299,7 +1314,7 @@ export default {
                         usd: 16,
                     },
                     amount: 0,
-                    url: "https://rus.study/storage/RKI_2021-A2.pdf ",
+                    url: "https://rus.study/preview/courses/9/modules/42/themes/130 ",
                     paperType: ["online year a2"],
                 },
 
@@ -1544,9 +1559,25 @@ export default {
             } else if (this.valueFrost.length < 3)
                 e.target.style.color = "inherit";
         },
+        useAudio() {
+            const audios = document.querySelectorAll(".audio-teg");
+
+            audios.forEach((audio) => {
+                audio.addEventListener("play", function () {
+                    audios.forEach((el) => {
+                        if (el !== audio) {
+                            el.pause();
+                            el.currentTime = 0;
+                        }
+                    });
+                });
+            });
+        },
     },
 
     mounted() {
+        this.useAudio();
+
         let getReviewsDb = async () => {
             try {
                 let reviews = await getReviews();
