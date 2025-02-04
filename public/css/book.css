@@ -670,14 +670,14 @@ font-weight: 600;
 
 
 
-.game__audio {
+/* .game__audio {
     display: flex;
     padding: 5px 20px;
     max-width: max-content;
     background-color: white;
     border-radius: 20px;
 
-}
+} */
 
 .game__number {
     margin-right: 20px;
@@ -798,13 +798,13 @@ audio {
 audio::-webkit-media-controls-play-button {
     height: 30px;
     width: 30px;
-    background-image: url(../img/play.svg);
+    /* background-image: url(../img/play.svg); */
     background-size: 30px 30px;
 }
 
-audio::-webkit-media-controls-play-button:hover {
+/* audio::-webkit-media-controls-play-button:hover {
     background-image: url(../img/play-hover.svg);
-}
+} */
 
 audio::-webkit-media-controls-mute-button {
     background-image: url(../img/mute.svg);
@@ -1421,14 +1421,14 @@ audio::-moz-media-controls-panel {
         max-width: 235px;
     }
 
-    .game__audio {
+    /* .game__audio {
         padding: 0 8px;
         border-radius: 16px;
-    }
+    } */
 
-    audio {
+    /* audio {
         max-width: 194px;
-    }
+    } */
 
     .author__img {
         height: 400px;

@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <div class="about__cards">
-                            <BookList :books="books"></BookList>
+                            <BookList :books="booksVisible"></BookList>
                         </div>
                     </div>
                 </section>
@@ -337,7 +337,7 @@
                                             ва́с зову́т?
                                         </p>
                                         <div class="game__audio">
-                                            <audio controls="controls">
+                                            <audio controls id="myAudio">
                                                 <source
                                                     src="audio/1.mp3"
                                                     type="audio/mpeg"
@@ -1165,6 +1165,144 @@ export default {
                     url: "https://rus.study/storage/RKI_2021-A2.pdf ",
                     paperType: ["online forever a2"],
                 },
+                // {
+                //     id: 2,
+                //     course_id: 8,
+                //     name: "Привет, Россия!",
+                //     type: "Онлайн-учебник",
+                //     level: "А1",
+                //     image: "img/book-1.webp",
+                //     isOnline: true,
+                //     price: {
+                //         year: {
+                //             rub: 1100,
+                //             eur: 13,
+                //             usd: 16,
+                //         },
+                //         always: {
+                //             rub: 3900,
+                //             eur: 42,
+                //             usd: 45,
+                //         },
+                //     },
+
+                //     amount: 0,
+                //     url: "https://rus.study/preview/courses/8/modules/32/themes/67?select=17",
+                //     paperType: ["online year a1", "online forever a1"],
+                // },
+                // {
+                //     id: 3,
+                //     course_id: 9,
+                //     name: "Привет, Россия!",
+                //     type: "Бумажный учебник",
+                //     level: "А2",
+                //     image: "img/book-2.webp",
+                //     isOnline: false,
+                //     price: {
+                //         rub: 1650,
+                //         eur: 20,
+                //         usd: 22,
+                //     },
+                //     amount: 0,
+                //     url: "https://rus.study/storage/RKI_2021-A2.pdf ",
+                //     paperType: ["paper a2"],
+                // },
+                // {
+                //     id: 4,
+                //     course_id: 9,
+                //     name: "Привет, Россия!",
+                //     type: "Онлайн-учебник",
+                //     level: "А2",
+                //     image: "img/book-2.webp",
+                //     isOnline: true,
+                //     price: {
+                //         year: {
+                //             rub: 1100,
+                //             eur: 13,
+                //             usd: 16,
+                //         },
+                //         always: {
+                //             rub: 3900,
+                //             eur: 42,
+                //             usd: 45,
+                //         },
+                //     },
+                //     amount: 0,
+                //     url: "https://rus.study/preview/courses/9/modules/42/themes/130?select=293 ",
+                //     paperType: ["online year a2", "online forever a2"],
+                // },
+            ],
+            booksVisible: [
+                {
+                    id: 1,
+                    course_id: 8,
+                    name: "Привет, Россия!",
+                    type: "Бумажный учебник",
+                    level: "А1",
+                    image: "img/book-1.webp",
+                    isOnline: false,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
+                    amount: 0,
+                    url: "https://rus.study/storage/RKI_2020.pdf",
+                    paperType: ["paper a1"],
+                },
+                {
+                    id: 2,
+                    course_id: 8,
+                    name: "Привет, Россия! ",
+                    type: "Электронный учебник ",
+                    level: "А1",
+                    image: "img/book-1.webp",
+                    isOnline: true,
+                    price: {
+                        rub: 1100,
+                        eur: 13,
+                        usd: 16,
+                    },
+                    amount: 0,
+                    url: "https://rus.study/storage/RKI_2020.pdf",
+                    paperType: ["online year a1"],
+                },
+
+                {
+                    id: 3,
+                    course_id: 9,
+                    name: "Привет, Россия!",
+                    type: "Бумажный учебник",
+                    level: "А2",
+                    image: "img/book-2.webp",
+                    isOnline: false,
+                    price: {
+                        rub: 1650,
+                        eur: 20,
+                        usd: 22,
+                    },
+                    amount: 0,
+                    url: "https://rus.study/storage/RKI_2021-A2.pdf ",
+                    paperType: ["paper a2"],
+                },
+                {
+                    id: 4,
+                    course_id: 9,
+                    name: "Привет, Россия!",
+                    type: "Электронный учебник ",
+                    level: "А2",
+                    image: "img/book-2.webp",
+                    isOnline: true,
+                    price: {
+                        rub: 1100,
+                        eur: 13,
+                        usd: 16,
+                    },
+                    amount: 0,
+                    url: "https://rus.study/storage/RKI_2021-A2.pdf ",
+                    paperType: ["online year a2"],
+                },
+
                 // {
                 //     id: 2,
                 //     course_id: 8,
