@@ -618,6 +618,8 @@ export default {
             promocodeTypes: [],
             selectedBookId: null,
             appliedBookId: null,
+            count: 0,
+            isBookOnline: null,
         };
     },
     mounted() {
@@ -1021,8 +1023,10 @@ export default {
         },
 
         async sendRobokassa() {
+            const selectedProductFlag = this.selectedProducts.map((item) => {
+                return item.isOnline;
+            });
             try {
-                
                 const paymentWindow = window.open("", "_blank");
 
                 const response = await axios.get("/api/payment", {
@@ -1037,13 +1041,14 @@ export default {
                         subscription: this.subscription,
                         courses: this.getCourseID,
                         email: this.email,
+                        count: JSON.stringify(this.booksCount),
+                        subscription: selectedProductFlag,
                     },
                 });
 
                 console.log("Успех:", response.data);
                 this.showModalSubmit = true;
 
-              
                 paymentWindow.location.href = response.data;
             } catch (error) {
                 console.error("Ошибка:", error);
@@ -1140,6 +1145,12 @@ export default {
     },
 
     computed: {
+        bookCounts() {
+            return this.selectedProducts.map((product) => ({
+                id: product.id,
+                amount: product.amount,
+            }));
+        },
         getAddress() {
             if (this.deliveryValue == 0) {
                 return (this.pickupAddress =
