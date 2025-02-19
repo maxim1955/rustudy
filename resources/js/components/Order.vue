@@ -1053,6 +1053,7 @@ export default {
                         countA1: this.countA1,
                         countA2: this.countA2,
                         bookType: this.bookType,
+                        
                     },
                 });
 
