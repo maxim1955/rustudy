@@ -618,9 +618,10 @@ export default {
             promocodeTypes: [],
             selectedBookId: null,
             appliedBookId: null,
-            count: 0,
+            countA1: 0,
+            countA2: 0,
             isBookOnline: null,
-            bookType: "",
+            bookType: [],
         };
     },
     mounted() {
@@ -632,10 +633,10 @@ export default {
                 if (el.id === book.id) {
                     if (el.course_id === 8) {
                         this.amount1 += 1;
-                        this.count = this.amount1;
+                        this.countA1 = this.amount1;
                     } else if (el.course_id === 9) {
                         this.amount2 += 1;
-                        this.count = this.amount2;
+                        this.countA2 = this.amount2;
                     }
                     el.amount += 1;
                     book.amount += 1;
@@ -921,7 +922,8 @@ export default {
                 payment: this.paymentValue,
                 courses: this.getCourseID,
                 subscription: this.subscription,
-                count: this.count,
+                countA1: this.countA1,
+                countA2: this.countA2,
                 bookType: this.bookType,
             };
 
@@ -1048,7 +1050,8 @@ export default {
                         subscription: this.subscription,
                         courses: this.getCourseID,
                         email: this.email,
-                        count: this.count,
+                        countA1: this.countA1,
+                        countA2: this.countA2,
                         bookType: this.bookType,
                     },
                 });
@@ -1069,10 +1072,14 @@ export default {
 
         addProduct(product) {
             this.selectedBookId = product.id;
-            this.bookType = product.type + " " + product.level;
-            console.log(this.bookType);
-            console.log("тип сабскрипшн", typeof this.subscription);
-            
+            const bookTypeItem = product.type + " " + product.level;
+
+            const index = this.bookType.indexOf(bookTypeItem);
+            if (index !== -1) {
+                this.bookType.splice(index, 1);
+            } else {
+                this.bookType.push(bookTypeItem);
+            }
 
             const haveProduct = this.selectedProducts.some(
                 (el) => el.id === product.id
