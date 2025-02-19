@@ -597,7 +597,7 @@ export default {
             promocode: "",
             promocodes: [],
             address: reactive(null),
-            subscription: null,
+            subscription: 0,
             courseID: null,
             pickupAddress: "",
             courseIds: [],
@@ -620,6 +620,7 @@ export default {
             appliedBookId: null,
             count: 0,
             isBookOnline: null,
+            bookType: "",
         };
     },
     mounted() {
@@ -628,10 +629,14 @@ export default {
     methods: {
         incrementProduct(book) {
             this.selectedProducts.forEach((el) => {
-                if (el.id == book.id) {
-                    if (el.course_id == 8) {
+                if (el.id === book.id) {
+                    if (el.course_id === 8) {
                         this.amount1 += 1;
-                    } else this.amount2 += 1;
+                        this.count = this.amount1;
+                    } else if (el.course_id === 9) {
+                        this.amount2 += 1;
+                        this.count = this.amount2;
+                    }
                     el.amount += 1;
                     book.amount += 1;
                 }
@@ -916,6 +921,8 @@ export default {
                 payment: this.paymentValue,
                 courses: this.getCourseID,
                 subscription: this.subscription,
+                count: this.count,
+                bookType: this.bookType,
             };
 
             try {
@@ -1041,8 +1048,8 @@ export default {
                         subscription: this.subscription,
                         courses: this.getCourseID,
                         email: this.email,
-                        count: JSON.stringify(this.booksCount),
-                        subscription: selectedProductFlag,
+                        count: this.count,
+                        bookType: this.bookType,
                     },
                 });
 
@@ -1062,7 +1069,11 @@ export default {
 
         addProduct(product) {
             this.selectedBookId = product.id;
-            console.log("selected book id", this.selectedBookId);
+            this.bookType = product.type + " " + product.level;
+            console.log(this.bookType);
+            console.log("тип сабскрипшн", typeof this.subscription);
+            
+
             const haveProduct = this.selectedProducts.some(
                 (el) => el.id === product.id
             );
@@ -1070,10 +1081,13 @@ export default {
             let obj;
             if (!haveProduct) {
                 // this.incrementProduct(product);
-                if (product.course_id == 8 && product.isOnline == false)
+                if (product.course_id == 8 && product.isOnline == false) {
                     this.amount1 = 1;
-                if (product.course_id == 9 && product.isOnline == false)
+                }
+
+                if (product.course_id == 9 && product.isOnline == false) {
                     this.amount2 = 1;
+                }
 
                 if (product.isOnline) {
                     obj = {
