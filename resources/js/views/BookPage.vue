@@ -1081,6 +1081,7 @@ export default {
                 {
                     id: 1,
                     course_id: 8,
+                    subscription: 0,
                     name: "Привет, Россия!",
                     type: "Бумажный учебник",
                     level: "А1",
@@ -1098,6 +1099,7 @@ export default {
                 {
                     id: 2,
                     course_id: 8,
+                    subscription: 1,
                     name: "Привет, Россия! ",
                     type: "Электронный учебник (год)",
                     level: "А1",
@@ -1114,6 +1116,7 @@ export default {
                 },
                 {
                     id: 3,
+                    subscription: 1,
                     course_id: 8,
                     name: "Привет, Россия! ",
                     type: "Электронный учебник (навсегда)",
@@ -1131,6 +1134,7 @@ export default {
                 },
                 {
                     id: 4,
+                    subscription: 0,
                     course_id: 9,
                     name: "Привет, Россия!",
                     type: "Бумажный учебник",
@@ -1148,6 +1152,7 @@ export default {
                 },
                 {
                     id: 5,
+                    subscription: 1,
                     course_id: 9,
                     name: "Привет, Россия!",
                     type: "Электронный учебник (год)",
@@ -1165,6 +1170,7 @@ export default {
                 },
                 {
                     id: 6,
+                    subscription: 1,
                     course_id: 9,
                     name: "Привет, Россия!",
                     type: "Электронный учебник (навсегда)",
