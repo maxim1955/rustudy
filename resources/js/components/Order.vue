@@ -597,7 +597,7 @@ export default {
             promocode: "",
             promocodes: [],
             address: reactive(null),
-            subscription: 0,
+            subscription: [],
             courseID: null,
             pickupAddress: "",
             courseIds: [],
@@ -921,7 +921,7 @@ export default {
                 pickup: this.deliveryValue,
                 payment: this.paymentValue,
                 courses: this.getCourseID,
-                subscription: this.subscription,
+                subscription: this.getSubscriptionIndex,
                 countA1: this.countA1,
                 countA2: this.countA2,
                 bookType: this.bookType,
@@ -1047,13 +1047,12 @@ export default {
                         promocode: this.promocode,
                         address: this.getAddress,
                         pickup: this.deliveryValue,
-                        subscription: this.subscription,
+                        subscription: this.getSubscriptionIndex,
                         courses: this.getCourseID,
                         email: this.email,
                         countA1: this.countA1,
                         countA2: this.countA2,
                         bookType: this.bookType,
-                        
                     },
                 });
 
@@ -1073,6 +1072,8 @@ export default {
 
         addProduct(product) {
             this.selectedBookId = product.id;
+            console.log(this.selectedProducts);
+
             const bookTypeItem = product.type + " " + product.level;
 
             const index = this.bookType.indexOf(bookTypeItem);
@@ -1081,22 +1082,22 @@ export default {
             } else {
                 this.bookType.push(bookTypeItem);
             }
-
             const haveProduct = this.selectedProducts.some(
                 (el) => el.id === product.id
             );
+            
             product.amount = 1;
             let obj;
             if (!haveProduct) {
                 // this.incrementProduct(product);
                 if (product.course_id == 8 && product.isOnline == false) {
                     this.amount1 = 1;
+                    this.countA1 = this.amount1;
                 }
-
                 if (product.course_id == 9 && product.isOnline == false) {
                     this.amount2 = 1;
+                    this.countA2 = this.amount2;
                 }
-
                 if (product.isOnline) {
                     obj = {
                         id: product.id,
@@ -1104,6 +1105,7 @@ export default {
                         name: product.name,
                         type: product.type,
                         level: product.level,
+                        subscription: product.subscription,
                         isOnline: product.isOnline,
                         price: product.price[this.currencyValue],
                         amount: product.amount,
@@ -1115,6 +1117,7 @@ export default {
                         name: product.name,
                         type: product.type,
                         level: product.level,
+                        subscription: product.subscription,
                         isOnline: product.isOnline,
                         price: product.price[this.currencyValue],
                         amount: product.amount,
@@ -1123,9 +1126,21 @@ export default {
 
                 this.selectedProducts.push(obj);
 
-                if (product.isOnline == true) {
-                    this.subscription = 1;
-                } else this.subscription = 0;
+                // const index = this.subscription.findIndex(
+                //     (item, i) =>
+                //         (product.isOnline && item === 1) ||
+                //         (!product.isOnline && item === 0)
+                // );
+
+                // if (index !== -1) {
+                //     this.subscription.splice(index, 1);
+                // }
+
+                // if (product.isOnline) {
+                //     this.subscription.push(1);
+                // } else {
+                //     this.subscription.push(0);
+                // }
             } else {
                 const id = product.id;
                 let objNew;
@@ -1141,19 +1156,26 @@ export default {
                 product.amount = 0;
             }
 
-            const resultSub = this.selectedProducts.some((el) => {
-                return el.isOnline == true;
-            });
+            // const resultSub = this.selectedProducts.some((el) => {
+            //     return el.isOnline == true;
+            // });
 
-            if (resultSub) this.subscription = 1;
-            else this.subscription = 0;
+            // if (resultSub) this.subscription.push(1);
+            // else this.subscription.push(0);
 
-            const resultOffline = this.selectedProducts.some((el) => {
-                return el.isOnline == false;
-            });
+            // const resultOffline = this.selectedProducts.some((el) => {
+            //     return el.isOnline == false;
+            // });
 
-            if (resultOffline) this.haveOfflineBook = 1;
-            else this.haveOfflineBook = 0;
+            // if (resultOffline) this.haveOfflineBook = 1;
+            // else this.haveOfflineBook = 0;
+
+            this.haveOnlineBook = this.selectedProducts.some(
+                (el) => el.isOnline
+            );
+            this.haveOfflineBook = this.selectedProducts.some(
+                (el) => !el.isOnline
+            );
         },
 
         changeTermBook(event, id) {
@@ -1184,6 +1206,9 @@ export default {
 
         getCourseID() {
             return this.selectedProducts.map((el) => el.course_id);
+        },
+        getSubscriptionIndex() {
+            return this.selectedProducts.map((el) => el.subscription);
         },
 
         getTermOnlineBook1: {
