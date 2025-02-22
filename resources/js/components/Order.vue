@@ -1085,7 +1085,7 @@ export default {
             const haveProduct = this.selectedProducts.some(
                 (el) => el.id === product.id
             );
-            
+
             product.amount = 1;
             let obj;
             if (!haveProduct) {
