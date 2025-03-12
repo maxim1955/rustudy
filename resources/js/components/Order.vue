@@ -908,7 +908,38 @@ export default {
         async onSubmit(e) {
             if (this.address == null) {
                 this.addressError = "Введите адрес доставки";
-            } else this.addressError = null;
+            } else {
+                this.addressError = null;
+            }
+
+            // Преобразуем данные о товарах в нужный формат
+            const items = [];
+
+            // Добавляем информацию о книге, если она есть
+            if (this.bookType && this.bookType.length > 0) {
+                this.bookType.forEach((book) => {
+                    items.push({
+                        name: book,
+                        quantity: this.countA1, // Количество книг A1
+                        sum: this.total, // Общая сумма за книги
+                        cost: this.total / this.countA1, // Стоимость одной книги
+                        tax: "none",
+                    });
+                });
+            }
+
+            // Добавляем информацию о курсах, если они есть
+            if (this.courses && this.courses.length > 0) {
+                this.courses.forEach((courseId) => {
+                    items.push({
+                        name: `Курс ${courseId}`,
+                        quantity: 1, // Предполагаем, что количество курсов всегда 1
+                        sum: this.total, // Общая сумма за курсы
+                        cost: this.total, // Стоимость курса
+                        tax: "none",
+                    });
+                });
+            }
 
             let res = {
                 fio: this.fio,
@@ -925,6 +956,7 @@ export default {
                 countA1: this.countA1,
                 countA2: this.countA2,
                 bookType: this.bookType,
+                items: items, // Добавляем поле items
             };
 
             try {
@@ -1035,6 +1067,36 @@ export default {
             const selectedProductFlag = this.selectedProducts.map((item) => {
                 return item.isOnline;
             });
+
+            // Преобразуем данные о товарах в нужный формат
+            const items = [];
+
+            // Добавляем информацию о книге, если она есть
+            if (this.bookType && this.bookType.length > 0) {
+                this.bookType.forEach((book) => {
+                    items.push({
+                        name: book,
+                        quantity: this.countA1, // Количество книг A1
+                        sum: this.total, // Общая сумма за книги
+                        cost: this.total / this.countA1, // Стоимость одной книги
+                        tax: "none",
+                    });
+                });
+            }
+
+            // Добавляем информацию о курсах, если они есть
+            if (this.courses && this.courses.length > 0) {
+                this.courses.forEach((courseId) => {
+                    items.push({
+                        name: `Курс ${courseId}`,
+                        quantity: 1, // Предполагаем, что количество курсов всегда 1
+                        sum: this.total, // Общая сумма за курсы
+                        cost: this.total, // Стоимость курса
+                        tax: "none",
+                    });
+                });
+            }
+
             try {
                 const paymentWindow = window.open("", "_blank");
 
@@ -1053,6 +1115,7 @@ export default {
                         countA1: this.countA1,
                         countA2: this.countA2,
                         bookType: this.bookType,
+                        items: JSON.stringify(items), // Добавляем поле items
                     },
                 });
 
