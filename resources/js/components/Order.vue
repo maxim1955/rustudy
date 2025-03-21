@@ -617,7 +617,9 @@ export default {
             booksArray: JSON.parse(JSON.stringify(this.books)),
             promocodeTypes: [],
             selectedBookId: null,
+            selectedBookIds: [],
             appliedBookId: null,
+            addedProducts: [],
             countA1: 0,
             countA2: 0,
             isBookOnline: null,
@@ -672,7 +674,7 @@ export default {
         },
 
         activeCity(newValue) {
-            console.log(newValue);
+            // console.log(newValue);
             this.address = newValue;
         },
 
@@ -752,7 +754,7 @@ export default {
         },
 
         customValidate(value) {
-            console.log(value);
+            // console.log(value);
             if (value.valid != undefined) {
                 if (value.valid === true) {
                     this.phoneValid = true;
@@ -790,10 +792,10 @@ export default {
         },
 
         async applyPromocode() {
-            if (!this.selectedBookId) {
+            if (this.selectedProducts.length === 0) {
                 this.promocodeActive = 1;
                 this.promocodeMessage =
-                    "Выберите книгу, чтобы применить промокод";
+                    "Выберите книги, чтобы применить промокод";
                 return;
             }
 
@@ -811,34 +813,11 @@ export default {
                 });
 
                 const data = response.data;
-                const selectedBook = this.booksArray.find(
-                    (book) => book.id === this.selectedBookId
-                );
 
-                if (!selectedBook) {
+                if (data === "no such promocode") {
                     this.promocodeActive = 1;
-                    this.promocodeMessage = "Выбранная книга не найдена";
-                    return;
+                    this.promocodeMessage = "Данного промокода не существует";
                 }
-
-                let selectedBookTypes = [...selectedBook.paperType];
-
-                // if (selectedBook.isOnline) {
-                //     const level = selectedBook.level.toLowerCase();
-
-                //     if (
-                //         this.termOnlineBook1 === selectedBook.price[this.currencyValue] &&
-                //         selectedBook.level
-                //     ) {
-                //         selectedBookTypes = [`online year ${level}`];
-                //     } else if (
-                //         this.termOnlineBook2 === selectedBook.price[this.currencyValue] &&
-                //         selectedBook.level
-                //     ) {
-                //         selectedBookTypes = [`online forever ${level}`];
-                //     }
-                // }
-
                 let promocodeTypes = data.type;
 
                 if (typeof promocodeTypes === "string") {
@@ -862,21 +841,44 @@ export default {
                         .replace(/\s+/g, " ")
                 );
 
-                console.log("Форматированные типы из API:", promocodeTypes);
-                console.log("Длина типа из API:", promocodeTypes[0].length);
+                this.appliedBookIds = [];
+                this.addedProducts.forEach((book) => {
+                    if (!book.paperType) {
+                        console.warn(
+                            `У книги ${book.id} отсутствует paperType`,
+                            book
+                        );
+                        return;
+                    }
 
-                // Альтернативная проверка совпадения
-                const isValidPromocode = promocodeTypes.some((type) =>
-                    selectedBookTypes.some((bookType) => bookType === type)
-                );
+                    const bookTypes = Array.isArray(book.paperType)
+                        ? book.paperType.map((type) =>
+                              type
+                                  .trim()
+                                  .toLowerCase()
+                                  .normalize("NFKD")
+                                  .replace(/\s+/g, " ")
+                          )
+                        : [
+                              book.paperType
+                                  .trim()
+                                  .toLowerCase()
+                                  .normalize("NFKD"),
+                          ];
 
-                if (data === "no such promocode") {
-                    this.promocodeActive = 1;
-                    this.promocodeMessage = "Данного промокода не существует";
-                } else if (data.active === 0) {
+                    if (
+                        bookTypes.some((type) => promocodeTypes.includes(type))
+                    ) {
+                        this.appliedBookIds.push(book.id);
+                    }
+                });
+
+                const isValid = this.appliedBookIds.length > 0;
+
+                if (data.active === 0) {
                     this.promocodeActive = 1;
                     this.promocodeMessage = "Срок действия промокода истек";
-                } else if (isValidPromocode) {
+                } else if (isValid) {
                     this.stockType = data.stock_type;
                     this.stock = data.stock;
                     this.appliedStock = data.stock;
@@ -884,7 +886,7 @@ export default {
                     this.promocodeActive = 0;
                     this.promocodeMessage = "Промокод успешно применен";
                     this.appliedBookId = this.selectedBookId;
-                } else if (!isValidPromocode) {
+                } else {
                     this.promocodeActive = 1;
                     this.promocodeMessage =
                         "Этот промокод не подходит для выбранных товаров";
@@ -892,17 +894,16 @@ export default {
             } catch (error) {
                 console.error("Ошибка:", error);
                 this.promocodeActive = 1;
-                this.promocodeMessage = "Ошибка при проверке промокода";
-                throw error;
             }
         },
 
         resetPromocodeState() {
             this.promocodeActive = 1;
             this.promocodeMessage = "";
+            this.stockType = null;
+            this.stock = null;
             this.appliedStock = null;
             this.appliedStockType = null;
-            this.appliedBookId = null;
         },
 
         async onSubmit(e) {
@@ -912,17 +913,15 @@ export default {
                 this.addressError = null;
             }
 
-            // Преобразуем данные о товарах в нужный формат
             const items = [];
 
-            // Добавляем информацию о книге, если она есть
             if (this.bookType && this.bookType.length > 0) {
                 this.bookType.forEach((book) => {
                     items.push({
                         name: book,
-                        quantity: this.countA1, // Количество книг A1
-                        sum: this.total, // Общая сумма за книги
-                        cost: this.total / this.countA1, // Стоимость одной книги
+                        quantity: this.countA1,
+                        sum: this.total,
+                        cost: this.total / this.countA1,
                         tax: "none",
                     });
                 });
@@ -1068,10 +1067,8 @@ export default {
                 return item.isOnline;
             });
 
-            // Преобразуем данные о товарах в нужный формат
             const items = [];
 
-            // Добавляем информацию о книге, если она есть
             if (this.bookType && this.bookType.length > 0) {
                 this.bookType.forEach((book) => {
                     items.push({
@@ -1135,8 +1132,9 @@ export default {
 
         addProduct(product) {
             this.selectedBookId = product.id;
-            console.log(this.selectedProducts);
+            this.addedProducts.push(product);
 
+            console.log("products", this.addedProducts);
             const bookTypeItem = product.type + " " + product.level;
 
             const index = this.bookType.indexOf(bookTypeItem);
@@ -1311,16 +1309,18 @@ export default {
             let totalPrice = this.selectedProducts.reduce((total, book) => {
                 let bookPrice = book.amount * book.price;
 
-                // Применяем скидку только к книге, на которую действует промокод
-                if (book.id === this.appliedBookId) {
-                    console.log("total:bookID");
+                // Применение скидки, если книга подходит под промокод
+                if (
+                    this.appliedBookIds &&
+                    this.appliedBookIds.includes(book.id)
+                ) {
+                    console.log("Применение скидки к товару:", book.id);
                     if (
                         this.appliedStockType === "руб" &&
                         this.appliedStock > 0
                     ) {
                         bookPrice = Math.max(bookPrice - this.appliedStock, 0);
-                    }
-                    if (
+                    } else if (
                         this.appliedStockType === "%" &&
                         this.appliedStock > 0
                     ) {
