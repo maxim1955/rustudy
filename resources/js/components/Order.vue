@@ -378,10 +378,10 @@
                                                 Самовывоз
                                             </label>
                                             <p>
-                                                г. Москва, ул. Ростовская
-                                                набережная, д. 5, вход
-                                                с внутреннего двора, слева
-                                                от 5-го подъезда (бесплатно)
+                                                г. Москва, ул. Ростовская
+                                                набережная, д. 5, вход с
+                                                внутреннего двора, слева от 5-го
+                                                подъезда (бесплатно)
                                             </p>
                                         </div>
 
@@ -425,10 +425,10 @@
                                     </div>
                                     <div class="between-block">
                                         <p class="order__text">
-                                            Товары, {{ productAmount }}  шт.
+                                            Товары, {{ productAmount }} шт.
                                         </p>
                                         <p class="order__price">
-                                            {{ total }} ₽
+                                            {{ total }} ₽
                                         </p>
                                     </div>
 
@@ -453,8 +453,8 @@
                                                 stroke-linejoin="round"
                                             />
                                         </svg>
-                                        Мы свяжемся с вами, чтобы уточнить сроки
-                                        и стоимость доставки.
+                                        Мы свяжемся с вами, чтобы уточнить сроки
+                                        и стоимость доставки.
                                     </p>
 
                                     <input
@@ -506,21 +506,22 @@
                                 </div>
                                 <div class="order__block order__message">
                                     <p class="order__text">
-                                        Любые вопросы по покупке книги:
+                                        Любые вопросы по покупке книги:
                                         <a href="tel:+74993021872"
-                                            >+7 499 302-18-72</a
+                                            >+7 499 302-18-72</a
                                         >,
                                         <a href="tel:+79993333303"
-                                            >+7 999 333-33-03</a
+                                            >+7 999 333-33-03</a
                                         >,
                                         <a href="mailto:book@rus.study"
                                             >book@rus.study</a
                                         >
                                     </p>
                                     <p class="order__text">
-                                        Если вы не получили ответ,
+                                        Если вы не получили ответ,
                                         продублируйте, пожалуйста, письмо
-                                        координатору проекта на <a
+                                        координатору проекта на
+                                        <a
                                             href="mailto:pressantonov2013@gmail.com"
                                             >pressantonov2013@gmail.com</a
                                         >
@@ -617,7 +618,9 @@ export default {
             booksArray: JSON.parse(JSON.stringify(this.books)),
             promocodeTypes: [],
             selectedBookId: null,
+            selectedBookIds: [],
             appliedBookId: null,
+            addedProducts: [],
             countA1: 0,
             countA2: 0,
             isBookOnline: null,
@@ -672,7 +675,7 @@ export default {
         },
 
         activeCity(newValue) {
-            console.log(newValue);
+            // console.log(newValue);
             this.address = newValue;
         },
 
@@ -752,7 +755,7 @@ export default {
         },
 
         customValidate(value) {
-            console.log(value);
+            // console.log(value);
             if (value.valid != undefined) {
                 if (value.valid === true) {
                     this.phoneValid = true;
@@ -790,10 +793,10 @@ export default {
         },
 
         async applyPromocode() {
-            if (!this.selectedBookId) {
+            if (this.selectedProducts.length === 0) {
                 this.promocodeActive = 1;
                 this.promocodeMessage =
-                    "Выберите книгу, чтобы применить промокод";
+                    "Выберите книги, чтобы применить промокод";
                 return;
             }
 
@@ -811,34 +814,6 @@ export default {
                 });
 
                 const data = response.data;
-                const selectedBook = this.booksArray.find(
-                    (book) => book.id === this.selectedBookId
-                );
-
-                if (!selectedBook) {
-                    this.promocodeActive = 1;
-                    this.promocodeMessage = "Выбранная книга не найдена";
-                    return;
-                }
-
-                let selectedBookTypes = [...selectedBook.paperType];
-
-                // if (selectedBook.isOnline) {
-                //     const level = selectedBook.level.toLowerCase();
-
-                //     if (
-                //         this.termOnlineBook1 === selectedBook.price[this.currencyValue] &&
-                //         selectedBook.level
-                //     ) {
-                //         selectedBookTypes = [`online year ${level}`];
-                //     } else if (
-                //         this.termOnlineBook2 === selectedBook.price[this.currencyValue] &&
-                //         selectedBook.level
-                //     ) {
-                //         selectedBookTypes = [`online forever ${level}`];
-                //     }
-                // }
-
                 let promocodeTypes = data.type;
 
                 if (typeof promocodeTypes === "string") {
@@ -863,12 +838,42 @@ export default {
                 );
 
                 console.log("Форматированные типы из API:", promocodeTypes);
-                console.log("Длина типа из API:", promocodeTypes[0].length);
 
-                // Альтернативная проверка совпадения
-                const isValidPromocode = promocodeTypes.some((type) =>
-                    selectedBookTypes.some((bookType) => bookType === type)
-                );
+                this.appliedBookIds = [];
+                this.addedProducts.forEach((book) => {
+                    if (!book.paperType) {
+                        console.warn(
+                            `У книги ${book.id} отсутствует paperType`,
+                            book
+                        );
+                        return;
+                    }
+
+                    const bookTypes = Array.isArray(book.paperType)
+                        ? book.paperType.map((type) =>
+                              type
+                                  .trim()
+                                  .toLowerCase()
+                                  .normalize("NFKD")
+                                  .replace(/\s+/g, " ")
+                          )
+                        : [
+                              book.paperType
+                                  .trim()
+                                  .toLowerCase()
+                                  .normalize("NFKD"),
+                          ];
+
+                    console.log(`Типы книги ${book.id}:`, bookTypes);
+
+                    if (
+                        bookTypes.some((type) => promocodeTypes.includes(type))
+                    ) {
+                        this.appliedBookIds.push(book.id);
+                    }
+                });
+
+                const isValid = this.appliedBookIds.length > 0;
 
                 if (data === "no such promocode") {
                     this.promocodeActive = 1;
@@ -876,7 +881,7 @@ export default {
                 } else if (data.active === 0) {
                     this.promocodeActive = 1;
                     this.promocodeMessage = "Срок действия промокода истек";
-                } else if (isValidPromocode) {
+                } else if (isValid) {
                     this.stockType = data.stock_type;
                     this.stock = data.stock;
                     this.appliedStock = data.stock;
@@ -884,7 +889,9 @@ export default {
                     this.promocodeActive = 0;
                     this.promocodeMessage = "Промокод успешно применен";
                     this.appliedBookId = this.selectedBookId;
-                } else if (!isValidPromocode) {
+
+                    this.selectedProducts = [...this.selectedProducts];
+                } else {
                     this.promocodeActive = 1;
                     this.promocodeMessage =
                         "Этот промокод не подходит для выбранных товаров";
@@ -893,7 +900,6 @@ export default {
                 console.error("Ошибка:", error);
                 this.promocodeActive = 1;
                 this.promocodeMessage = "Ошибка при проверке промокода";
-                throw error;
             }
         },
 
@@ -1135,8 +1141,9 @@ export default {
 
         addProduct(product) {
             this.selectedBookId = product.id;
-            console.log(this.selectedProducts);
+            this.addedProducts.push(product);
 
+            console.log("products", this.addedProducts);
             const bookTypeItem = product.type + " " + product.level;
 
             const index = this.bookType.indexOf(bookTypeItem);
@@ -1311,16 +1318,18 @@ export default {
             let totalPrice = this.selectedProducts.reduce((total, book) => {
                 let bookPrice = book.amount * book.price;
 
-                // Применяем скидку только к книге, на которую действует промокод
-                if (book.id === this.appliedBookId) {
-                    console.log("total:bookID");
+                // Применение скидки, если книга подходит под промокод
+                if (
+                    this.appliedBookIds &&
+                    this.appliedBookIds.includes(book.id)
+                ) {
+                    console.log("Применение скидки к товару:", book.id);
                     if (
                         this.appliedStockType === "руб" &&
                         this.appliedStock > 0
                     ) {
                         bookPrice = Math.max(bookPrice - this.appliedStock, 0);
-                    }
-                    if (
+                    } else if (
                         this.appliedStockType === "%" &&
                         this.appliedStock > 0
                     ) {
