@@ -33,25 +33,23 @@ class RobocassaController extends RestController
             //       ->orderBy('created_at', 'desc')
             //       ->limit(3);
 
-            $items = $req->items; // string
-            $items_json = json_decode($items, JSON_UNESCAPED_UNICODE);
+            $items = $req->items;
         // urlencoded receipt
-            //$book_type = implode('', $req->bookType);
+            $book_type = implode('', $req->bookType);
             $receipt = [
-                "sno" => "osn",
-                "items" => $items_json
+                "sno"=>"osn",
+                "items" => [
+                    $items
+                ]
             ];
 
         // double urlencode for headers
-
-           $receipt = json_encode($receipt);
-           $receipt = urlencode($receipt);
-            //echo $receipt;
+            $receipt = json_encode($receipt);
             $receipt_urlencode = urlencode($receipt);
             $book_type = implode(', ', $req->bookType);
             $inv_desc = $book_type;
         // description of the order, if you need
-
+            $inv_desc =  $book_type;
             // $inv_desc = '';
 
         // build own CRC
@@ -65,10 +63,10 @@ class RobocassaController extends RestController
             $sum = $out_sum;
             $address = $req->address;
             $pickup = $req->pickup;
-            $subscription = "";
+            $subscription = implode(', ', $req->subscription);
             $version = $req->version;
-            // $courses = $req->courses;implode(', ', $req->courses)
-            $courses = "";
+            // $courses = $req->courses;
+            $courses = implode(', ', $req->courses);
         Payment::insert([
             'name' => $name,
             'country' =>$country,
@@ -126,18 +124,15 @@ class RobocassaController extends RestController
         $crc = $request->SignatureValue;
 
         $order = Payment::where('sdo_request_id', '=', $inv_id)->first();
-        $shp_item = $order->comment;
-        $courses = explode(",", $order->courses);
-        $course = "";
-        foreach ($courses as $one_course){
-            if($one_course == 8){
-                $course .= "Уровень А1 ";
-            }
-            else if($one_course == 9){
-                $course .= "Уровень А2";
-            }
+        if($order->courses == 8){
+            $course = "Уровень А1";
         }
-
+        else if($order->courses == 9){
+            $course = "Уровень А2";
+        }
+        else if($order->courses == 89){
+            $course = "Уровень А1,А2";
+        }
         Payment::where('sdo_request_id', '=', $inv_id)
        ->update([
            'status_payment' => "оплачен"
@@ -296,17 +291,15 @@ class RobocassaController extends RestController
        ->update([
            'status_payment' => "не оплачен"
         ]);
-
         $order = Payment::where('sdo_request_id', '=', $inv_id)->first();
-        $courses = explode(",", $order->courses);
-        $course = "";
-        foreach ($courses as $one_course){
-            if($one_course == 8){
-                $course .= "Уровень А1 ";
-            }
-            else if($one_course == 9){
-                $course .= "Уровень А2";
-            }
+        if($order->courses == 8){
+            $course = "Уровень А1";
+        }
+        else if($order->courses == 9){
+            $course = "Уровень А2";
+        }
+        else if($order->courses == 89){
+            $course = "Уровень А1,А2";
         }
 
         $data = [
