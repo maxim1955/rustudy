@@ -927,8 +927,8 @@ export default {
                     items.push({
                         name: book,
                         quantity: this.countA1, // Количество книг A1
-                        sum: this.total, // Общая сумма за книги
-                        cost: this.total / this.countA1, // Стоимость одной книги
+                        sum: this.bookPrice * this.countA1, // Общая сумма за книги
+                        cost: this.bookPrice, // Стоимость одной книги
                         tax: "none",
                     });
                 });
@@ -940,8 +940,8 @@ export default {
                     items.push({
                         name: `Курс ${courseId}`,
                         quantity: 1, // Предполагаем, что количество курсов всегда 1
-                        sum: this.total, // Общая сумма за курсы
-                        cost: this.total, // Стоимость курса
+                        sum: this.price, // Общая сумма за курсы
+                        cost: this.price, // Стоимость курса
                         tax: "none",
                     });
                 });
@@ -1080,13 +1080,24 @@ export default {
             // Добавляем информацию о книге, если она есть
             if (this.bookType && this.bookType.length > 0) {
                 this.bookType.forEach((book) => {
-                    items.push({
-                        name: book,
-                        quantity: this.countA1, // Количество книг A1
-                        sum: this.total, // Общая сумма за книги
-                        cost: this.total / this.countA1, // Стоимость одной книги
-                        tax: "none",
-                    });
+                    if(this.bookTypeItem == "Бумажный учебник А1") {
+                        items.push({
+                            name: book,
+                            quantity: this.countA1, // Количество книг A1
+                            sum: this.bookPrice * this.countA1, // Общая сумма за книги
+                            cost: this.bookPrice, // Стоимость одной книги
+                            tax: "none",
+                        });
+                    }
+                    if(this.bookTypeItem == "Бумажный учебник А2") {
+                        items.push({
+                            name: book,
+                            quantity: this.countA2, // Количество книг A2
+                            sum: this.bookPrice * this.countA2, // Общая сумма за книги
+                            cost: this.bookPrice, // Стоимость одной книги
+                            tax: "none",
+                        });
+                    }
                 });
             }
 
