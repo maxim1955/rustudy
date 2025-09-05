@@ -17,12 +17,12 @@ class RobocassaController extends RestController
         if (!empty($req->out_sum)) {
             header('Access-Control-Allow-Origin: *');
             $out_sum = trim(htmlspecialchars(strip_tags($req->out_sum)));
-            
+
         // your registration data
-            $mrh_login = "Uchebnik_RKI-Privet_Rossiya_po_RKI"; 
+            $mrh_login = "Uchebnik_RKI-Privet_Rossiya_po_RKI";
             $mrh_pass1 = "W1bQBYhHxmE0qLH151lQ";
             // $mrh_pass1 = "AZKqf07v5oJAZaV0nD1X"; //тестовый
-            
+
             $payments = Payment::orderByDesc('sdo_request_id')->first();
             // order number. "" for random value
             $inv_id = $payments->sdo_request_id+1;
@@ -32,21 +32,31 @@ class RobocassaController extends RestController
             //       ->whereColumn('user_id', 'users.id')
             //       ->orderBy('created_at', 'desc')
             //       ->limit(3);
-        
-        
+
+            $items = $req->items; // string
+            $items_json = json_decode($items, JSON_UNESCAPED_UNICODE);
         // urlencoded receipt
-            $receipt = "%7B%22items%22:%5B%7B%22name%22:%22name%22,%22quantity%22:1,".
-            "%22sum%22:11,%22tax%22:%22none%22%7D%5D%7D";
-        
+            //$book_type = implode('', $req->bookType);
+            $receipt = [
+                "sno" => "osn",
+                "items" => $items_json
+            ];
+
         // double urlencode for headers
+
+           $receipt = json_encode($receipt);
+           $receipt = urlencode($receipt);
+            //echo $receipt;
             $receipt_urlencode = urlencode($receipt);
-        
+            $book_type = implode(', ', $req->bookType);
+            $inv_desc = $book_type;
         // description of the order, if you need
-            $inv_desc = "book";
-        
+
+            // $inv_desc = '';
+
         // build own CRC
             $crc = md5("$mrh_login:$out_sum:$inv_id:$receipt:$mrh_pass1");
-            
+
             $name = $req->fio;
             $country = $req->country;
             $email = $req->email;
@@ -55,12 +65,14 @@ class RobocassaController extends RestController
             $sum = $out_sum;
             $address = $req->address;
             $pickup = $req->pickup;
-            $subscription = $req->subscription;
+            $subscription = "";
             $version = $req->version;
-            $courses = $req->courses;
+            // $courses = $req->courses;implode(', ', $req->courses)
+            $courses = "";
         Payment::insert([
             'name' => $name,
             'country' =>$country,
+            'comment' => $items,
             'email' => $email,
             'phone' => $phone,
             'promocode' => $promocode,
@@ -73,8 +85,8 @@ class RobocassaController extends RestController
             'sdo_request_id' => $inv_id
         ]);
             $params = array(
-                'MrchLogin' => $mrh_login, 
-                'OutSum' => $out_sum, 
+                'MrchLogin' => $mrh_login,
+                'OutSum' => $out_sum,
                 'InvId' => $inv_id,
                 'Receipt' => $receipt_urlencode,
                 'Desc' => $inv_desc,
@@ -106,8 +118,85 @@ class RobocassaController extends RestController
         // read parameters
         $out_summ = $request->OutSum;
         $inv_id = $request->InvId;
+        //$receipt = json_encode($receipt);
+        //$receipt_urlencode = urlencode($receipt);
+        //var_dump($request->Shp_item);
         $shp_item = $request->Shp_item;
+
         $crc = $request->SignatureValue;
+
+        $order = Payment::where('sdo_request_id', '=', $inv_id)->first();
+        $shp_item = $order->comment;
+        $courses = explode(",", $order->courses);
+        $course = "";
+        foreach ($courses as $one_course){
+            if($one_course == 8){
+                $course .= "Уровень А1 ";
+            }
+            else if($one_course == 9){
+                $course .= "Уровень А2";
+            }
+        }
+
+        Payment::where('sdo_request_id', '=', $inv_id)
+       ->update([
+           'status_payment' => "оплачен"
+        ]);
+        $data = [
+        "iform" => "true",
+        "action" => "send_iform",
+        "referer" => "",
+        "task_id" => "2692116",
+        "hash" => "03e33c259e10dd38d5d6cdd3394eb25a",
+        "formdata" => [
+                "A47A2C320B1DB2A6" => $order->name,
+                "ACDD88C215B6AEC8" => $order->email,
+                "A29C4E09B1903EC0" => 1,
+                "A07C805149E94922" => $order->promocode,
+                "A353E802272FC8D8" => $order->sum,
+                "A32C7B222AFE2096" => date('d.m.Y H:i'),
+                "F7A4002538E4DE10" => $course,
+                "B8EE5D122B06DAA0" => "оплачен",
+                "AA728E55381DA81C" => $order->phone,
+                "ADB324849F89A902" => "form",
+                "ED0291F49B4212B2" => "rus.study/",
+                "A3902D25372F859A" => $order->address,
+                "AF314A7589ACCBEF" => "robokassa"
+            ]
+        ];
+
+
+        $jsonData = json_encode($data);
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://agent.prostoy.ru/api/ultraform.php');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $html = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            echo 'Error:' . curl_error($curl);
+            $error = curl_error($curl);
+            return $error;
+        }
+
+
+        curl_close($curl);
+
+        $decodedResponse = json_decode($html, true);
+        // Возвращаем успешный ответ с декодированным JSON
+        return response()->json([
+            'status' => 'success',
+            'response' => $decodedResponse
+        ]);
+
+        // Возвращаем ответ
+        return $html()->json([
+            'status' => 'success',
+            'response' => json_decode($html)
+        ]);
 
         $crc = strtoupper($crc);
 
@@ -131,7 +220,7 @@ class RobocassaController extends RestController
 
             $str_exp = explode(";", $str);
             if ($str_exp[0]=="order_num :$inv_id")
-            { 
+            {
                 echo "Операция прошла успешно\n";
                 echo "Operation of payment is successfully completed\n";
             }
@@ -161,8 +250,14 @@ class RobocassaController extends RestController
         // read parameters
         $out_summ = $_REQUEST["OutSum"];
         $inv_id = $_REQUEST["InvId"];
-        $shp_item = $_REQUEST["Shp_item"];
+        //$shp_item = $_REQUEST["Shp_item"];
         $crc = $_REQUEST["SignatureValue"];
+        $order = Payment::where('sdo_request_id', '=', $inv_id)->first();
+        $shp_item = $order->comment;
+        //$out_summ = $request->OutSum;
+        //$inv_id = $request->InvId;
+        //$shp_item = $request->Shp_item;
+        //$crc = $request->SignatureValue;
 
         $crc = strtoupper($crc);
 
@@ -186,8 +281,8 @@ class RobocassaController extends RestController
                 die("error");
         fputs($f,"order_num :$inv_id;Summ :$out_summ;Date :$date\n");
         fclose($f);
-        
-        
+
+
 
     }
 
@@ -197,6 +292,79 @@ class RobocassaController extends RestController
     public function fail(Request $request)
     {
         $inv_id = $request->InvId;
+        Payment::where('sdo_request_id', '=', $inv_id)
+       ->update([
+           'status_payment' => "не оплачен"
+        ]);
+
+        $order = Payment::where('sdo_request_id', '=', $inv_id)->first();
+        $courses = explode(",", $order->courses);
+        $course = "";
+        foreach ($courses as $one_course){
+            if($one_course == 8){
+                $course .= "Уровень А1 ";
+            }
+            else if($one_course == 9){
+                $course .= "Уровень А2";
+            }
+        }
+
+        $data = [
+        "iform" => "true",
+        "action" => "send_iform",
+        "referer" => "",
+        "task_id" => "2692116",
+        "hash" => "03e33c259e10dd38d5d6cdd3394eb25a",
+        "formdata" => [
+                "A47A2C320B1DB2A6" => $order->name,
+                "ACDD88C215B6AEC8" => $order->email,
+                "A29C4E09B1903EC0" => $order->count,
+                "A07C805149E94922" => $order->promocode,
+                "A353E802272FC8D8" => $order->sum,
+                "A32C7B222AFE2096" => date('d.m.Y H:i'),
+                "F7A4002538E4DE10" => $course,
+                "B8EE5D122B06DAA0" => "не оплачен",
+                "AA728E55381DA81C" => $order->phone,
+                "ADB324849F89A902" => "form",
+                "ED0291F49B4212B2" => "rus.study/",
+                "A3902D25372F859A" => $order->address,
+                "AF314A7589ACCBEF" => "robokassa"
+            ]
+        ];
+
+
+        $jsonData = json_encode($data);
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://agent.prostoy.ru/api/ultraform.php');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $html = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            echo 'Error:' . curl_error($curl);
+            $error = curl_error($curl);
+            return $error;
+        }
+
+
+        curl_close($curl);
+
+        $decodedResponse = json_decode($html, true);
+        // Возвращаем успешный ответ с декодированным JSON
+        return response()->json([
+            'status' => 'success',
+            'response' => $decodedResponse
+        ]);
+
+        // Возвращаем ответ
+        return $html()->json([
+            'status' => 'success',
+            'response' => json_decode($html)
+        ]);
+
         echo "Вы отказались от оплаты. Заказ# $inv_id\n";
         echo "You have refused payment. Order# $inv_id\n";
     }
